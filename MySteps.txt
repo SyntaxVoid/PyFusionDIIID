@@ -1,0 +1,174 @@
+I. Setting up GIT on the local computer
+        $ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+            Creates a new ssh key, using the provided email as a label
+        Generating public/private rsa key pair.'
+        Enter a file in which to save the key (/Users/you/.ssh/id_rsa): [Press enter]
+        Enter passphrase (empty for no passphrase): [Type a passphrase]
+        Enter same passphrase again: [Type passphrase again]
+        $ eval "$(ssh-agent -s)"
+        Agent pid 59566
+        $ ssh-add ~/.ssh/id_rsa
+            Now add the contents of ~/.ssh/id_rsa to a new key on github.com
+        $ sudo apt-get install xclip
+        $ xclip -sel clip < ~/.ssh/id_rsa.pub
+            Got to github.com, login, go to settings, add new SSH key, paste
+
+II. Installing Additional Packages, Pyfusion and Setting up Environment Variables
+        Note: the venus computer uses a c-shell variant instead of the familiar bash.
+        First, I needed to change our default version of python to the anaconda distribution.
+        Add the following line to ~/.cshrc
+            alias python /task/imd/anaconda/bin/python
+        Pyfusion requires pyFFTW (https://pypi.python.org/pypi/pyFFTW)
+        and pyserial2.7 (https://pypi.python.org/pypi/pyserial/2.7).
+        (Optional): Create a new directory for these packages.
+            $ mkdir ~/.py_packages
+        1. pyFFTw
+            $ cd ~/.py_packages
+            $ wget https://pypi.python.org/packages/c2/2e/b25edc6960fc837e915eb1b38e5f0e3013e32e90aff14a1d0f4556b3d145/pyFFTW-0.10.4.tar.gz#md5=7fb59450308881bb48d9f178947d950e --no-check-certificate
+            $ tar -xvzf pyFFTW-0.10.4.tar.gz
+            $ rm pyFFTW-0.10.4.tar.gz
+            $ cd pyFFTW-0.10.4
+            $ python setup.py build
+        2. pyserial2.7
+            $ cd ~/.py_packages
+            $ wget https://pypi.python.org/packages/df/c9/d9da7fafaf2a2b323d20eee050503ab08237c16b0119c7bbf1597d53f793/pyserial-2.7.tar.gz#md5=794506184df83ef2290de0d18803dd11 --no-check-certificate
+            $ tar -xvzf pyserial-2.7.tar.gz
+            $ rm pyserial-2.7.tar.gz
+            $ cd pyserial-2.7
+            $ python setup.py build
+        3. Pyfusion
+            I tried using Shaun's pyfusion from his git repository, but I don't think it is as up-to-date as the local
+            version he has stored on Venus. I could have just added the path to his pyfusion to my PYTHONPATH, but in
+            case something breaks while he edits it, I will have no idea what he changed. For that reason, I copied his
+            local pyfusion version to my home directory.
+            $ cp -r /u/haskeysr/code/python/srh_pyfusion/pyfusion ~/pyfusion
+        Now we have to add these packages and pyfusion to our PYTHONPATH. Go into ~/.cshrc and add the following lines.
+
+            if ( ! ($?PYTHONPATH) ) then
+                setenv PYTHONPATH "/u/greslj/.py_packages/pyFFTW-0.10.4/build/lib.linux-x86_64-2.7/pyfftw:/u/greslj/pyfusion/:/u/greslj/.py_packages/pyserial-2.7/"
+            else
+    	        setenv PYTHONPATH /u/greslj/.py_packages/pyFFTW-0.10.4/build/lib.linux-x86_64-2.7/pyfftw:/u/greslj/pyfusion/:/u/greslj/.py_packages/pyserial-2.7/:$PYTHONPATH"
+            endif
+
+        (Optional) To clone Shaun's version of pyfusion from git, execute the following line
+        $ git clone git@github.com:shaunhaskey/pyfusion.git
+
+III. Copying his test scripts and config files
+        $ cp /u/haskeysr/code/test_datamining_DIII-D.py ~/pyfusion/test_datamining_DIII-D.py
+        $ cp /u/haskeysr/.pyfusion/pyfusion.cfg ~/.pyfusion/pyfusion.cfg
+        *****The pyfusion.cfg file MUST be in the ~/.pyfusion folder*****
+        Notes:
+            There were a few typos in test_datamining_DIII-D.py which would cause the script to close the plots
+            immediately after they were being created without even an error. To fix this, I changed:
+               Line 211:    fig.canvas.draw();fig.show()        ->    fig.canvas.draw()
+               Line 212:    fig2.canvas.draw();fig2.show()      ->    fig2.canvas.draw()
+               Line 213:                                        ->    plt.show()
+
+IV. Running Shaun's test datamining (test_datamining_DIII-D.py) script using venus' queue manager
+        Change your directory to wherever you decided to store test_datamining_DIII-D.py
+        $ cd ~/pyfusion/
+        The test datamining script is very memory intensive (~12 GB of RAM) so it must be submitted as a job
+        to the queue manager where the venus cluster will decide when and where to run it.
+        1. Making the .job file to submit
+            I created a text file titled 'program.job' with the following contents
+
+#---------------------------Start program.job------------------------
+#!/bin/bash
+# Test_Datamining_DIII-D
+#$ -N TestDatamining_0.25_Shauns_Test_Script
+# The job should be placed into the queue 'all.q'.
+#$ -q all.q
+# Redirect output stream to this file.
+#$ -o sge_output.dat
+# Redirect error stream to this file.
+#$ -e sge_error.dat
+# The batchsystem should use the current directory as working directory.
+# Both files (output.dat and error.dat) will be placed in the current
+# directory. The batchsystem assumes to find the executable in this directory.
+#$ -cwd
+# Pass along all current environment variables to the submission script.
+#$ -V
+# Make sure there is 20GB of free memory on the node before submitting.
+#$ -l mem_free=20G,h_vmem=40G
+#$ -M jgresl@uci.edu
+# Send me an email when the job is finished.
+#$ -m e
+# This is the file to be executed. Change the test_datamining_DIII-D.py location to where you saved yours
+/task/imd/anaconda/bin/python /u/greslj/test_datamining_DIII-D.py
+#---------------------------End program .sge----------------------
+
+        2. Submit the job to the queue manager
+            $ qsub program.job
+        3. Wait...Wait...Wait
+            While waiting, you can check on the status of your job with the command
+            $ qstat
+            If nothing shows up, the task if finished or program.job was not written correctly.
+        4. Plots
+            Depending on the load of Venus, it may take between 6-30 minutes to complete the task. At the end of the
+            program, seven non-responsive windows will open up. Wait about a minute for the plots to render and now you
+            can save,print,do whatever you want with them.
+        5. Outputs
+            sge_error.dat: Errors from the execution of the script. Will be full of python FutureWarnings... This is ok.
+            sge_output.dat: Normal output from the execution of the script.
+
+V. Description of test datamining script.
+    1. def get_single(shot, time_window=None):
+        Inputs:
+            shot: Shot number
+            time_window: Window to look at in ms. If time_window is not supplied it will default to [2000 ms -> 5000 ms]
+        Outputs:
+            ???
+        Function description: (Line number: Comment) Self-explanatory lines not documented.
+        11: Creates a name to store the cache as a .pickle. Doesn't appear to be used. Can delete?
+        12: Saves the starting time to later see how long the program took
+        13: Selects the device "DIIID" and stores it as dev
+        14: Fetches the toroidal magnitude from dev. From pyfusion\acquisition\base.py, it returns a 'subclass of BaseData'
+        15: Prints how long it took to fetch and write the signal to memory
+        16: Makes a new mag with a new, reduced, time window
+        19: Runs a FFT on the data using a hamming window by default. (using the new reduced mag)
+        20: Calculates the subsequent differences in the time_base    (using the new reduced mag)
+            (time deltas) ''out[n] = time[n+1]-time[n]''
+        21: ?? Subtracts the average from the data set                (using the new reduced mag)
+        22: Segments the data with a certain overlap
+        23: First version of settings, overwritten in next line
+        24: Stores settings to pass to a function later
+        25: Creates a dictionary where results(???) will go
+        26: Creates an instance array list
+        27: Loops through the segmented data from Line 22
+        28,29: Prints some information every 50 segments just to see how far we are
+        30: Stores a temporary variable with the segmented data
+        31: Stores the average time
+        32: Ask Shaun what fs_set and flucstruc is (???)
+
+
+Appendix: (Not sure where these fall in, will sort them later)
+    1. Class: BaseData declared at pyfusion/data/base.py Line 207
+        self.meta: PfMetaData() class which inherits methods and structure from dict
+            PfMetaData declared on line 200
+        self.history: History of the dataset (Not sure why this is important???)
+        self.channels: ChannelList() inherits methods and structures from list.
+            ChannelList declared on line 171
+    2. Function: generate_frequency_series(self, NFFT, step, window='hamming')
+        Located at pyfusion\data\timeseries.py Line 146
+        Returns a FrequencyseriesData class (declared line 174)
+    3. subtract_mean(input_data)
+        Located in pyfusion\data\filters.py line 274
+        Subtracts the mean from a certain data_set
+
+(To start a job on a worker node,
+qsh -V
+)
+VMM von meises distribution
+
+
+
+
+
+
+
+
+
+
+
+
+
