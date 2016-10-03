@@ -124,8 +124,6 @@ time_window = [300,1400]
 #time_window = [1000,5000]
 nrows = int(np.sqrt(len(shot_list)))
 ncols = int(np.ceil(len(shot_list)/nrows))
-fig, ax = plt.subplots(nrows = nrows, ncols=ncols, sharex=True, sharey=True)
-axf = ax.flatten()
 
 rep = itertools.repeat
 input_data_iter = itertools.izip(shot_list, rep(time_window))
