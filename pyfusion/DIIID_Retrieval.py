@@ -9,6 +9,7 @@ import copy, time
 
 # Global Variables #
 DEVICE_NAME = "DIIID"
+PROBES = "DIIID_toroidal_mag"
 DEFAULT_TIME_WINDOW = [1000, 5000]
 SAMPLES = 1024
 OVERLAP = 4
@@ -24,7 +25,7 @@ def print_if_true(condition, msg):
     return
 
 
-def get_shot_data(shot, probes, time_window=None, verbose=False):
+def get_shot_data(shot, time_window=None, verbose=False):
     # Inputs:
     #   shot:           Shot Number
     #   probes:     Name of data to fetch defined in pyfusion.cfg. Ex: DIIID_toroidal_mag
@@ -36,7 +37,7 @@ def get_shot_data(shot, probes, time_window=None, verbose=False):
     time_window = DEFAULT_TIME_WINDOW if time_window is None else time_window
     start_time = time.time()
     device = PF.getDevice(DEVICE_NAME)
-    diagnostics = device.acq.getdata(shot, probes)
+    diagnostics = device.acq.getdata(shot, PROBES)
     print_if_true(verbose, "Data fetch time: {:.2f} seconds".format(time.time() - start_time))
     diagnostics = diagnostics.reduce_time(time_window)
     data = diagnostics.subtract_mean(copy=False).normalise(method='v', seperate=True, copy=True)
@@ -72,11 +73,11 @@ def get_shot_data(shot, probes, time_window=None, verbose=False):
     return instance_array, misc_data_dict, diagnostics.signal, diagnostics.timebase
 
 
-def get_stft(shot, probes, time_window=None, verbose=False):
+def get_stft(shot, time_window=None, verbose=False):
     time_window = DEFAULT_TIME_WINDOW if time_window is None else time_window
     start_time = time.time()
     device = PF.getDevice(DEVICE_NAME)
-    diagnostics = device.acq.getdata(shot, probes)
+    diagnostics = device.acq.getdata(shot,PROBES)
     print_if_true(verbose, "Data fetch time: {:.2f} seconds".format(time.time() - start_time))
     diagnostics = diagnostics.reduce_time(time_window)
     diagnostics_fft = diagnostics.generate_frequency_series(SAMPLES, SAMPLES/OVERLAP)
@@ -108,11 +109,11 @@ def get_stft(shot, probes, time_window=None, verbose=False):
     return instance_array, misc_data_dict, diagnostics.signal, diagnostics.timebase
 
 
-def get_shot_data_wrapper(input_data, probes, verbose=False):
+def get_shot_data_wrapper(input_data, verbose=False):
     print_if_true(verbose, "In get_shot_data wrapper.")
-    return copy.deepcopy(get_shot_data(input_data[0], probes, time_window=input_data[1], verbose=verbose))
+    return copy.deepcopy(get_shot_data(input_data[0], time_window=input_data[1], verbose=verbose))
 
 
-def get_stft_wrapper(input_data, probes, verbose=False):
+def get_stft_wrapper(input_data, verbose=False):
     print_if_true(verbose, "In get_stft wrapper.")
-    return copy.deepcopy(get_stft(input_data[0], probes, time_window=input_data[1], verbose=verbose))
+    return copy.deepcopy(get_stft(input_data[0], time_window=input_data[1], verbose=verbose))
