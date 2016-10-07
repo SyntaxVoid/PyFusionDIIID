@@ -1747,7 +1747,7 @@ class clusterer_wrapper(clustering_object):
         import jtools as jt
         print("Clustering Settings. . .")
         jt.print_dict(self.settings, "   ")
-        print()
+        print("")
         cluster_func = cluster_funcs[method]
         #print method, self.settings
         if cluster_func_class[method]=='func':
@@ -2540,10 +2540,9 @@ def EM_VMM_clustering_wrapper2(input_data):
 
 def EM_VMM_clustering_wrapper(instance_array, n_clusters = 9, n_iterations = 20, n_cpus=1, start='random', kappa_calc='approx', hard_assignments = 0, kappa_converged = 0.1, mu_converged = 0.01, min_iterations=10, LL_converged = 1.e-4, verbose = 0, number_of_starts = 1, seeds = None):
     cluster_list = [n_clusters for i in range(number_of_starts)]
-    print 'hello EMVMM clustering wrapper'
     if seeds == None:
         seed_list = [int(np.random.rand()*10000) for i in range(number_of_starts)]# )[None]*number_of_starts
-        print 'seeds..........', seed_list
+        print 'Seeds: ', seed_list
     if (seeds.__class__ == int) and (number_of_starts==1):
         seed_list = [seed_list]
     if (seeds.__class__ == int) and (number_of_starts!=1):
@@ -2573,7 +2572,7 @@ def EM_VMM_clustering_wrapper(instance_array, n_clusters = 9, n_iterations = 20,
         results = map(EM_VMM_clustering_wrapper2, input_data_iter)
     LL_results = []
     for tmp in results: LL_results.append(tmp[1]['LL'][-1])
-    print LL_results
+    print("I'm in here JG", LL_results)
     tmp_loc = np.argmax(LL_results)
     return results[tmp_loc]
 

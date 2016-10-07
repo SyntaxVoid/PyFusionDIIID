@@ -633,7 +633,7 @@ def perform_data_datamining(mirnov_angles, misc_data_dict, datamining_settings):
     #print 'perform datamining', datamining_settings
     print("Performing Datamining. . .")
     jt.print_dict(datamining_settings,"   ")
-    print()
+    print("")
     z = feat_obj.cluster(**datamining_settings)
     #n_clusters=n_clusters,n_iterations = n_iterations,start='k_means',verbose=0)
     #z.plot_VM_distributions()
