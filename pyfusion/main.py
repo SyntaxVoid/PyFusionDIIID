@@ -14,7 +14,7 @@ import pyfusion.clustering as clust
 
 def run():
     verbose = True
-    shots = np.arange(159243,159252)
+    shots = [159243]
     time_window = D3DR.DEFAULT_TIME_WINDOW
     nrows = 2
     ncols = 2
@@ -52,7 +52,7 @@ def run():
     feat_obj = clust.feature_object(instance_array=instance_array,
                                     instance_array_amps=+misc_data_dict["mirnov_data"],
                                     misc_data_dict=misc_data_dict)
-    datamining_settings = {'n_clusters': 20, 'n_iterations': 20,
+    datamining_settings = {'n_clusters': 16, 'n_iterations': 20,
                            'start': 'k_means', 'verbose': 0, 'method': 'EM_VMM'}
     z = feat_obj.cluster(**datamining_settings)
     z.plot_VM_distributions()
