@@ -1,13 +1,15 @@
 # main.py
 # Main running script for obtaining data
 # Last edited by John Gresl Oct 2 2016
-from multiprocessing import Pool
 import copy
+from multiprocessing import Pool
+
 import itertools
-from matplotlib import pyplot as plt
 import numpy as np
-import pyfusion.clustering as clust
+from matplotlib import pyplot as plt
+
 import DIIID_Retrieval as D3DR
+import pyfusion.clustering as clust
 
 
 def run():
