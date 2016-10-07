@@ -1744,7 +1744,10 @@ class clusterer_wrapper(clustering_object):
         #replace EM_VMM and EM_VMM_soft with the class.... somehow
         self.settings = default_settings[method]
         self.settings.update(kwargs)
-        print self.settings
+        import jtools as jt
+        print("Clustering Settings. . .")
+        jt.print_dict(self.settings, "   ")
+        print()
         cluster_func = cluster_funcs[method]
         #print method, self.settings
         if cluster_func_class[method]=='func':
