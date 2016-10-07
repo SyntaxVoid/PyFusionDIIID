@@ -16,8 +16,8 @@ def run():
     verbose = True
     shots = [159243]
     time_window = D3DR.DEFAULT_TIME_WINDOW
-    nrows = 1
-    ncols = 1
+    nrows = 2
+    ncols = 2
     figure, axes = plt.subplots(nrows=nrows, ncols=ncols, sharex=True, sharey=True)
     axf = axes.flatten()
     rep = itertools.repeat
