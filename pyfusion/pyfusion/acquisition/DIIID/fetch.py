@@ -16,17 +16,17 @@ class DIIIDDataFetcherPTdata(MDSPlusDataFetcher):
     def setup(self):
         pass
     def do_fetch(self):
-        print(self.shot, self.pointname)
+        print("Shot: {}\nProbe Name: {}".format(self.shot, self.pointname))
         if not hasattr(self,'NC'):
             self.NC=None
         if self.NC is not None:
-            print(self.NC)
+            #print(self.NC)
             t_name = '{}_time'.format(self.pointname)
             NC_vars = self.NC.variables.keys()
         else:
             NC_vars = []
         if self.pointname in NC_vars:
-            print('  Pointname in NC cache, Reading...')
+            print('\tPointname in NC cache, Reading...')
             t_axis = self.NC.variables[t_name].data[:].copy()
             data = self.NC.variables[self.pointname].data[:].copy()
             self.write_cache = False

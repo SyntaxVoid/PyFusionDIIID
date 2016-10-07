@@ -23,7 +23,6 @@ class MDSPlusAcquisition(BaseAcquisition):
             if self.server.startswith('http'):
                 self.server_mode = 'http'
             else:
-                print(self.server)
                 self.connection = MDSplus.Connection(self.server)
                 self.server_mode = 'mds'
                 
