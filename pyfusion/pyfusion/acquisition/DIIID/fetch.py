@@ -16,7 +16,7 @@ class DIIIDDataFetcherPTdata(MDSPlusDataFetcher):
     def setup(self):
         pass
     def do_fetch(self):
-        print("Shot: {}\nProbe Name: {}".format(self.shot, self.pointname))
+        print("Shot: {}\nPoint Name: {}".format(self.shot, self.pointname))
         if not hasattr(self,'NC'):
             self.NC=None
         if self.NC is not None:
@@ -31,7 +31,7 @@ class DIIIDDataFetcherPTdata(MDSPlusDataFetcher):
             data = self.NC.variables[self.pointname].data[:].copy()
             self.write_cache = False
         else:
-            print(' Fetching from ptdata')
+            print('   Fetching from ptdata')
             tmp = self.acq.connection.get('ptdata2("{}",{})'.format(self.pointname, self.shot))
             data = tmp.data()
             tmp = self.acq.connection.get('dim_of(ptdata2("{}",{}))'.format(self.pointname, self.shot))
@@ -40,7 +40,7 @@ class DIIIDDataFetcherPTdata(MDSPlusDataFetcher):
         coords = get_coords_for_channel(**self.__dict__)
         ch = Channel(self.pointname, coords)
         if self.NC is not None and self.write_cache:
-            print(' Writing pointname to NC file')
+            print('   Writing pointname to NC file\n')
             self.NC.createDimension(t_name, len(t_axis))
             f_time = self.NC.createVariable(t_name,'d',(t_name,))
             f_time[:] = +t_axis

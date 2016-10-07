@@ -1747,7 +1747,7 @@ class clusterer_wrapper(clustering_object):
         import jtools as jt
         print("Clustering Settings. . .")
         jt.print_dict(self.settings, "   ")
-        print("")
+        print("\n")
         cluster_func = cluster_funcs[method]
         #print method, self.settings
         if cluster_func_class[method]=='func':
