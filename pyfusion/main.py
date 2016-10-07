@@ -14,7 +14,7 @@ import pyfusion.clustering as clust
 
 def run():
     verbose = True
-    shots = np.arange(159243, 159258)
+    shots = np.arange(159243, 159248)
     time_window = D3DR.DEFAULT_TIME_WINDOW
     nrows = 2
     ncols = 2
