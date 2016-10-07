@@ -26,7 +26,7 @@ class DIIIDDataFetcherPTdata(MDSPlusDataFetcher):
         else:
             NC_vars = []
         if self.pointname in NC_vars:
-            print('\tPointname in NC cache, Reading...')
+            print('   Pointname in NC cache, Reading...\n')
             t_axis = self.NC.variables[t_name].data[:].copy()
             data = self.NC.variables[self.pointname].data[:].copy()
             self.write_cache = False

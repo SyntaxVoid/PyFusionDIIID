@@ -279,11 +279,11 @@ class feature_object():
         the filename of a pickle file that was saved with 
         feature_object.dump_data()
         '''
-        if instance_array==None and filename!=None:
+        if instance_array is None and filename is not None:
             self.load_data(filename)
         else:
             self.instance_array = instance_array
-            if instance_array_amps != None: self.instance_array_amps = instance_array_amps
+            if instance_array_amps is not None: self.instance_array_amps = instance_array_amps
             self.misc_data_dict = misc_data_dict
             self.clustered_objects = []
 
