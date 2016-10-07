@@ -10,7 +10,7 @@ import copy, time
 # Global Variables #
 DEVICE_NAME = "DIIID"
 PROBES = "DIIID_toroidal_mag"
-DEFAULT_TIME_WINDOW = [200, 1000]
+DEFAULT_TIME_WINDOW = [300, 1000]
 SAMPLES = 1024
 OVERLAP = 4
 
