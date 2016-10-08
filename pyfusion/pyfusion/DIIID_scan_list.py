@@ -23,4 +23,4 @@ def return_scan_details(names):
         out_start_time.extend([start_time] * len(shot_list))
         out_end_time.extend([end_time] * len(shot_list))
         out_shot_list.extend(shot_list)
-    return out_shot_list, out_start_time, out_end_time
+    return (out_shot_list, out_start_time, out_end_time)
