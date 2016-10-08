@@ -5,6 +5,7 @@ import clustering as clust
 import numpy as np
 import pyfusion as pf
 import pyfusion.H1_scan_list as H1_scan_list
+import pyfusion.DIIID_scan_list as DIIID_scan_list
 
 
 class single_shot_extraction():
@@ -329,6 +330,70 @@ def single_shot_stft_wrapper(input_data):
         return [None,]
 
 
+def multi_extract_DIIID(shot_selection, array_name, other_arrays=None, other_array_labels=None,
+                        meta_data=None, n_cpus=8, NFFT=2048, overlap=4, extraction_settings=None,
+                        method="svd", start_times=None, end_times=None):
+    # Runs through all of the shots in shot_selection. other_arrays is a list of other arrays to
+    # pull information from. Adapted from multi_extract from below
+    # ( will delete multi_extract(...) once it becomes obsolete )
+    # John Gresl 10/07/2016
+    if extraction_settings is None:
+        if method.lower() == "svd":
+            extraction_settings = {"power_cutoff": 0.05, "min_svs": 2}
+        elif method.lower() == "stft":
+            extraction_settings = {"n_pts":20, "lower_freq": 1500, "cutoff_by": "sigma_eq", "filter_cutoff": 20}
+
+    # Fetch the scan details
+    if method.lower() == "svd":
+        wrapper = single_shot_svd_wrapper
+    elif method.lower() == "stft":
+        wrapper = single_shot_stft_wrapper
+    else:
+        raise ValueError("'method' is not a valid choice! Choose either svd or stft")
+
+    # Gather shot numbers
+    if type(shot_selection) == str:
+        print("List of shots not provided. Looking up shots in DIIID_Scan_List.py: {}".format(shot_selection))
+        shot_list, start_times, end_times = DIIID_scan_list.return_scan_details(shot_selection)
+    rep = itertools.repeat
+    if other_arrays is None:
+        # other_arrays = ["ElectronDensity", "H1ToroidalNakedCoil"] # TODO: Find DIIID names for these devices
+        other_arrays = [ ]
+    if other_array_labels is None:
+        # other_array_labels = [["ne_static", "ne_mode"], [None, "naked_coil"]] # TODO: Same as ^
+        other_array_labels = [ ]
+    if meta_data is None:
+        meta_data = ["kh", "heating_freq", "main_current", "sec_current", "shot"]
+
+    # Construct the input data iterable for our single_shot_wrapper mapper.
+    input_data_iter = itertools.izip(shot_list, rep(array_name), rep(other_arrays),
+                                     rep(other_array_labels), start_times, end_times,
+                                     rep(NFFT), rep(overlap), rep(meta_data), rep(extraction_settings))
+
+    # Generate the shot list for each worker
+    if n_cpus > 1:
+        pool = Pool(processes=n_cpus, maxtasksperchild=3)
+        results = pool.map(wrapper, input_data_iter)
+        pool.close()
+        pool.join()
+    else:
+        results = map(wrapper, input_data_iter)
+    start = True
+    for i,tmp in enumerate(results):
+        if tmp[0] is not None:
+            if start:
+                instance_array = copy.deepcopy(tmp[0])
+                misc_data_dict = copy.deepcopy(tmp[1])
+                start = False
+            else:
+                instance_array = np.append(instance_array, tmp[0], axis=0)
+                for i in misc_data_dict.keys():
+                    misc_data_dict[i] = np.append(misc_data_dict[i], tmp[1][i], axis = 0)
+        else:
+            print("One shot may have failed.")
+    return clust.feature_object(instance_array=instance_array,
+                                instance_array_amps=+misc_data_dict["mirnov_data"],
+                                misc_data_dict = misc_data_dict)
 
 def multi_extract(shot_selection,array_name, other_arrays = None, other_array_labels = None, meta_data = None,
                   n_cpus=8, NFFT = 2048, overlap = 4, extraction_settings = None, method = 'svd', start_times = None, end_times = None):
