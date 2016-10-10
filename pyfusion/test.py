@@ -11,7 +11,7 @@ meta_data = ["kh", "heating_freq", "main_current","sec_current","shot"]
 ext_settings_svd = {"min_svs": 2, "power_cutoff": 0.006, "lower_freq": 4000, "upper_freq": 200000}
 
 print("Before svd multi extract.")
-svd_data = ext.multi_extract_DIIID(dataset,array,other_arrays=other_arrays,other_array_labels=other_array_labels,
+svd_data = ext.multi_extract_DIIID(dataset,array,other_arrays=None,other_array_labels=None,
                                    meta_data=meta_data, n_cpus=1, NFFT=1024, overlap=4,
                                    extraction_settings=ext_settings_svd,method="svd")
 print("After svd multi extract.")
