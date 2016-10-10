@@ -64,6 +64,7 @@ class single_shot_extraction():
         new_signal_length = 0
         for i, arr in enumerate(self.array):
             #data_list.append(pf.getDevice('H1').acq.getdata(self.shot, arr).reduce_time([self.start_time, self.end_time]))
+            print("DEBUG shot arr start time end time", self.shot, arr, self.start_time, self.end_time)
             data_list.append(pf.getDevice('DIIID').acq.getdata(self.shot, arr).reduce_time([self.start_time, self.end_time]))
             print("DEBUG data_list",data_list)
             if i==0:
