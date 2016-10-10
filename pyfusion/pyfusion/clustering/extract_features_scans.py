@@ -43,8 +43,8 @@ class single_shot_extraction():
 
         self.other_arrays_segmented = []
         for i in self.other_arrays:
-            print("DEBUG AM I ABOUT TO GET H1 DATA?")
-            tmp = pf.getDevice('H1').acq.getdata(self.shot, i).change_time_base(self.data.timebase)
+            #tmp = pf.getDevice('H1').acq.getdata(self.shot, i).change_time_base(self.data.timebase)
+            tmp = pf.getDevice('DIIID').acq.getdata(self.shot, i).change_time_base(self.data.timebase)
             self.other_arrays_segmented.append(tmp.segment(self.samples, overlap = self.overlap, datalist = 1))
         self.instance_array_list = []
         self.misc_data_dict = {'RMS':[],'time':[], 'svs':[]}
@@ -171,7 +171,8 @@ class for_stft(single_shot_extraction):
 
         self.other_arrays_fft = []
         for i in self.other_arrays:
-            tmp = pf.getDevice('H1').acq.getdata(self.shot, i).change_time_base(self.data.timebase)
+            #tmp = pf.getDevice('H1').acq.getdata(self.shot, i).change_time_base(self.data.timebase)
+            tmp = pf.getDevice('DIIID').acq.getdata(self.shot, i).change_time_base(self.data.timebase)
             self.other_arrays_fft.append(tmp.generate_frequency_series(self.samples,self.samples/self.overlap))
 
         self.instance_array_list = []
@@ -239,7 +240,7 @@ def single_shot_fluc_strucs(shot=None, array=None, other_arrays=None, other_arra
     time_bounds = [start_time, end_time]
 
     #extract data for array, naked_coil and ne_array, then reduce_time, interpolate etc...
-    data = pf.getDevice('H1').acq.getdata(shot, array).reduce_time([start_time, end_time])
+    data = pf.getDevice('DIIID').acq.getdata(shot, array).reduce_time([start_time, end_time])
     data = data.subtract_mean(copy=False).normalise(method='v',separate=True,copy=False)
     data_segmented = data.segment(samples,overlap=overlap, datalist = 1)
     print other_arrays, other_array_labels
@@ -251,7 +252,7 @@ def single_shot_fluc_strucs(shot=None, array=None, other_arrays=None, other_arra
     #Need to include the standard interferometer channels somehow.
     other_arrays_segmented = []
     for i in other_arrays:
-        tmp = pf.getDevice('H1').acq.getdata(shot, i).change_time_base(data.timebase)
+        tmp = pf.getDevice('DIIID').acq.getdata(shot, i).change_time_base(data.timebase)
         other_arrays_segmented.append(tmp.segment(samples, overlap = overlap, datalist = 1))
     instance_array_list = []
     misc_data_dict = {'RMS':[],'time':[], 'svs':[]}
@@ -476,7 +477,8 @@ def multi_svd(shot_selection,array_name, other_arrays = None, other_array_labels
     '''Runs through all the shots in shot_selection other_arrays is a
     list of the other arrays you want to get information from '''
 
-    #Get the scan details 
+    #Get the scan details
+    print("DEBUG Am I in multi SVD???")
     shot_list, start_times, end_times = H1_scan_list.return_scan_details(shot_selection) 
     rep = itertools.repeat
     if other_arrays == None: other_arrays = ['ElectronDensity','H1ToroidalNakedCoil']
