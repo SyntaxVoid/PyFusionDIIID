@@ -1601,7 +1601,8 @@ class clustering_object():
                     ax[0].scatter((misc_data_dict[kh_plot_item][current_items]), scatter_data,s=marker_size, c='k', marker='o', cmap=None, norm=None, alpha=alpha,zorder=0,rasterized=True, linewidth=linewidth)
                     print 'hello, no instance', cluster
         if plot_alfven_lines:
-            plot_alfven_lines_func(ax[0])
+            #plot_alfven_lines_func(ax[0])
+            print("Commented out plot_alfven_lines because we have no theoretical lines yet... " )
         ax[-1].set_xlim([0.201,0.99])
         ax[0].set_xlabel(r'$\kappa_H$')
         ax[0].grid()
