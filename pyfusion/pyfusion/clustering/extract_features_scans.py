@@ -78,6 +78,7 @@ class single_shot_extraction():
             self.data.signal = +new_sig
             self.data.channels.extend(i.channels)
         #print self.data.signal.shape
+        print("DEBUG self.data",self.data)
         self.data_fft = self.data.generate_frequency_series(self.samples,self.samples/self.overlap)
 
     def get_interesting(self, min_svs = 2, power_cutoff = 0.05, lower_freq = 0, upper_freq = 2.e6):
