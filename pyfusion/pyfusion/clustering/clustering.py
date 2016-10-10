@@ -2594,6 +2594,7 @@ class EM_VMM_clustering_class():
         #min iterations, max iterations
         #kappa change, mu change
         self.instance_array = copy.deepcopy(instance_array)
+        print("DEBUG", instance_array)
         self.instance_array_complex = np.exp(1j*self.instance_array)
         self.instance_array_c = np.real(self.instance_array_complex)
         self.instance_array_s = np.imag(self.instance_array_complex)
