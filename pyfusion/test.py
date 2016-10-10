@@ -16,14 +16,14 @@ svd_data = ext.multi_extract_DIIID(dataset,array,other_arrays=other_arrays,other
 
 datamining_settings = {"n_clusters": 16, "n_iterations": 20, "start": "k_means", "verbose": 1, "method": "EM_VMM"}
 
-#extraction_settings = {"n_pts": 5, "lower_freq": 0, "filter_cutoff": 0.18, "cutoff_by": "sigma_bar",
-#                       "datamining_settings": datamining_settings, "upper_freq": 100000}
+extraction_settings = {"n_pts": 5, "lower_freq": 0, "filter_cutoff": 0.18, "cutoff_by": "sigma_bar",
+                       "datamining_settings": datamining_settings, "upper_freq": 100000}
 
-#print("Before STFT")
-#stft_data = ext.multi_extract_DIIID(dataset, array, other_arrays = other_arrays, other_array_labels=other_array_labels,
-#                                    meta_data=meta_data,n_cpus=1,NFFT=1024,overlap=4,extraction_settings=extraction_settings,method="stft")
-#print("After STFT")
-#comb_data = ext.combine_feature_sets(svd_data,stft_data)
+print("Before STFT")
+stft_data = ext.multi_extract_DIIID(dataset, array, other_arrays = other_arrays, other_array_labels=other_array_labels,
+                                    meta_data=meta_data,n_cpus=1,NFFT=1024,overlap=4,extraction_settings=extraction_settings,method="stft")
+print("After STFT")
+comb_data = ext.combine_feature_sets(svd_data,stft_data)
 svd_cluster = svd_data.cluster(method="EM_VMM", start="k_means", n_clusters = 16, n_iterations = 50, number_of_starts = 4, n_cpus = 1)
 svd_cluster.plot_single_kh()
 
