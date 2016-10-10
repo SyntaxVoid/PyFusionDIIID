@@ -102,7 +102,6 @@ class single_shot_extraction():
             frequency_base = np.round((np.arange(0, N, dtype=int)) * val,4)
             #get the valid flucstrucs
             valid_fs = []
-            print("DEBUG fs_set", fs_set)
             for fs in fs_set:
                 tmp_valid = (fs.p > power_cutoff) and (len(fs.svs()) >= min_svs) and (fs.freq>lower_freq) and (fs.freq<upper_freq)
                 if tmp_valid: valid_fs.append(fs)
