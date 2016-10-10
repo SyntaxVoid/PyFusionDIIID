@@ -2578,7 +2578,6 @@ def EM_VMM_clustering_wrapper(instance_array, n_clusters = 9, n_iterations = 20,
 
 class EM_VMM_clustering_class():
     def __init__(self, instance_array, n_clusters = 9, n_iterations = 20, n_cpus=1, start='random', kappa_calc='approx', hard_assignments = 0, kappa_converged = 0.1, mu_converged = 0.01, min_iterations=10, LL_converged = 1.e-4, verbose = 0, seed=None):
-        print("In init")
         '''
         Expectation maximisation using von Mises with soft cluster
         assignments.  instance_array : the input phases n_clusters :
@@ -2594,13 +2593,11 @@ class EM_VMM_clustering_class():
         #min iterations, max iterations
         #kappa change, mu change
         self.instance_array = copy.deepcopy(instance_array)
-        print("DEBUG", instance_array)
+        print("DEBUG: Why is instance array empty??? Need to find where it's being filled.")
+        print("Instance array: {}".format(instance_array))
         self.instance_array_complex = np.exp(1j*self.instance_array)
         self.instance_array_c = np.real(self.instance_array_complex)
         self.instance_array_s = np.imag(self.instance_array_complex)
-        print("DEBUG: BEFORE")
-        print("DEBUG: {}".format(self.instance_array.shape))
-        print("DEBUG: AFTER")
         self.n_instances, self.n_dimensions = self.instance_array.shape
         self.n_clusters = n_clusters
         self.max_iterations = n_iterations

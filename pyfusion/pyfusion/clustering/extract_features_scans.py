@@ -353,10 +353,8 @@ def multi_extract_DIIID(shot_selection, array_name, other_arrays=None, other_arr
 
     # Gather shot numbers
     if type(shot_selection[0]) == str:
-        print("DEBUG? List of shots not provided. Looking up shots in DIIID_Scan_List.py: {}".format(shot_selection))
-        print("DEBUG BEFORE SHOT INFO")
+        print("List of shots not provided. Looking up shots in DIIID_Scan_List.py: {}".format(shot_selection))
         (shot_list, start_times, end_times) = DIIID_scan_list.return_scan_details(shot_selection)
-        print("DEBUG AFTER SHOT INFO")
     rep = itertools.repeat
     if other_arrays is None:
         # other_arrays = ["ElectronDensity", "H1ToroidalNakedCoil"] # TODO: Find DIIID names for these devices
