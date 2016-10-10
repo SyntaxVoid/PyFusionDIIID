@@ -2578,6 +2578,7 @@ def EM_VMM_clustering_wrapper(instance_array, n_clusters = 9, n_iterations = 20,
 
 class EM_VMM_clustering_class():
     def __init__(self, instance_array, n_clusters = 9, n_iterations = 20, n_cpus=1, start='random', kappa_calc='approx', hard_assignments = 0, kappa_converged = 0.1, mu_converged = 0.01, min_iterations=10, LL_converged = 1.e-4, verbose = 0, seed=None):
+        print("In init")
         '''
         Expectation maximisation using von Mises with soft cluster
         assignments.  instance_array : the input phases n_clusters :
