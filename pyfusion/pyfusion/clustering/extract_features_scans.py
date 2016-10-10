@@ -353,7 +353,7 @@ def multi_extract_DIIID(shot_selection, array_name, other_arrays=None, other_arr
 
     # Gather shot numbers
     if type(shot_selection[0]) == str:
-        print("List of shots not provided. Looking up shots in DIIID_Scan_List.py: {}".format(shot_selection))
+        print("DEBUG? List of shots not provided. Looking up shots in DIIID_Scan_List.py: {}".format(shot_selection))
         print("DEBUG BEFORE SHOT INFO")
         (shot_list, start_times, end_times) = DIIID_scan_list.return_scan_details(shot_selection)
         print("DEBUG AFTER SHOT INFO")
