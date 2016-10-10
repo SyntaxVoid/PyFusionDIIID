@@ -43,6 +43,7 @@ class single_shot_extraction():
 
         self.other_arrays_segmented = []
         for i in self.other_arrays:
+            print("DEBUG AM I ABOUT TO GET H1 DATA?")
             tmp = pf.getDevice('H1').acq.getdata(self.shot, i).change_time_base(self.data.timebase)
             self.other_arrays_segmented.append(tmp.segment(self.samples, overlap = self.overlap, datalist = 1))
         self.instance_array_list = []
