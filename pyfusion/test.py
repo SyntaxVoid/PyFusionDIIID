@@ -17,8 +17,8 @@ svd_data = ext.multi_extract_DIIID(dataset,array,other_arrays=other_arrays,other
 print("After svd multi extract.")
 datamining_settings = {"n_clusters": 16, "n_iterations": 20, "start": "k_means", "verbose": 1, "method": "EM_VMM"}
 
-extraction_settings = {"n_pts": 5, "lower_freq": 0, "filter_cutoff": 0.18, "cutoff_by": "sigma_bar",
-                       "datamining_settings": datamining_settings, "upper_freq": 100000}
+#extraction_settings = {"n_pts": 5, "lower_freq": 0, "filter_cutoff": 0.18, "cutoff_by": "sigma_bar",
+#                       "datamining_settings": datamining_settings, "upper_freq": 100000}
 
 #print("Before STFT")
 #stft_data = ext.multi_extract_DIIID(dataset, array, other_arrays = other_arrays, other_array_labels=other_array_labels,
