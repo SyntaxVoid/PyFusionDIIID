@@ -379,7 +379,7 @@ def multi_extract_DIIID(shot_selection, array_name, other_arrays=None, other_arr
     else:
         results = map(wrapper, input_data_iter)
     start = True
-    1/0
+    print("DEBUG:", results)
     for i,tmp in enumerate(results):
         if tmp[0] is not None:
             if start:
