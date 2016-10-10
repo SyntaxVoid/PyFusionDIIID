@@ -63,7 +63,8 @@ class single_shot_extraction():
         new_signal_length = 0
         print("DEBUG: self.array", self.array)
         for i, arr in enumerate(self.array):
-            data_list.append(pf.getDevice('H1').acq.getdata(self.shot, arr).reduce_time([self.start_time, self.end_time]))
+            #data_list.append(pf.getDevice('H1').acq.getdata(self.shot, arr).reduce_time([self.start_time, self.end_time]))
+            data_list.append(pf.getDevice('DIIID').acq.getdata(self.shot, arr).reduce_time([self.start_time, self.end_time]))
             if i==0:
                 self.timebase = data_list[-1].timebase
             else:
