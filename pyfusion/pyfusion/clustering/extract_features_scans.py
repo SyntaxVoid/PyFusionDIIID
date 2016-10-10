@@ -81,6 +81,7 @@ class single_shot_extraction():
         self.data_fft = self.data.generate_frequency_series(self.samples,self.samples/self.overlap)
 
     def get_interesting(self, min_svs = 2, power_cutoff = 0.05, lower_freq = 0, upper_freq = 2.e6):
+        print("DEBUG len(self.data_segmented)", len(self.data_segmented))
         for seg_loc in range(len(self.data_segmented)):
             data_seg = self.data_segmented[seg_loc]
             time_seg_average_time = np.mean([data_seg.timebase[0],data_seg.timebase[-1]])
