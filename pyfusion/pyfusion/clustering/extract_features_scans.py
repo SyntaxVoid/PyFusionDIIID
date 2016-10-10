@@ -524,6 +524,7 @@ def multi_svd(shot_selection,array_name, other_arrays = None, other_array_labels
 
 def get_array_data(current_shot, array_name, time_window=None,new_timebase=None):
     array_cutoff_locs = [0]
+    print("DEBUG am i in get_array_data()?")
     data = pf.getDevice('H1').acq.getdata(current_shot, array_name)
     if new_timebase!=None:
         print 'interpolating onto a new timebase....'
