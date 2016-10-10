@@ -379,6 +379,7 @@ def multi_extract_DIIID(shot_selection, array_name, other_arrays=None, other_arr
     else:
         results = map(wrapper, input_data_iter)
     start = True
+    1/0
     for i,tmp in enumerate(results):
         if tmp[0] is not None:
             if start:
@@ -391,7 +392,6 @@ def multi_extract_DIIID(shot_selection, array_name, other_arrays=None, other_arr
                     misc_data_dict[i] = np.append(misc_data_dict[i], tmp[1][i], axis = 0)
         else:
             print("One shot may have failed.")
-    print("DEBUG INSTANCE ARRAY???", instance_array)
     return clust.feature_object(instance_array=instance_array,
                                 instance_array_amps=+misc_data_dict["mirnov_data"],
                                 misc_data_dict = misc_data_dict)
