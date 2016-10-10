@@ -5,13 +5,13 @@ import pyfusion.clustering.extract_features_scans as ext
 
 dataset = ["test_shots"]
 array = ["DIIID_toroidal_mag"]
-other_arrays = [ ]
-other_array_labels = [ ]
+other_arrays = ["DIIID_toroidal_mag"]
+other_array_labels = ["toroidal mag"]
 meta_data = ["kh", "heating_freq", "main_current","sec_current","shot"]
 ext_settings_svd = {"min_svs": 2, "power_cutoff": 0.006, "lower_freq": 4000, "upper_freq": 200000}
 
 print("Before svd multi extract.")
-svd_data = ext.multi_extract_DIIID(dataset,array,other_arrays=None,other_array_labels=None,
+svd_data = ext.multi_extract_DIIID(dataset,array,other_arrays=other_arrays,other_array_labels=other_array_labels,
                                    meta_data=meta_data, n_cpus=1, NFFT=1024, overlap=4,
                                    extraction_settings=ext_settings_svd,method="svd")
 print("After svd multi extract.")
@@ -20,9 +20,10 @@ datamining_settings = {"n_clusters": 16, "n_iterations": 20, "start": "k_means",
 extraction_settings = {"n_pts": 5, "lower_freq": 1500, "filter_cutoff": 0.18, "cutoff_by": "sigma_bar",
                        "datamining_settings": datamining_settings, "upper_freq": 100000}
 
-stft_data = ext.multi_extract_DIIID(dataset, array, other_arrays = None, other_array_labels=None,
+print("Before STFT")
+stft_data = ext.multi_extract_DIIID(dataset, array, other_arrays = other_arrays, other_array_labels=other_array_labels,
                                     meta_data=meta_data,n_cpus=1,NFFT=1024,overlap=4,extraction_settings=extraction_settings,method="stft")
-
+print("After STFT")
 comb_data = ext.combine_feature_sets(svd_data,stft_data)
 svd_cluster = svd_data.cluster(method="EM_VMM", start="k_means", n_clusters = 16, n_iterations = 50, number_of_starts = 4, n_cpus = 1)
 svd_cluster.plot_single_kh()
