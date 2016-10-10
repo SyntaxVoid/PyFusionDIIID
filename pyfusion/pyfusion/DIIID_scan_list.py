@@ -9,8 +9,8 @@ def database_of_scans(name):
     # John Gresl Oct 7 2016
     if name.lower() == "test_shots":
         shots = [159243]
-        start_time = 0.002
-        end_time = 1.0
+        start_time = 200.
+        end_time = 1200.
         return shots, start_time, end_time
     print("Name is invalid!")
     return []
