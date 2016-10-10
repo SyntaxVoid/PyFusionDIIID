@@ -2596,6 +2596,7 @@ class EM_VMM_clustering_class():
         self.instance_array_complex = np.exp(1j*self.instance_array)
         self.instance_array_c = np.real(self.instance_array_complex)
         self.instance_array_s = np.imag(self.instance_array_complex)
+        print("DEBUG: {}".format(self.instance_array.shape))
         self.n_instances, self.n_dimensions = self.instance_array.shape
         self.n_clusters = n_clusters
         self.max_iterations = n_iterations
