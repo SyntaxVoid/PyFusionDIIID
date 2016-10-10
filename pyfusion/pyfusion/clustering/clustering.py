@@ -1552,8 +1552,6 @@ class clustering_object():
                 total = 0
                 for i in cluster_list: total+= np.sum(self.cluster_assignments==i)
                 items.append(total)
-            print("DEBUG kappa_cutoff_list", kappa_cutoff_list)
-            print("DEBUG items", items)
             ax.plot(kappa_cutoff_list, items,'o')
             fig.canvas.draw(); fig.show()
             cluster_list = np.arange(len(averages))[averages>kappa_cutoff]
