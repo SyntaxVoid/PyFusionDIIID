@@ -61,10 +61,10 @@ class single_shot_extraction():
     def get_primary_array(self,):
         data_list = []
         new_signal_length = 0
-        print("DEBUG: self.array", self.array)
         for i, arr in enumerate(self.array):
             #data_list.append(pf.getDevice('H1').acq.getdata(self.shot, arr).reduce_time([self.start_time, self.end_time]))
             data_list.append(pf.getDevice('DIIID').acq.getdata(self.shot, arr).reduce_time([self.start_time, self.end_time]))
+            print("DEBUG data_list",data_list)
             if i==0:
                 self.timebase = data_list[-1].timebase
             else:
@@ -79,8 +79,6 @@ class single_shot_extraction():
             start_ind = end_ind
             self.data.signal = +new_sig
             self.data.channels.extend(i.channels)
-        #print self.data.signal.shape
-        print("DEBUG self.data",self.data)
         self.data_fft = self.data.generate_frequency_series(self.samples,self.samples/self.overlap)
 
     def get_interesting(self, min_svs = 2, power_cutoff = 0.05, lower_freq = 0, upper_freq = 2.e6):
