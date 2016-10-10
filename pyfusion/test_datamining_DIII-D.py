@@ -3,7 +3,9 @@ import pyfusion as pf
 import numpy as np
 import copy, os, time, itertools
 import matplotlib.pyplot as plt
-
+import cPickle as pickle
+import pyfusion.clustering as clust
+import pyfusion.clustering.extract_features_scans as ext
 
 
 def get_single(shot, time_window=None):
@@ -49,13 +51,6 @@ def get_single(shot, time_window=None):
             #misc_data_dict['time'].append(time_seg_average_time)
             misc_data_dict['freq'].append(fs.freq)
             misc_data_dict['shot'].append(shot)
-            #ind1 = np.argmin(np.abs(data_fft.timebase - time_seg_average_time))
-            #ind2 = np.argmin(np.abs(data_fft.frequency_base - misc_data_dict['freq'][-1]))
-            #misc_data_dict['mirnov_data'].append(data_fft.signal[ind1,:,ind2])
-
-            # for i,tmp_label in zip(other_arrays_data_fft, self.other_array_labels):
-            #     if tmp_label[0]!=None: self.misc_data_dict[tmp_label[0]].append((i[:,0]))
-            #     if tmp_label[1]!=None: self.misc_data_dict[tmp_label[1]].append((i[:,tmp_loc]))
             phases = np.array([tmp_phase.delta for tmp_phase in fs.dphase])
             phases[np.abs(phases)<0.001]=0
             instance_array_list.append(phases)
@@ -65,45 +60,70 @@ def get_single(shot, time_window=None):
     return instance_array, misc_data_dict, mag.signal, mag.timebase
 
 
-
 def get_stft(shot, time_window = None):
+    '''STFT-clustering to extract features from a single shot
+    '''
     if time_window == None: time_window=[1000,5000]
-    dev = pf.getDevice('DIIID')
-    print("I connected!")
-    mag = dev.acq.getdata(shot,'DIIID_toroidal_mag')
-    mag_red = mag.reduce_time(time_window)
-    samples = 1024
-    overlap = 4
-    data_fft = mag_red.generate_frequency_series(samples,samples/overlap)
-    import pyfusion.clustering.extract_features_scans as ext
-    n_pts = 20; lower_freq = 1; cutoff_by = 'sigma_eq'; filter_cutoff = 55; datamining_settings = None; upper_freq = 500000; filter_item = 'EM_VMM_kappas'
 
-    timebase = mag.timebase
+    # Get the raw data for this shot
+    dev = pf.getDevice('DIIID')
+    mag = dev.acq.getdata(shot,'DIIID_toroidal_mag')
+    # mag contains the signal and timebase of the raw data
+    # In [171]: mag.signal.shape
+    # Out[171]: (14, 2039808)
+    # In [172]: mag.timebase.shape
+    # Out[174]: (2039808,)
+
+    # Reduce the data to the time window we care about
+    mag_red = mag.reduce_time(time_window)
+
+    # Settings for performing the fft, i.e break the above signal into chunks 1024 samples long
+    # and allow subsequent chunks to overlap
+    samples = 1024; overlap = 4
+    data_fft = mag_red.generate_frequency_series(samples,samples/overlap)
+
+    # Some settings
+    n_pts = 20; lower_freq = 1; cutoff_by = 'sigma_eq'; filter_cutoff = 55; 
+    datamining_settings = None; upper_freq = 500000; filter_item = 'EM_VMM_kappas'
+
+    # Find peaks int fft data (i.e probably modes), and only keep those:
     good_indices = ext.find_peaks(data_fft, n_pts=n_pts, lower_freq=lower_freq, upper_freq=upper_freq)
     rel_data = ext.return_values(data_fft.signal,good_indices)
+
+    # Put together some meta-data that should be useful later
     misc_data_dict = {}
-    misc_data_dict['mirnov_data'] = +rel_data
-    rel_data_angles = np.angle(rel_data)
-    instance_array_amps = +rel_data
     misc_data_dict['time'] = ext.return_time_values(data_fft.timebase, good_indices)
     misc_data_dict['freq'] = ext.return_non_freq_dependent(data_fft.frequency_base,good_indices)
     misc_data_dict['shot'] = np.ones(len(misc_data_dict['freq']),dtype=int)*shot
+
+    # Not really meta-data, but can be useful to keep this for later
+    misc_data_dict['mirnov_data'] = +rel_data
+
+    # Calculate the phase differences between probes - this is the thing used for datamining!
+    rel_data_angles = np.angle(rel_data)
     diff_angles = (np.diff(rel_data_angles))%(2.*np.pi)
+    # Also important to map to -pi, pi
     diff_angles[diff_angles>np.pi] -= (2.*np.pi)
+
+    instance_array_amps = +rel_data
+
+    # STFT-clustering includes a clustering step before we get to the main clustering.
+    # This is essentially to filter out any rubbish 
     datamining_settings = {'n_clusters':16, 'n_iterations':20, 'start': 'k_means','verbose':0, 'method':'EM_VMM'}
     z = ext.perform_data_datamining(diff_angles, misc_data_dict, datamining_settings)
 
-    #fig10, ax10 = plt.subplots()
-    dt = np.mean(np.diff(timebase))
-    #im = ax10.specgram(mag.signal[0,:], NFFT=1024,Fs=1./dt, noverlap=128,xextent=[timebase[0], timebase[-1]])
+    dt = np.mean(np.diff(mag.timebase))
+
+    # Only keep instances that belong to well defined clusters - i.e useful information instead of noise
     instance_array_cur, misc_data_dict_cur = ext.filter_by_kappa_cutoff(z, ave_kappa_cutoff = filter_cutoff, ax = None, cutoff_by = cutoff_by, filter_item = filter_item)
-    #fig10.canvas.draw();fig10.show()
+
+    # Return this data from a single shot to be used in the big clustering step that involves all the shots
     instance_array = np.array(instance_array_cur)
     misc_data_dict = misc_data_dict_cur
     return instance_array, misc_data_dict, mag.signal, mag.timebase
 
 def get_single_wrapper(input_data):
-    print 'in wrapper'
+    print 'in wrapper svd'
     return copy.deepcopy(get_single(input_data[0], time_window=input_data[1]))
 
 def get_stft_wrapper(input_data):
@@ -111,44 +131,53 @@ def get_stft_wrapper(input_data):
     return copy.deepcopy(get_stft(input_data[0], time_window=input_data[1]))
     
 
-shot_list = [163518,164950,164436,165402]
-
-#shot_list = np.arange(159243,159257+1)#159257+1)
-#shot_list = np.arange(159243,159257+1)#159257+1)
-
-shot_list = np.arange(159243, 159257+1)
-#shot_list = np.arange(159243, 159243+3)
-results = []
-time_window = [1000,2000]
+# List of shots that we are interested in, and the time window that we care about in those shots:
+shot_list = [159243,159244]
 time_window = [300,1400]
-#time_window = [1000,5000]
-nrows = int(np.sqrt(len(shot_list)))
-ncols = int(np.ceil(len(shot_list)/nrows))
 
-rep = itertools.repeat
-input_data_iter = itertools.izip(shot_list, rep(time_window))
+# Bundle the above data together, note if we wanted we could have different time windows for each shot
+input_data_iter = itertools.izip(shot_list, itertools.repeat(time_window))
 
-n_cpus = 1
+# First stage is to extract features from the raw signals for each shot
+# I.e create the things that we are going to use the clustering algorithm on.
+# So how do you find interesting 'spectral features' in timeseries data?
+# There are two methods that I have used a fair bit, the first is SVD analysis:
+#   See chapter 3.1 and 3.2 of David Pretty's thesis
+# The second method is called STFT-clustering, see section 2 and 3 of:
+#  http://dx.doi.org/10.1016/j.cpc.2014.03.008
 
-#generate the shot list for each worker
-#wrapper = get_single_wrapper
+# The choice of "wrapper" decides which of the above two methods is going to
+#be used, note the wrappers are required for the multi-processing,
+#look int he wrapper functions to see the function that ultimately
+#gets called wrapper = get_single_wrapper
 wrapper = get_stft_wrapper
+
+# We take advantage of the fact that each shot can be analysed
+# independently, so we can use multiple CPUs to speed things up
+n_cpus = 3
+
+# Only go through the extra effort required for multiprocessing if n_cpu is greater than 1
 if n_cpus>1:
     pool_size = n_cpus
+    # Setup the multiprocessing
+    # results will be a list where each item contains the identified 
     pool = Pool(processes=pool_size, maxtasksperchild=3)
-    print 'creating pool map'
     results = pool.map(wrapper, input_data_iter)
-    print 'waiting for pool to close '
     pool.close()
-    print 'joining pool'
     pool.join()
-    print 'pool finished'
 else:
     results = map(wrapper, input_data_iter)
 
-#for cur_ax, shot in zip(axf,shot_list):
-#    results.append(get_single(shot, time_window))
-#fig.canvas.draw();fig.show()
+# At this stage 
+# results[0][0] and results[0][1] are  arrays of the phase differences for all interesting features identified in the shot and a dictionary which contains some meta data such as shot number, and frequency
+# results[1][0] and results[1][1] are the same as above except for the second shot in the list, etc...
+# In [76]: results[0][0].shape
+# Out[76]: (12816, 13)
+
+# In [77]: results[0][1]['freq'].shape
+# Out[77]: (12816,)
+
+# Next we want to combine the data from all the shots (i.e items in the results list) into a single phase differences array (called instance_array), and a single dictionary containing meta-data (misc_data_dict)
 start = 1
 for i,tmp in enumerate(results):
     print i
@@ -163,20 +192,101 @@ for i,tmp in enumerate(results):
                 misc_data_dict[i] = np.append(misc_data_dict[i], tmp[1][i],axis=0)
     else:
         print 'One shot may have failed....'
-#return clust.feature_object(instance_array = instance_array, instance_array_amps = +misc_data_dict['mirnov_data'], misc_data_dict = misc_data_dict)
-import pyfusion.clustering as clust
+
+# Now all of the data from all of the shots is contained in instance_array, and misc_data_dict
+# Note the dimensions: for this case we have identified 19678 interesting things, there are 13 phase differences between channels
+# Each index in misc_data_dict[XXXX] matches up with the column number in instance_array
+# In [81]: instance_array.shape
+# Out[81]: (19678, 13)
+
+# In [82]: misc_data_dict['shot'].shape
+# Out[82]: (19678,)
+
+# In [83]: misc_data_dict['freq'].shape
+# Out[83]: (19678,)
+
+# In [84]: misc_data_dict['time'].shape
+# Out[84]: (19678,)
+
+# I.e the phases differences, time, shot number, and frequency for the 10th interesting thing are:
+# In [85]: instance_array[10,:]
+# Out[85]: 
+# array([ 0.62393259, -1.16184058,  0.35121318,  0.02464877, -0.05007769,
+#         0.17279242,  0.03985014,  0.03270833,  0.20733238,  0.06055794,
+#        -0.25735253,  0.12476335,  0.036808  ])
+
+# In [86]: misc_data_dict['time'][10]
+# Out[86]: 304.09499999999997
+
+# In [87]: misc_data_dict['shot'][10]
+# Out[87]: 159243
+
+# In [88]: misc_data_dict['freq'][10]
+# Out[88]: 30.273399999999999
+
+
+# Next we create a "feature_object" which has all of this information
+# We do this because this feature_object is what is used for the clustering
 feat_obj = clust.feature_object(instance_array = instance_array, instance_array_amps = +misc_data_dict['mirnov_data'], misc_data_dict = misc_data_dict)
+# Note feat_obj.instance_array and feat_obj.misc_data_dict are the instance arrays from above 
+
+# At any time now you can save feat_obj as it is
+# feat_obj.dump_data("hello.pickle")
+# And then reload it at a later time:
+# feat_obj2 = clust.feature_object(filename='hello.pickle')
+
+# Now we are ready to do the actual datamining
+# We need to choose which settings to use:
 datamining_settings = {'n_clusters':16, 'n_iterations':20, 
                        'start': 'k_means','verbose':0, 'method':'EM_VMM'}
+
+# Perform the datamining, and return an object with the results!
 z = feat_obj.cluster(**datamining_settings)
+# z.cluster_assignments is a list of integers which identify which cluster each of the items in instance_array belong to
+# In [89]: z.cluster_assignments
+# Out[101]: array([9, 0, 9, ..., 4, 5, 4])
+# z.cluster_details is a dictionary containing statistical information about each of the clusters
+# Also note that z.feature_obj is the same as feat_obj from earler
+
+# "z" is also stored in the following list feat_obj.clustered_objects
+# if you do z2 = feat_obj.cluster(**datamining_settings) again using different settings then:
+# feat_obj.clustered_objects[0] is z, and feat_obj.clustered_objects[1] is z2
+# We can make some interesting plots using the returned object 
+# This is very useful when combined with being able to save feat_obj as described earlier
+# i.e feat_obj.dump_data("hello.pickle")
+
+# We can make some plots:
 z.plot_VM_distributions()
 z.plot_dimension_histograms()
-#z.plot_phase_vs_phase(compare_dimensions=[[1,2],[2,3]])
 dims = [[i,i+1] for i in range(13)]
 z.plot_phase_vs_phase(compare_dimensions=dims)
 z.plot_cumulative_phases()
 
+#If you want to investigate cluster #4 in more detail
+# In [116]: mask=(z.cluster_assignments==4)
+#
+# In [117]: mask
+# Out[117]: array([False, False, False, ...,  True, False,  True], dtype=bool)
+# Now we can use this mask to find out the phase differences for all the instances that are in that cluster:
+# In [118]: feat_obj.instance_array[mask,:]
 
+# We can also get at the meta data for that particular cluster! shot #'s, time's, frequencies, etc...
+# In [159]: feat_obj.misc_data_dict['shot'][mask]
+# Out[159]: array([159244, 159244, 159244, ..., 159244, 159244, 159244])
+
+# In [160]: feat_obj.misc_data_dict['freq'][mask]
+# Out[160]: array([ 175.293,  175.293,  175.293, ...,  168.457,  175.293,  175.293])
+
+# In [161]: feat_obj.misc_data_dict['time'][mask]
+# Out[161]: 
+# array([  894.431,   301.023,   301.535, ...,  1396.191,  1398.239,
+#         1398.751])
+
+# This information can be used to go and get any extra information that you want to get
+
+
+nrows = int(np.sqrt(len(shot_list)))
+ncols = int(np.ceil(len(shot_list)/nrows))
 fig, ax = plt.subplots(nrows = nrows, ncols=ncols, sharex=True, sharey=True)
 axf = ax.flatten()
 fig2, ax2 = plt.subplots(nrows = nrows, ncols=ncols, sharex=True, sharey=True)
@@ -210,17 +320,17 @@ axf[0].set_xlim(time_window)
 axf2[0].set_xlim(time_window)
 fig.subplots_adjust(bottom=0.02, left=0.02, right=0.95, top=0.95,wspace=0.01,hspace=0.01)
 fig2.subplots_adjust(bottom=0.02, left=0.02, right=0.95, top=0.95,wspace=0.01,hspace=0.01)
-fig.canvas.draw()#;fig.show()
-fig2.canvas.draw()#;fig2.show()
-plt.show()
+fig.canvas.draw();fig.show()
+fig2.canvas.draw();fig2.show()
+
 
 #copy.deepcopy(tmp.instance_array_list), copy.deepcopy(tmp.misc_data_dict)
 #ecei = dev.acq.getdata(164950,'ECE1')
 #print mag.timebase
 
-#1/0
+1/0
 
-'''
+
 def get_interesting(self, n_pts = 20, lower_freq = 1500, cutoff_by = 'sigma_eq', filter_cutoff = 20, datamining_settings = None, upper_freq = 500000, filter_item = 'EM_VMM_kappas'):
 
     if datamining_settings == None: datamining_settings = {'n_clusters':16, 'n_iterations':20, 'start': 'k_means','verbose':0, 'method':'EM_VMM'}
@@ -263,4 +373,3 @@ def get_interesting(self, n_pts = 20, lower_freq = 1500, cutoff_by = 'sigma_eq',
     self.misc_data_dict = misc_data_dict_cur
     #return instance_array_cur, misc_data_dict_cur, z.cluster_details['EM_VMM_kappas']
 
-'''
