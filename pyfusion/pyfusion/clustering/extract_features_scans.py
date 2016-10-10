@@ -64,9 +64,7 @@ class single_shot_extraction():
         new_signal_length = 0
         for i, arr in enumerate(self.array):
             #data_list.append(pf.getDevice('H1').acq.getdata(self.shot, arr).reduce_time([self.start_time, self.end_time]))
-            print("DEBUG shot arr start time end time", self.shot, arr, self.start_time, self.end_time)
             data_list.append(pf.getDevice('DIIID').acq.getdata(self.shot, arr).reduce_time([self.start_time, self.end_time]))
-            print("DEBUG data_list",data_list)
             if i==0:
                 self.timebase = data_list[-1].timebase
             else:
@@ -84,7 +82,6 @@ class single_shot_extraction():
         self.data_fft = self.data.generate_frequency_series(self.samples,self.samples/self.overlap)
 
     def get_interesting(self, min_svs = 2, power_cutoff = 0.05, lower_freq = 0, upper_freq = 2.e6):
-        print("DEBUG len(self.data_segmented)", len(self.data_segmented))
         for seg_loc in range(len(self.data_segmented)):
             data_seg = self.data_segmented[seg_loc]
             time_seg_average_time = np.mean([data_seg.timebase[0],data_seg.timebase[-1]])
@@ -384,7 +381,6 @@ def multi_extract_DIIID(shot_selection, array_name, other_arrays=None, other_arr
     else:
         results = map(wrapper, input_data_iter)
     start = True
-    print("DEBUG:", results)
     for i,tmp in enumerate(results):
         if tmp[0] is not None:
             if start:
@@ -478,7 +474,6 @@ def multi_svd(shot_selection,array_name, other_arrays = None, other_array_labels
     list of the other arrays you want to get information from '''
 
     #Get the scan details
-    print("DEBUG Am I in multi SVD???")
     shot_list, start_times, end_times = H1_scan_list.return_scan_details(shot_selection) 
     rep = itertools.repeat
     if other_arrays == None: other_arrays = ['ElectronDensity','H1ToroidalNakedCoil']
@@ -524,7 +519,6 @@ def multi_svd(shot_selection,array_name, other_arrays = None, other_array_labels
 
 def get_array_data(current_shot, array_name, time_window=None,new_timebase=None):
     array_cutoff_locs = [0]
-    print("DEBUG am i in get_array_data()?")
     data = pf.getDevice('H1').acq.getdata(current_shot, array_name)
     if new_timebase!=None:
         print 'interpolating onto a new timebase....'
