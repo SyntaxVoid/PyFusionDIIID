@@ -8,7 +8,11 @@ def database_of_scans(name):
     #   1. test_shots
     # John Gresl Oct 7 2016
     if name.lower() == "test_shots":
-        return np.arange(159243,159250) # TODO: ADD START TIMES AND END TIMES
+        shots = np.arange(159243,159250)
+        start_time = 0.002
+        end_time = 0.2
+        return shots, start_time, end_time
+
     print("Name is invalid!")
     return []
 
