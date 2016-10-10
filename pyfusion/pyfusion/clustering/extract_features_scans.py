@@ -61,6 +61,7 @@ class single_shot_extraction():
     def get_primary_array(self,):
         data_list = []
         new_signal_length = 0
+        print("DEBUG: self.array", self.array)
         for i, arr in enumerate(self.array):
             data_list.append(pf.getDevice('H1').acq.getdata(self.shot, arr).reduce_time([self.start_time, self.end_time]))
             if i==0:
