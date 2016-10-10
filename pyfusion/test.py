@@ -5,8 +5,8 @@ import pyfusion.clustering.extract_features_scans as ext
 
 dataset = ["test_shots"]
 array = ["DIIID_toroidal_mag"]
-other_arrays = ["DIIID_toroidal_mag"]
-other_array_labels = ["toroidal mag"]
+other_arrays = [ ]
+other_array_labels = [ ]
 meta_data = ["kh", "heating_freq", "main_current","sec_current","shot"]
 ext_settings_svd = {"min_svs": 2, "power_cutoff": 0.006, "lower_freq": 4000, "upper_freq": 200000}
 
