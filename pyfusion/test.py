@@ -23,7 +23,7 @@ svd_data = ext.multi_extract_DIIID(dataset,array,other_arrays=other_arrays,other
 #print("After STFT")
 #comb_data = ext.combine_feature_sets(svd_data,stft_data)
 svd_cluster = svd_data.cluster(method="EM_VMM", start="k_means", n_clusters = 16, n_iterations = 50, number_of_starts = 4, n_cpus = 1)
-svd_cluster.plot_single_kh()
+#svd_cluster.plot_single_kh()
 
 
 
