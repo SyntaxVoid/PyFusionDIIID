@@ -14,10 +14,11 @@ import pyfusion.clustering as clust
 
 def run():
     verbose = True
-    shots = [159243,159244,159245,159246]
+    #shots = [159243,159244,159245,159246]
+    shots = np.arange(159243,159257+1)
     time_window = D3DR.DEFAULT_TIME_WINDOW
-    nrows = 2
-    ncols = 2
+    nrows = 4
+    ncols = 4
     figure, axes = plt.subplots(nrows=nrows, ncols=ncols, sharex=True, sharey=True)
     axf = axes.flatten()
     rep = itertools.repeat
