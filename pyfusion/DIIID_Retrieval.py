@@ -99,7 +99,7 @@ def get_stft(shot, time_window=None, verbose=False):
     rel_data_angles = np.angle(rel_data)
     diff_angles = (np.diff(rel_data_angles)) % (2.*np.pi)
     diff_angles[diff_angles > np.pi] -= (2.*np.pi)
-    datamining_settings = {"n_clusters": 16, "n_iterations": 20, "start": "k_means", "verbose": 0, "method": "EM_VMM"}
+    datamining_settings = {"n_clusters": 10, "n_iterations": 20, "start": "k_means", "verbose": 0, "method": "EM_VMM"}
     z = ext.perform_data_datamining(diff_angles, misc_data_dict, datamining_settings)
     instance_array_cur, misc_data_dict_cur = ext.filter_by_kappa_cutoff(z, ave_kappa_cutoff=filter_cutoff,
                                                                         ax=None, cutoff_by=cutoff_by,
