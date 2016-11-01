@@ -96,6 +96,8 @@ def run():
     print("Changed Plot limits maybe???")
     axf1[0].set_xlim([400,500])
     axf2[0].set_xlim([400,500])
+    axf1[0].set_ylim([50,100])
+    axf2[0].set_ylim([50,100])
     figure1.subplots_adjust(bottom=0.02, left=0.02, right=0.95, top=0.95, wspace=0.01, hspace=0.01)
     figure2.subplots_adjust(bottom=0.02, left=0.02, right=0.95, top=0.95, wspace=0.01, hspace=0.01)
     figure1.canvas.draw()
