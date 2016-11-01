@@ -91,8 +91,11 @@ def run():
                     pl = cur_ax1.plot(z.feature_obj.misc_data_dict['time'][mask],
                                       z.feature_obj.misc_data_dict['freq'][mask],
                                       "o", markersize=markersize, color=plot_colors[i])
-    axf1[0].set_xlim(time_window)
-    axf2[0].set_xlim(time_window)
+    #axf1[0].set_xlim(time_window)
+    #axf2[0].set_xlim(time_window)
+    print("Changed Plot limits maybe???")
+    axf1[0].set_xlim([400,500])
+    axf2[0].set_xlim([400,500])
     figure1.subplots_adjust(bottom=0.02, left=0.02, right=0.95, top=0.95, wspace=0.01, hspace=0.01)
     figure2.subplots_adjust(bottom=0.02, left=0.02, right=0.95, top=0.95, wspace=0.01, hspace=0.01)
     figure1.canvas.draw()
