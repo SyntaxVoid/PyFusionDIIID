@@ -150,32 +150,6 @@ fall=fall[0:i-1]
 pdistort=pdistort[0:i-1]
 rdistort=rdistort[0:i-1]
 
-;----------------------
-; Merge with Mirnov data
-read_fb_mirnov,a
-for i=0,i-1 do begin
-  w=where(shot[i] eq a.shot and tbdot[i] eq a.tbdot,nw)
-  if nw eq 1 then begin
-    fbfreq[i]=reform(a.fbfreq[w])
-    minfreq[i]=reform(a.minfreq[w])
-    dfreq[i]=reform(a.dfreq[w])
-    distort[i]=reform(a.distort[w])
-    rise[i]=reform(a.rise[w])
-    fall[i]=reform(a.fall[w])
-  end else print,'FB not found:',shot[i],tbdot[i],nw
-end
-
-;----------------------
-; Merge with distort data
-read_fb_distort,a
-for i=0,i-1 do begin
-  w=where(shot[i] eq a.shot and tbdot[i] eq a.tbdot,nw)
-  if nw eq 1 then begin
-    pdistort[i]=reform(a.pdistort[w])
-    rdistort[i]=reform(a.rdistort[w])
-  end else print,'distort FB not found:',shot[i],tbdot[i],nw
-end
-
 ;-----------------------
 ; Fetch plasma signals
 
