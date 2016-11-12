@@ -1,0 +1,74 @@
+CHANGES
+
+  Version 1.0.1 (unreleased)
+
+    - Fix compatibility with null pointers
+
+  Version 1.0.0
+
+    Final main stable release (any future releases will be bug-fixes only)
+    equivalent to scipy.io.idl in Scipy 0.10.1. Future development will take
+    place in scipy.io.idl.
+
+    - Improved compatibility with multi-dimensional structures
+
+    - Fix bugs related to pointers
+
+    - Backported bug and compatibility fixes from scipy.io.idl
+
+    - Added support for classes with inheritance
+
+    - Added support for object references
+
+  Version 0.9.7
+
+    The code has been aligned with scipy coding conventions. This version is
+    identical to the initial version committed to scipy.io.idl.
+
+  Version 0.9.6
+
+    - Added unit tests
+
+    - Scalars are now returned with the correct Numpy type
+
+    - The read() function now returns a case-insensitive dictionary of
+      variables with attribute access
+
+    - Added option to provide an existing dictionary to append variables to
+
+    - Re-released under MIT license
+
+  Version 0.9.5
+
+    - Added support for reading .sav files written with /COMPRESS
+
+  Version 0.9.4
+
+    - Fixed PREDEF for structures
+
+  Version 0.9.3
+
+    - Implemented IDL pointers
+
+  Version 0.9.2
+
+    - Fixed reading in of byte scalars and arrays
+
+  Version 0.9.1
+
+    - Structures are now converted to Numpy recarrays
+
+    - Removed dependency on intrinsic bin() function, which
+      caused the module to only be compatible with Python 2.6
+
+    - Variable names are now case-insensitive
+
+    - Variables can now be access as attributes, e.g.:
+        s.variable_name
+
+    - Recarray fields can be accessed in lowercase, e.g.:
+        s.variable_name.field_name
+
+  Version 0.9.0
+
+    Initial release
