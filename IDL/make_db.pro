@@ -263,7 +263,7 @@ for j=0,i-1 do begin
 end
 
 ;-------------------------
-save,filename='fb_db.dat',shot,tbdot,bmax,fbfreq,minfreq,dfreq,distort, $
+save,filename='database.dat',shot,tbdot,bmax,fbfreq,minfreq,dfreq,distort, $
  rise,fall,pdistort,rdistort,tneut,pmax $
  ,pave,lbeam,pinj,tice,icehighmax,icehighsum,icehighave, $
  icelowsum,icelowave,bildsum,bildave,lbild,lcer,nicrf,lssnpa, $
