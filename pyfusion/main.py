@@ -9,6 +9,8 @@ from matplotlib import pyplot as plt
 import DIIID_Retrieval as D3DR
 import pyfusion.clustering as clust
 
+
+# noinspection PyInterpreter,PyInterpreter
 def fetch_and_write_interesting_events(shots_and_times,f,n_cpus=1):
     # John Gresl 11/22/2016
     # Input:
