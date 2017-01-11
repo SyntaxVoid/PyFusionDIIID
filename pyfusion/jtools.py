@@ -1,10 +1,72 @@
 # jtools.py
 # John Gresl 10/6/2016
+import os.path
+from copy import deepcopy
 
 # Contains useful auxiliary functions for aesthetics. . .
+
+def numlist_to_strlist(it):
+    out = []
+    for i in it:
+        out.append(str(i))
+    return out
+
 
 def print_dict(d,mod):
     # Prints a dictionary with 'mod' before each line
     f_str = "{}{{:{}}}:  {{}}".format(mod, max(map(len, d.keys()))+2)
     for k,v in d.items():
         print(f_str.format(k,v))
+
+def ensure_valid_path(p):
+    # Ensures that p is a valid path to a file. If the path already exists,
+    # ask the user if they would like to overwrite it.
+    if os.path.isfile(p):
+        valid_ans = ["y","yes","n","no"]
+        ans = raw_input("File already exists at:\n\t{}\nWould you like to overwrite this file? (y/n)\n".format(p)).lower().strip()
+        while ans not in valid_ans:
+            ans = raw_input("\"{}\" is not a valid input. Please select a choice from {}. . .\n".format(ans, valid_ans)).lower().strip()
+        return 0 if ans in ["no","n"] else 1
+    return 1
+
+
+def write_columns(location, header, ord_dict):
+    # I would like to use **kwargs here but python 2 treats it as an unordered dict, which will make the database
+    # lose designated structure. Instead, will have to pass an ordered dict as an argument and manually unpack it.
+    # WARNING: In order to write to a file, all values within ord_dict will be converted to strings. If a value is an
+    # abstract class, make sure it has an appropriate __repr__(self).
+    do_write = ensure_valid_path(location)
+    if not do_write:
+        print("Invalid file path... Please start over.")
+        return None
+
+    # Get categories, which are the names of the values in ord_dict.
+    categories = ord_dict.keys()
+    values = ord_dict.values()
+    n = len(categories)
+
+    # Every list in values must have the same length. Otherwise raise an assertion error.
+    m = len(values[0])
+    for i in range(1,n):
+        assert len(values[i]) == m
+
+    # Convert everything in values to a str.
+    values_as_str = []
+    for array in values:
+        values_as_str.append(numlist_to_strlist(array))
+
+    #Allocate 14 spaces per column
+    col_width = 14
+    cat_string = "{{:{}s}}".format(col_width)
+    cat_string = cat_string*n
+
+    with open(location,"w") as db:
+        db.write(header)
+        db.write("\n#"+cat_string.format(*categories))
+        for i in range(m):
+            cur_line = []
+            for j in range(n):
+                cur_line.append(values_as_str[j][i])
+            db.write("\n " + cat_string.format(*cur_line))
+
+    return

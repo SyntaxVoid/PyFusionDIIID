@@ -55,7 +55,7 @@ def fetch_and_write_interesting_events(shots_and_times,f,n_cpus=1):
         else:
             print("*"*35+"\n***One shot may have failed. . .***\n"+"*"*35)
     feat_obj = clust.feature_object(instance_array=instance_array, instance_array_amps=+misc_data_dict["mirnov_data"],
-                                    mist_data_dict=misc_data_dict)
+                                    misc_data_dict=misc_data_dict)
     datamining_settings = {'n_clusters': 10, 'n_iterations': 20,
                            'start': 'k_means', 'verbose': 0, 'method': 'EM_VMM'}
     z = feat_obj.cluster(**datamining_settings)
