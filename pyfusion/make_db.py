@@ -51,8 +51,8 @@ def write_pyfusion_events(shot,location,time_window = None):
     misc_data_dict["freq"] = ext.return_non_freq_dependent(data_fft.frequency_base, good_indices)
     misc_data_dict["shot"] = np.ones(len(misc_data_dict["freq"]),dtype=int)*shot
 
-    jt.write_columns("TestDatabase.txt","# TEST HEADER",misc_data_dict)
-    
+    jt.write_columns(location,"# TEST HEADER",misc_data_dict)
+
 
 
 
@@ -85,5 +85,5 @@ def make_db(shot, location, header = ""):
     return
 
 if __name__ == '__main__':
-    make_db(1,"test_database.txt")
+    write_pyfusion_events(159243,"test_database.txt")
 
