@@ -18,7 +18,7 @@ def make_data_dict(shot, data_fft, good_indices):
     d["shot"] = []
     d["time"] = ext.return_time_values(data_fft.timebase, good_indices)
     d["freq"] = ext.return_non_freq_dependent(data_fft.frequency_base, good_indices)
-    d["shot"] = np.ones(len(d["freq"]), dtype=int) * shot
+    d["shot"].extend(np.ones(len(d["freq"]), dtype=int) * shot)
     #d["mirnov_data"] = ext.return_values(data_fft.signal, good_indices)
     return d
 
@@ -43,10 +43,6 @@ def write_times(shot, data_dict, location):
 
 def write_pyfusion_events(shot, data_fft, main_location = "database.txt", write_time_database = False,
                           time_location = "database_times.txt", n_pts = 20, lower_freq = 1, upper_freq = 50000):
-    do_write = jt.ensure_valid_path(main_location)
-    if not do_write:
-        print("Invalid file path... Please start over.")
-        return None
     # Look for the peaks in the FFT data (Which are *** probably *** modes).
     # rel_data contains ONLY the peaks as identified within good_indices
     good_indices = ext.find_peaks(data_fft, n_pts = n_pts, lower_freq = lower_freq, upper_freq = upper_freq)
