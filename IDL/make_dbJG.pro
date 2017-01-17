@@ -1,4 +1,4 @@
-pro make_dbJG, shot, times, savename = "db.sav"
+pro make_dbJG, shot, times, savename
 ; John Gresl 1/16/2017
 ; Input:
 ;   shot: Shot number
