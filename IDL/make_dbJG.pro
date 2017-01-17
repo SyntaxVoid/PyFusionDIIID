@@ -41,6 +41,8 @@ for j=0,i-1 do begin
     q95[j] = gadatave_efficient("q95",shot,times[j],25)
 end
 
+; Any other parameters we may want in the future. . .
+
 ; Now we save the arrays to an IDL save file.
 save, ip, betan, q0, q95, filename = savename
 
