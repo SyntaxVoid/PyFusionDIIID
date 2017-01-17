@@ -1,8 +1,49 @@
-pro make_dbJG, shot, tmin, tmax
-; John Gresl 11/12/2016
+pro make_dbJG, shot, times
+; John Gresl 1/16/2017
+; Input:
+;   shot: Shot number
+;   times: array of times that I would like to fetch
+
 
 ; I want plasma current, betan, magnetic field, cerarott1 and cerarott6, q0 and q95
+; [x] Plasma Current
+; [x] Beta N
+; [o] Magnetic Field (This will come from PyFusion I think..)
+; [?] Cerarott1
+; [?] Cerarott6
+; [x] q0
+; [x] q95
 
 
-;
+i = size(times, /n_elements)
 
+; PLASMA CURRENT
+ip = fltarr(i)
+for j=0,i-1 do begin
+    ip[j] = 1.e-6*gadatave_efficient("ip",shot,times[i],20)
+end
+
+; BETA N
+betan = fltarr(i)
+for j=0,i-1 do begin
+    betan[j] = gadatave_efficient("betan",shot,times[i],25)
+end
+
+; q0
+q0 = fltarr(i)
+for j=0,i-1 do begin
+    q0[j] = gadatave_efficient("q0",shot,times[i],25)
+end
+
+; q95
+q95 = fltarr(i)
+for j=0,i-1 do begin
+    q95[j] = gadatave_efficient("q95",shot,times[i],25)
+end
+
+plot,times,ip
+oplot,times,betan,psym=200
+
+
+
+end

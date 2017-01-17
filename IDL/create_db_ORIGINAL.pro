@@ -2,7 +2,7 @@ PRO create_db
 ; Read fishbone_db.pro and write an idl save file
 ; shot
 
-; bdot: time of peak |Bdot| (ms)
+; tbdot: time of peak |Bdot| (ms)
 ; bmax: peak amplitude of |Bdot|
 ; fbfreq: initial fb frequency (kHz)
 ; minfreq: final fb frequency (kHz)

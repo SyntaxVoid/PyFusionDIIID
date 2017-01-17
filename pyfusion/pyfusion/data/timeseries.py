@@ -38,6 +38,7 @@ class Timebase(np.ndarray):
         try:
             return input_freq/(0.5*self.sample_freq)
         except:
+            # sample_freq should maybe be self.sample_freq? i don't remember
             return [i/(0.5*self.sample_freq) for i in sample_freq]
 
     def __array_finalize__(self, obj):
