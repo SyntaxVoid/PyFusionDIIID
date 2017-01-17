@@ -15,9 +15,10 @@ def make_data_dict(shot, data_fft, good_indices):
     # Returns an ordered data dictionary with certain parameters. In the future maybe I could generalize this
     # to store arbitrary user defined meta data...
     d = collections.OrderedDict()
-    d["shot"] = np.ones(len(d["freq"]), dtype=int) * shot
+    d["shot"] = []
     d["time"] = ext.return_time_values(data_fft.timebase, good_indices)
     d["freq"] = ext.return_non_freq_dependent(data_fft.frequency_base, good_indices)
+    d["shot"] = np.ones(len(d["freq"]), dtype=int) * shot
     #d["mirnov_data"] = ext.return_values(data_fft.signal, good_indices)
     return d
 
