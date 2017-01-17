@@ -31,6 +31,7 @@ for j=0,n_max-1 do begin
         cur_index = cur_index + 1
     end
 end
+times=times[0:cur_index-1]
 
 i = size(times, /n_elements)
 i2 = cur_index - 1
