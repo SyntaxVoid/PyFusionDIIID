@@ -2,20 +2,39 @@ pro make_dbJG, shot, times, savename
 ; John Gresl 1/16/2017
 ; Input:
 ;   shot: Shot number
-;   times: array of times that I would like to fetch
+;   times: file with the times that we are interested in
+; Output:
+;   Does not return values, instead it creates a save file with the
+;   the following arrays of values.
+;       ip:        Plasma Current
+;       betan:     ???
+;       q0:        ???
+;       q95:       ???
+;       cerqrott1: ???
+;       cerqrott6: ???
+;       te:        Electron Temperature
+;       dene:      Electron Density
 
 
-; I want plasma current, betan, magnetic field, cerarott1 and cerarott6, q0 and q95
-; [x] Plasma Current
-; [x] Beta N
-; [o] Magnetic Field (This will come from PyFusion I think..)
-; [?] Cerarott1
-; [?] Cerarott6
-; [x] q0
-; [x] q95
+print,"***Make sure you update your template if you add parameters (database_template.sav)!!!***"
 
+restore,"database_template.sav"
+data = read_ascii(times, template=database_template)
+n_max = n_elements(data.time)
+cur_time = -9999
+cur_index = 0
+times = fltarr(n_max)
+for j=0,n_max-1 do begin
+    if cur_time ne data.time[j] then begin
+        times[cur_index] = data.time[j]
+        cur_time = data.time[j]
+        cur_index = cur_index + 1
+    end
+end
 
 i = size(times, /n_elements)
+i2 = cur_index - 1
+print,i-i2
 
 ; PLASMA CURRENT
 ip = fltarr(i)
@@ -59,7 +78,7 @@ for j=0,i-1 do begin
     te[j] = gadatave_efficient("tste_0",shot,times[j],30)
 end
 
-; Electron Density ( I THINK this is electron density
+; Electron Density ( I THINK this is electron density )
 dene=fltarr(i)
 for j=0,i-1 do begin
     dene[j] = gadatave_efficient("tsne_0",shot,times[j],30)
