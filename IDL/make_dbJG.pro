@@ -1,4 +1,4 @@
-pro make_dbJG, shot, times
+pro make_dbJG, shot, times, savename = "db.sav"
 ; John Gresl 1/16/2017
 ; Input:
 ;   shot: Shot number
@@ -41,9 +41,7 @@ for j=0,i-1 do begin
     q95[j] = gadatave_efficient("q95",shot,times[j],25)
 end
 
-plot,times,ip
-oplot,times,betan,psym=2
-
-
+; Now we save the arrays to an IDL save file.
+save, ip, betan, q0, q95, filename = savename
 
 end
