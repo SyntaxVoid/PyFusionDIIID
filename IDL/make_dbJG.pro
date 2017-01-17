@@ -41,9 +41,36 @@ for j=0,i-1 do begin
     q95[j] = gadatave_efficient("q95",shot,times[j],25)
 end
 
-; Any other parameters we may want in the future. . .
+; cerqrott1 (What is this??)
+cerqrott1 = fltarr(i)
+for j=0,i-1 do begin
+    cerqrott1[j] = gadatave_efficient("cerqrott1",shot,times[j],30)
+end
+
+; cerqrott6 (What is this??x2)
+cerqrott6 = fltarr(i)
+for j=0,i-1 do begin
+    cerqrott6[j] = gadatave_efficient("cerqrott6",shot,times[j],30)
+end
+
+; Electron temperate
+te = fltarr(i)
+for j=0,i-1 do begin
+    te[j] = gadatave_efficient("tste_0",shot,times[j],30)
+end
+
+; Electron Density ( I THINK this is electron density
+dene=fltarr(i)
+for j=0,i-1 do begin
+    dene[j] = gadatave_efficient("tsne_0",shot,times[j],30)
+end
+
+;
+; Any other parameters we may want in the future will go here. . .
+;
 
 ; Now we save the arrays to an IDL save file.
-save, ip, betan, q0, q95, filename = savename
+save, ip, betan, q0, q95, cerqrott1, cerqrott6, te, dene, filename = savename
+
 
 end
