@@ -42,7 +42,7 @@ for j=0,i-1 do begin
 end
 
 plot,times,ip
-oplot,times,betan,psym=200
+oplot,times,betan,psym=8
 
 
 
