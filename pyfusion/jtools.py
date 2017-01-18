@@ -29,6 +29,40 @@ def ensure_valid_path(p):
         return 0 if ans in ["no","n"] else 1
     return 1
 
+def write_event_database(location, header, ord_dict):
+    do_write = ensure_valid_path(location)
+    if not do_write:
+        print("Invalid file path... Please start over.")
+        return None
+
+    # Get categories, which are the names of the values in ord_dict.
+    categories = ord_dict.keys()
+    values = ord_dict.values()
+    n = len(categories)
+
+    # All we care about are the shot numbers, times, and frequencies.
+    shots = numlist_to_strlist(ord_dict["shot"])
+    times = numlist_to_strlist(ord_dict["time"])
+    freqs = numlist_to_strlist(ord_dict["freq"])
+
+    event_str = "# SHOT: {:6s} TIME: {:6s}"
+    freq_str  = "{}"
+    to_write = "\0 " # Trust me, we need this here.
+    with open(location) as event_db:
+        event_db.write(header)
+        cur_s = -9999.
+        cur_t = -9999.
+        for s,t,f in zip(shots,times,freqs):
+            # if its a new shot or a new time, we need to write the sub-header
+            if (s != cur_s or t != cur_t):
+                event_db.write(to_write[:-2])
+                to_write = ""
+                event_db.write("\n"+event_str.format(s,t)+"\n")
+                cur_s = s
+                cur_t = t
+            to_write += freq_str.format(f) + ", "
+    return
+
 
 def write_columns(location, header, ord_dict):
     # I would like to use **kwargs here but python 2 treats it as an unordered dict, which will make the database

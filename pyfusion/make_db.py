@@ -6,6 +6,7 @@ import copy, os, time, itertools
 import matplotlib.pyplot as plt
 import cPickle as pickle
 import pyfusion.clustering as clust
+import idlsave
 import pyfusion.clustering.extract_features_scans as ext
 import DIIID_Retrieval as D3DR
 import jtools as jt
@@ -40,17 +41,45 @@ def write_times(shot, data_dict, location):
                 text_file.write("\n"+str(cur_time))
     return
 
+def add_to_database(sav_file,database_path):
+    # Want it to load all of the values stored in the IDL save file and then add any new entries
+    # to the database.
+    # -> Check if there are any new times to add. Any times that don't have an appropriate value
+    # should receive NaN status.
+    # -> For any times that do exist, add any new categories and all of their vlaues.
+    d = idlsave.read(sav_file).data_dict
+    # Field names are stored in: d.dtype.fields.keys() but they are repeated.
+    # For instance, if "ip" is a field, "IP" will also be a field.
+    fields = d.dtype.fields.keys()
+    unique_fields = []
+    for f in fields:
+        if f.lower() in unique_fields:
+            continue
+        unique_fields.append(f.lower())
+    fields = copy.deepcopy(unique_fields)
 
-def write_pyfusion_events(shot, data_fft, main_location = "database.txt", write_time_database = False,
-                          time_location = "database_times.txt", n_pts = 20, lower_freq = 1, upper_freq = 50000):
+    # Go into the database and see what fields already exist
+    with open(database_path) as db:
+        is_data = False
+        previous_line = ""
+        while not is_data:
+            cur_line = db.readline()
+            if cur_line[0] == "#":
+                previous_line = cur_line
+            else:
+                is_data = True
+                category_str = previous_line
+    existing_fields = previous_line[1:].strip().split()
+
+    return
+
+def write_pyfusion_events(shot, data_fft, main_location = "database.txt",
+                          n_pts = 20, lower_freq = 1, upper_freq = 50000):
     # Look for the peaks in the FFT data (Which are *** probably *** modes).
     # rel_data contains ONLY the peaks as identified within good_indices
     good_indices = ext.find_peaks(data_fft, n_pts = n_pts, lower_freq = lower_freq, upper_freq = upper_freq)
     misc_data_dict = make_data_dict(shot, data_fft, good_indices)
     jt.write_columns(main_location,"# TEST HEADER",misc_data_dict)
-
-    if write_time_database:
-        write_times(shot,misc_data_dict,time_location)
     return
 
 
@@ -63,12 +92,23 @@ def run_fft(shot,time_window=None,samples=1024,overlap=4):
     data_fft = mag.generate_frequency_series(samples, samples / overlap)
     return data_fft
 
+
+def make_event_database(shot, data_fft, location = "event_database.txt",
+                        n_pts = 20, lower_freq = 1, upper_freq = 50000):
+    # Look for the peaks in the FFT data (Which are *** probably *** modes).
+    # rel_data contains ONLY the peaks as identified within good_indices
+    good_indices = ext.find_peaks(data_fft, n_pts = n_pts, lower_freq = lower_freq, upper_freq = upper_freq)
+    misc_data_dict = make_data_dict(shot, data_fft, good_indices)
+    jt.write_event_database(location,"# Event Database",misc_data_dict)
+    return
+
+
+
 if __name__ == '__main__':
     shot = 159243
     data_fft = run_fft(shot,time_window = [200,800])
-    write_pyfusion_events(shot,data_fft,main_location="../Databases/first_database.txt", write_time_database=True,
-                          time_location="../Databases/first_database_times.txt")
-
+    #write_pyfusion_events(shot,data_fft,main_location="../Databases/first_database.txt")
+    make_event_database(shot,data_fft,location="../Databases/event_database.txt")
 
 
 
