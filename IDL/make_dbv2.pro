@@ -122,7 +122,7 @@ print, "Data fetching should be complete in ", seconds2str(fetch_time)
 ;help,my_dict
 ;; End Test
 
-before = systime()
+before = systime(/seconds)
 ; Now the actual fetching. Gets a little sketchy looking here...
 for i=0,n_points-1 do begin
     cur_point = pointnames[i]
@@ -132,7 +132,7 @@ for i=0,n_points-1 do begin
         if cur_point ne "ip" then (scope_varfetch(cur_point, /enter, level=0))[j] = gadatave_efficient(cur_point,shot,unique_times[j],25)
     end
 end
-after = systime()
+after = systime(/seconds)
 print,"Data fetch took "+ seconds2str(after-before)
 construction_string = dict_constructor(pointnames)
 dum = execute("data_dict="+construction_string)
