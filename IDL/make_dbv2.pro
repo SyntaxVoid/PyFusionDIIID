@@ -127,8 +127,6 @@ print, "Data fetching should be complete in ", seconds2str(fetch_time)
 for i=0,n_points-1 do begin
     cur_point = pointnames[i]
     (scope_varfetch(cur_point, /enter, level=0)) = fltarr(n)
-    print,cur_point
-    print,ip
     for j=0,n-1 do begin
         (scope_varfetch(cur_point, /enter, level=0))[j] = gadatave_efficient(cur_point,shot,unique_times[j],25)
     end
