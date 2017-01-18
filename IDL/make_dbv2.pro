@@ -78,7 +78,7 @@ for j=0,n_max-1 do begin
     end
 end
 time = time[0:cur_index-1]
-n = n_elements(unique_times)
+n = n_elements(time)
 
 ; Print out an estimation of when the database will be complete since some
 ; pointnames take a \very\ long time to calculate. Each variable is the average
