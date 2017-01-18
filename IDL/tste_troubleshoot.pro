@@ -1,4 +1,4 @@
-pro tste_troubleshoot x
+pro tste_troubleshoot
 ;
 ;
 ;
