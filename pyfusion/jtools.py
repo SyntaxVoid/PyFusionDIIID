@@ -45,7 +45,7 @@ def write_event_database(location, header, ord_dict):
     times = numlist_to_strlist(ord_dict["time"])
     freqs = numlist_to_strlist(ord_dict["freq"])
 
-    event_str = "# SHOT: {:6s} TIME: {:6s}"
+    event_str = "#SHOT: {:6s} TIME: {:6s}"
     freq_str  = "{}"
     to_write = "\0 " # Trust me, we need this here.
     with open(location,"w") as event_db:
@@ -61,6 +61,7 @@ def write_event_database(location, header, ord_dict):
                 cur_s = s
                 cur_t = t
             to_write += freq_str.format(f) + ", "
+        event_db.write(to_write[:-2])
     return
 
 

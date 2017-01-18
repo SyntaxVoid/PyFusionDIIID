@@ -99,7 +99,7 @@ def make_event_database(shot, data_fft, location = "event_database.txt",
     # rel_data contains ONLY the peaks as identified within good_indices
     good_indices = ext.find_peaks(data_fft, n_pts = n_pts, lower_freq = lower_freq, upper_freq = upper_freq)
     misc_data_dict = make_data_dict(shot, data_fft, good_indices)
-    jt.write_event_database(location,"# Event Database",misc_data_dict)
+    jt.write_event_database(location,"# Event Database of Frequency Peaks",misc_data_dict)
     return
 
 
