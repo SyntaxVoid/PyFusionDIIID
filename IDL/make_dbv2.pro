@@ -36,6 +36,18 @@ function seconds2str, time
   return, result
 end
 
+function dict_constructor, pointnames
+;
+;
+n = n_elements(pointnames)
+result = "{"
+for i=0,n-1 do begin
+    cur_point = pointnames[i]
+    to_add = cur_point
+    if i ne n-1 then result += to_add + ":" + to_add + ","
+    if i eq n-1 then result += to_add + ":" + to_add + "}"
+end
+return result
 
 
 
@@ -93,14 +105,31 @@ for j=0,n_points-1 do begin
         cur_point eq "cerqrott6": cur_factor += t_cerqrott6
         cur_point eq "tste_0": cur_factor += t_tste_0
         cur_point eq "tsne_0": cur_factor += t_tsne_0
-    else: print, "Pointname has not been timed yet and will not be included:", cur_point
+    else: print, "Pointname has not been timed yet and will not be included: ", cur_point
     end
 end
 fetch_time = cur_factor*n
 print, "Data fetching should be complete in ", time2string(fetch_time)
 
 
+;; Test
+points = ["ip","john","bill"]
+ip = [1,6,2]
+john = 16
+bill = "doctor"
+ans = dict_constructor(points)
+dum = execute("my_dict="+ans)
+help,my_dict
+;; End Test
 
 
-
+; Now the actual fetching. Gets a little sketchy looking here...
+;for i=0,n_points-1 do begin
+;    cur_point = pointnames[i]
+;    (scope_varfetch(cur_point, /enter, level=1)) = fltarr(n)
+;    temp_arr = fltarr(n)
+;    for j=0,n-1 do begin
+;        (scope_varfetch(cur_point, /enter, level=1))[j] = gadatave_efficient(cur_point,shot,unique_times[j],25)
+;    end
+end
 end
