@@ -10,7 +10,7 @@ function seconds2str, time
   result = string(temp mod 60, format='(f4.1, " seconds")')
 
   ; Minutes
-  temp = floor(tempTime / 60)
+  temp = floor(temp / 60)
   if temp eq 0 then return, result
   val = (temp mod 60) eq 1 ? ' minute and ' : ' minutes and '
   result = string(temp mod 60, format='(i2)') + val + result
