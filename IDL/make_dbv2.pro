@@ -137,9 +137,6 @@ for j=0,n_points-1 do begin
     end
 end
 fetch_time = cur_factor*n
-now = systime(/seconds)
-estimate = now+fetch_time
-estimate_str = systime(elapsed=estimate)
 print, "Data fetching should be complete in", time2string(fetch_time)
 
 
