@@ -6,7 +6,7 @@ COMPILE_OPT idl2, HIDDEN
 n=5
 shot = 159243
 times = 250 + indgen(n)
-print,"Checking time for fetching 5 values of tste_0 and tsne_0 between times 250 and 260 ms."
+print,"Checking time for fetching 5 values of tste_0 and tsne_0 between times 250 and 255 ms."
 ; Electron Temperature
 te = fltarr(n)
 t0 = systime(/seconds)
