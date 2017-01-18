@@ -12,7 +12,7 @@ te = fltarr(n)
 t0 = systime(/seconds)
 for i=0,n-1 do begin
     before = systime(/seconds)
-    te[i] = gadatave_efficient("tste_0",shot,times[i],25,x=1,y=1)
+    te[i] = gadatave_efficient("tste_0",shot,times[i],25)
     after = systime(/seconds)
     print, "tste_0 Fetch took " + strtrim(after-before,1) + " seconds."
 end
@@ -25,7 +25,7 @@ n_e = fltarr(n)
 t0 = systime(/seconds)
 for i=0,n-1 do begin
     before = systime(/seconds)
-    n_e[i] = gadatave_efficient("tsne_0",shot,times[i],25,x=1,y=1)
+    n_e[i] = gadatave_efficient("tsne_0",shot,times[i],25)
     after = systime(/seconds)
     print, "tsne_0 Fetch took " + strtrim(after-before,1) + " seconds."
 end
