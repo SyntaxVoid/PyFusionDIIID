@@ -123,24 +123,19 @@ print, "Data fetching should be complete in ", seconds2str(fetch_time)
 ;; End Test
 
 
-cur_point = "ip"
-(scope_varfetch(cur_point, /enter, level=0)) = fltarr(n)
-print,cur_point
-print,ip
-
 ; Now the actual fetching. Gets a little sketchy looking here...
-;for i=0,n_points-1 do begin
-;    cur_point = pointnames[i]
-;    (scope_varfetch(cur_point, /enter, level=1)) = fltarr(n)
-;    print,cur_point
-;    print,ip
-;    for j=0,n-1 do begin
-;        (scope_varfetch(cur_point, /enter, level=1))[j] = gadatave_efficient(cur_point,shot,unique_times[j],25)
-;    end
-;end
-;construction_string = dict_constructor(pointnames)
-;print,construction_string
-;help,ip
-;dum = execute("data_dict="+construction_string)
-;help,data_dict
+for i=0,n_points-1 do begin
+    cur_point = pointnames[i]
+    (scope_varfetch(cur_point, /enter, level=0)) = fltarr(n)
+    print,cur_point
+    print,ip
+    for j=0,n-1 do begin
+        (scope_varfetch(cur_point, /enter, level=0))[j] = gadatave_efficient(cur_point,shot,unique_times[j],25)
+    end
+end
+construction_string = dict_constructor(pointnames)
+print,construction_string
+help,ip
+dum = execute("data_dict="+construction_string)
+help,data_dict
 end
