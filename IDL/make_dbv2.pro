@@ -123,7 +123,7 @@ print, "Data fetching should be complete in ", seconds2str(fetch_time)
 ;; End Test
 
 
-cur_point = pointnames[i]
+cur_point = "ip"
 (scope_varfetch(cur_point, /enter, level=1)) = fltarr(n)
 print,cur_point
 print,ip
