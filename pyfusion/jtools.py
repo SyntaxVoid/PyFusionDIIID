@@ -48,7 +48,7 @@ def write_event_database(location, header, ord_dict):
     event_str = "# SHOT: {:6s} TIME: {:6s}"
     freq_str  = "{}"
     to_write = "\0 " # Trust me, we need this here.
-    with open(location) as event_db:
+    with open(location,"w") as event_db:
         event_db.write(header)
         cur_s = -9999.
         cur_t = -9999.
