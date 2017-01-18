@@ -10,7 +10,7 @@ print,"Checking time for fetching 5 values of tste_0 and tsne_0 between times 25
 ; Electron Temperature
 te = fltarr(n)
 t0 = systime(/seconds)
-for i=1,n-1 do begin
+for i=0,n-1 do begin
     before = systime(/seconds)
     te[i] = gadatave_efficient("tste_0",shot,times[i],25,x=1,y=1)
     after = systime(/seconds)
@@ -23,7 +23,7 @@ print, "Fetching 5 elements from tste_0 took " + strtrim(t1-t0,1) + " seconds."
 ; Electron Density
 n_e = fltarr(n)
 t0 = systime(/seconds)
-for i=1,n-1 do begin
+for i=0,n-1 do begin
     before = systime(/seconds)
     n_e[i] = gadatave_efficient("tsne_0",shot,times[i],25,x=1,y=1)
     after = systime(/seconds)
