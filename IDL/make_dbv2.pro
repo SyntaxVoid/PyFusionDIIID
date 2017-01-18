@@ -128,7 +128,7 @@ for i=0,n_points-1 do begin
     cur_point = pointnames[i]
     (scope_varfetch(cur_point, /enter, level=0)) = fltarr(n)
     for j=0,n-1 do begin
-        if cur_point eq "ip" then (scope_varfetch(cur_point, /enter, level=0))[j] = 1.e-6gadatave_efficient(cur_point,shot,unique_times[j],25)
+        if cur_point eq "ip" then (scope_varfetch(cur_point, /enter, level=0))[j] = 1.e-6*gadatave_efficient(cur_point,shot,unique_times[j],25)
         if cur_point ne "ip" then (scope_varfetch(cur_point, /enter, level=0))[j] = gadatave_efficient(cur_point,shot,unique_times[j],25)
     end
 end
