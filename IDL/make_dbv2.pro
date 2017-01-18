@@ -132,8 +132,7 @@ for i=0,n_points-1 do begin
     end
 end
 construction_string = dict_constructor(pointnames)
-print,construction_string
-help,ip
 dum = execute("data_dict="+construction_string)
 help,data_dict
+save,data_dict, filename=savename
 end
