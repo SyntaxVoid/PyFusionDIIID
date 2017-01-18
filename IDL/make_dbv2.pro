@@ -113,23 +113,26 @@ print, "Data fetching should be complete in ", time2string(fetch_time)
 
 
 ;; Test
-points = ["ip","john","bill"]
-ip = [1,6,2]
-john = 16
-bill = "doctor"
-ans = dict_constructor(points)
-dum = execute("my_dict="+ans)
-help,my_dict
+;points = ["ip","john","bill"]
+;ip = [1,6,2]
+;john = 16
+;bill = "doctor"
+;ans = dict_constructor(points)
+;dum = execute("my_dict="+ans)
+;help,my_dict
 ;; End Test
 
 
 ; Now the actual fetching. Gets a little sketchy looking here...
-;for i=0,n_points-1 do begin
-;    cur_point = pointnames[i]
-;    (scope_varfetch(cur_point, /enter, level=1)) = fltarr(n)
-;    temp_arr = fltarr(n)
-;    for j=0,n-1 do begin
-;        (scope_varfetch(cur_point, /enter, level=1))[j] = gadatave_efficient(cur_point,shot,unique_times[j],25)
-;    end
-;end
+for i=0,n_points-1 do begin
+    cur_point = pointnames[i]
+    (scope_varfetch(cur_point, /enter, level=1)) = fltarr(n)
+    temp_arr = fltarr(n)
+    for j=0,n-1 do begin
+        (scope_varfetch(cur_point, /enter, level=1))[j] = gadatave_efficient(cur_point,shot,unique_times[j],25)
+    end
+end
+construction_string = dict_constructor(pointnames)
+dum = execute("data_dict="+construction_string)
+help,data_dict
 end
