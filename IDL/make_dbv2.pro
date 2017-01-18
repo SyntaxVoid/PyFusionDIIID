@@ -97,7 +97,7 @@ for j=0,n_points-1 do begin
     end
 end
 fetch_time = cur_factor*n
-print, "Data fetching should be complete in", time2string(fetch_time), "."
+print, "Data fetching should be complete in ", time2string(fetch_time)
 
 
 
