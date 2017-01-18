@@ -2,7 +2,7 @@ pro tste_troubleshoot
 ;
 ;
 ;
-
+COMPILE_OPT idl2, HIDDEN
 n=5
 shot = 159243
 times = 250 + indgen(n)
