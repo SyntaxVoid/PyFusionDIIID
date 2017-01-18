@@ -77,7 +77,7 @@ for j=0,n_max-1 do begin
         cur_index += 1
     end
 end
-unique_times = unique_times[0:cur_index-1]
+time = time[0:cur_index-1]
 n = n_elements(unique_times)
 
 ; Print out an estimation of when the database will be complete since some
@@ -112,24 +112,14 @@ fetch_time = cur_factor*n
 print, "Data fetching should be complete in ", seconds2str(fetch_time)
 
 
-;; Test
-;points = ["ip","john","bill"]
-;ip = [1,6,2]
-;john = 16
-;bill = "doctor"
-;ans = dict_constructor(points)
-;dum = execute("my_dict="+ans)
-;help,my_dict
-;; End Test
-
 before = systime(/seconds)
 ; Now the actual fetching. Gets a little sketchy looking here...
 for i=0,n_points-1 do begin
     cur_point = pointnames[i]
     (scope_varfetch(cur_point, /enter, level=0)) = fltarr(n)
     for j=0,n-1 do begin
-        if cur_point eq "ip" then (scope_varfetch(cur_point, /enter, level=0))[j] = 1.e-6*gadatave_efficient(cur_point,shot,unique_times[j],25)
-        if cur_point ne "ip" then (scope_varfetch(cur_point, /enter, level=0))[j] = gadatave_efficient(cur_point,shot,unique_times[j],25)
+        if cur_point eq "ip" then (scope_varfetch(cur_point, /enter, level=0))[j] = 1.e-6*gadatave_efficient(cur_point,shot,time[j],25)
+        if cur_point ne "ip" then (scope_varfetch(cur_point, /enter, level=0))[j] = gadatave_efficient(cur_point,shot,time[j],25)
     end
 end
 after = systime(/seconds)
