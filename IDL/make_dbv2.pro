@@ -40,7 +40,7 @@ function dict_constructor, pointnames
 ;
 ;
 n = n_elements(pointnames)
-result = "{time:time"
+result = "{time:time,"
 for i=0,n-1 do begin
     cur_point = pointnames[i]
     to_add = cur_point
