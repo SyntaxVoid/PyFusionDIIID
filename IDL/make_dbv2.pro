@@ -40,7 +40,7 @@ function dict_constructor, pointnames
 ;
 ;
 n = n_elements(pointnames)
-result = "{"
+result = "{time:time"
 for i=0,n-1 do begin
     cur_point = pointnames[i]
     to_add = cur_point
@@ -69,10 +69,10 @@ pro make_dbv2, shot, pointnames, times, savename
 n_max = n_elements(times)
 cur_time = -9999
 cur_index = 0
-unique_times = fltarr(n_max)
+time = fltarr(n_max)
 for j=0,n_max-1 do begin
     if cur_time ne times[j] then begin
-        unique_times[cur_index] = times[j]
+        time[cur_index] = times[j]
         cur_time = times[j]
         cur_index += 1
     end
