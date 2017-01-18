@@ -21,5 +21,5 @@ for j=0,n_max-1 do begin
     end
 end
 times=times[0:cur_index-1]
-return times
+return, times
 end
