@@ -29,6 +29,27 @@ def ensure_valid_path(p):
         return 0 if ans in ["no","n"] else 1
     return 1
 
+def write_master_database(location,header, ord_dict):
+    do_write = ensure_valid_path(location)
+    if not do_write:
+        print("Invalid file path... Please start over.")
+        return None
+    categories = ord_dict.keys()
+    values = ord_dict.values()
+    n = len(categories)
+    values_as_str = []
+    for array in values:
+        values_as_str.append(numlist_to_strlist(array))
+    values = values_as_str
+
+    # The first array in values is a shot array, the second array is a time array.
+    # This should ALWAYS be true.. Maybe I should check with code to be 100% sure.
+    shots = values[0]
+    times = values[1]
+
+
+    return
+
 def write_event_database(location, header, ord_dict):
     do_write = ensure_valid_path(location)
     if not do_write:
