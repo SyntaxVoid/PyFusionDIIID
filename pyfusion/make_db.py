@@ -113,7 +113,7 @@ if __name__ == '__main__':
     time_window = [350,550]
     data_fft = run_fft(shot,time_window = time_window)
     #write_pyfusion_events(shot,data_fft,main_location="../Databases/first_database.txt")
-    make_event_database(shot,data_fft,location="../Databases/event_database.txt")
+    make_event_database(shot,data_fft,location="../Databases/shot159243events.txt")
     od = jt.idlsav_to_ordered_dict("../IDL/shot1592243time350to550ms.sav")
     jt.write_master_database("../Databases/shot159243time350to550.txt","# Shot 159243 from 350ms - 550ms",od)
     # Write master database --
