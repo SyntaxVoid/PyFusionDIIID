@@ -122,8 +122,7 @@ for i=0,n_points-1 do begin
         if cur_point ne "ip" then (scope_varfetch(cur_point, /enter, level=0))[j] = gadatave_efficient(cur_point,shot,time[j],25)
     end
 end
-shot_arr = 1+fltarr(n)
-shot_arr = shot*shot_arr
+shot_arr = shot+intarr(n)
 after = systime(/seconds)
 print,"Data fetch took "+ seconds2str(after-before)
 construction_string = dict_constructor(shot, pointnames)
