@@ -42,6 +42,7 @@ def write_times(shot, data_dict, location):
     return
 
 def add_to_database(sav_file,database_path):
+    # I dont think I need this yet.
     # Want it to load all of the values stored in the IDL save file and then add any new entries
     # to the database.
     # -> Check if there are any new times to add. Any times that don't have an appropriate value
@@ -109,9 +110,12 @@ def make_event_database(shot, data_fft, location = "event_database.txt",
 
 if __name__ == '__main__':
     shot = 159243
-    data_fft = run_fft(shot,time_window = [200,800])
+    time_window = [350,550]
+    data_fft = run_fft(shot,time_window = time_window)
     #write_pyfusion_events(shot,data_fft,main_location="../Databases/first_database.txt")
     make_event_database(shot,data_fft,location="../Databases/event_database.txt")
+    od = jt.idlsav_to_ordered_dict("../IDL/shot1592243time350to550ms.sav")
+    jt.write_master_database("../Databases/shot159243time350to550.txt","# Shot 159243 from 350ms - 550ms",od)
     # Write master database --
     # 1. Make IDL save file
     # 2. Read IDL save file
