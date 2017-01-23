@@ -85,9 +85,21 @@ def idlsav_to_ordered_dict(path):
     #     In[3]: value2 = data[0][1]
     #      ... etc ...
     n = len(fields)
+    # Here, we want to make sure "shot" and "time" are the first two fields
+    shot_index = fields.index("shot")
+    if shot_index != 0:
+        fields.remove("shot")
+        fields.insert(0,"shot")
+    time_index = fields.index("time")
+    if time_index != 1:
+        fields.remove("time")
+        fields.insert(1,"time")
     values = []
     for i in range(n):
         od[fields[i]] = data[0][i]
+
+    # Now we want to make sure that SHOT and TIME are the first and second fields/values.
+
     return od
 
 def write_event_database(location, header, ord_dict):
