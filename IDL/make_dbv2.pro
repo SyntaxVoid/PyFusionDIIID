@@ -36,11 +36,11 @@ function seconds2str, time
   return, result
 end
 
-function dict_constructor, pointnames
+function dict_constructor, shot, pointnames
 ;
 ;
 n = n_elements(pointnames)
-result = "{time:time,"
+result = "{shot:shot, time:time,"
 for i=0,n-1 do begin
     cur_point = pointnames[i]
     to_add = cur_point
@@ -113,7 +113,7 @@ print, "Data fetching should be complete in ", seconds2str(fetch_time)
 
 
 before = systime(/seconds)
-; Now the actual fetching. Gets a little sketchy looking here...
+; Now the actual fetching. Gets a little sketchy looking here but trust me...
 for i=0,n_points-1 do begin
     cur_point = pointnames[i]
     (scope_varfetch(cur_point, /enter, level=0)) = fltarr(n)
@@ -124,7 +124,7 @@ for i=0,n_points-1 do begin
 end
 after = systime(/seconds)
 print,"Data fetch took "+ seconds2str(after-before)
-construction_string = dict_constructor(pointnames)
+construction_string = dict_constructor(shot, pointnames)
 dum = execute("data_dict="+construction_string)
 help,data_dict
 save,data_dict, filename=savename

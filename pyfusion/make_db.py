@@ -50,13 +50,13 @@ def add_to_database(sav_file,database_path):
     d = idlsave.read(sav_file).data_dict
     # Field names are stored in: d.dtype.fields.keys() but they are repeated.
     # For instance, if "ip" is a field, "IP" will also be a field.
-    fields = d.dtype.fields.keys()
+    fields_in_IDL = d.dtype.fields.keys()
     unique_fields = []
-    for f in fields:
+    for f in fields_in_IDL:
         if f.lower() in unique_fields:
             continue
         unique_fields.append(f.lower())
-    fields = copy.deepcopy(unique_fields)
+    fields_in_IDL = copy.deepcopy(unique_fields)
 
     # Go into the database and see what fields already exist
     with open(database_path) as db:
@@ -68,8 +68,11 @@ def add_to_database(sav_file,database_path):
                 previous_line = cur_line
             else:
                 is_data = True
-                category_str = previous_line
-    existing_fields = previous_line[1:].strip().split()
+    fields_in_database = previous_line[1:].strip().split()
+
+    # THE IDL save file gives me an array that I can turn into an ordered dict.
+    # I would like to combine the IDL save file
+
 
     return
 
@@ -109,6 +112,10 @@ if __name__ == '__main__':
     data_fft = run_fft(shot,time_window = [200,800])
     #write_pyfusion_events(shot,data_fft,main_location="../Databases/first_database.txt")
     make_event_database(shot,data_fft,location="../Databases/event_database.txt")
+    # Write master database --
+    # 1. Make IDL save file
+    # 2. Read IDL save file
+    # 3. Save as ordered dict, make sure times are unique!!*!!
 
 
 

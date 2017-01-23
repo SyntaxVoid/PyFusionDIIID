@@ -37,9 +37,9 @@ def write_master_database(location,header, ord_dict):
     categories = ord_dict.keys()
     values = ord_dict.values()
     n = len(categories)
-    m = n-2 # The number of categories that are NOT shot or time
-    categories.remove("shot") # We don't need these two in categories anymore.
-    categories.remove("time")
+    #m = n-2 # The number of categories that are NOT shot or time
+    #categories.remove("shot") # We don't need these two in categories anymore.
+    #categories.remove("time")
     values_as_str = []
     for array in values:
         values_as_str.append(numlist_to_strlist(array))
@@ -48,18 +48,19 @@ def write_master_database(location,header, ord_dict):
 
     # The first array in values is a shot array, the second array is a time array.
     # This should ALWAYS be true.. Maybe I should check with code to be 100% sure.
-    shots = numlist_to_strlist(ord_dict["shot"])
-    times = numlist_to_strlist(ord_dict["time"])
+    #shots = numlist_to_strlist(ord_dict["shot"])
+    #times = numlist_to_strlist(ord_dict["time"])
 
 
     # Write the header and the categories, with 14 spaces allocated per column
-    cat_str = "#" + "{:14s}"*m
+    #cat_str = "#" + "{:14s}"*m
+    cat_str = "#" + "{:14s}" * n
     cat_str = cat_str.format(*categories)
     with open(location,"w") as db:
         db.write(header+"\n")
         db.write(cat_str)
-        for v in zip(*values[2:]):
-            line_str = "{:14s}" * m
+        for v in zip(*values):
+            line_str = "{:14s}" * n
             line_str = line_str.format(*v)
             db.write("\n" + line_str)
     return
