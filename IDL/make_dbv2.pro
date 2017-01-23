@@ -40,7 +40,7 @@ function dict_constructor, shot, pointnames
 ;
 ;
 n = n_elements(pointnames)
-result = "{shot:shot, time:time,"
+result = "{shot:shot_arr, time:time,"
 for i=0,n-1 do begin
     cur_point = pointnames[i]
     to_add = cur_point
@@ -122,6 +122,8 @@ for i=0,n_points-1 do begin
         if cur_point ne "ip" then (scope_varfetch(cur_point, /enter, level=0))[j] = gadatave_efficient(cur_point,shot,time[j],25)
     end
 end
+shot_arr = 1+fltarr(n)
+shot_arr = shot*shot_arr
 after = systime(/seconds)
 print,"Data fetch took "+ seconds2str(after-before)
 construction_string = dict_constructor(shot, pointnames)
