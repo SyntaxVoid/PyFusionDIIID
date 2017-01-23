@@ -58,11 +58,10 @@ def write_master_database(location,header, ord_dict):
     with open(location,"w") as db:
         db.write(header+"\n")
         db.write(cat_str)
-        for i in range(n):
-            line_str = "{:14s}"*m
-            for v in zip(*values[2:]):
-                line_str = line_str.format(*v)
-                db.write("\n" + line_str)
+        for v in zip(*values[2:]):
+            line_str = "{:14s}" * m
+            line_str = line_str.format(*v)
+            db.write("\n" + line_str)
     return
 
 def write_event_database(location, header, ord_dict):
