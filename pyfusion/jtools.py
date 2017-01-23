@@ -2,6 +2,9 @@
 # John Gresl 10/6/2016
 import os.path
 from copy import deepcopy
+import collections
+import idlsave
+from copy import deepcopy
 
 # Contains useful auxiliary functions for aesthetics. . .
 
@@ -64,6 +67,28 @@ def write_master_database(location,header, ord_dict):
             line_str = line_str.format(*v)
             db.write("\n" + line_str)
     return
+
+def idlsav_to_ordered_dict(path):
+    od = collections.OrderedDict()
+    data = idlsave.read(path).data_dict
+    fields = data.dtype.fields.keys()
+    unique_fields = []
+    for f in fields:
+        if f.lower() in unique_fields:
+            continue
+        unique_fields.append(f.lower())
+    fields = deepcopy(unique_fields)
+
+    # Values in an IDL sav file are restored using a double index
+    # ex: In[1]: data = idlsave.read(path).data_dict
+    #     In[2]: value1 = data[0][0]
+    #     In[3]: value2 = data[0][1]
+    #      ... etc ...
+    n = len(fields)
+    values = []
+    for i in range(n):
+        od[fields[i]] = data[0][i]
+    return od
 
 def write_event_database(location, header, ord_dict):
     do_write = ensure_valid_path(location)
