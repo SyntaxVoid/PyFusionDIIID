@@ -54,14 +54,14 @@ def write_master_database(location,header, ord_dict):
 
     # Write the header and the categories, with 14 spaces allocated per column
     cat_str = "#" + "{:14s}"*m
-    cat_str.format(*categories)
+    cat_str = cat_str.format(*categories)
     with open(location,"w") as db:
         db.write(header+"\n")
         db.write(cat_str)
         for i in range(n):
             line_str = "{:14s}"*m
             for v in zip(*values[2:]):
-                line_str.format(*v)
+                line_str = line_str.format(*v)
                 db.write("\n" + line_str)
     return
 
