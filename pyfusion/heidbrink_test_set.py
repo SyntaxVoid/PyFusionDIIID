@@ -157,11 +157,11 @@ def get_stft_wrapper(input_data):
 def create_feature_object(shots,time_windows,savename):
     input_data_iter = itertools.izip(shots, time_windows)
     wrapper = get_stft_wrapper
-    n_cpus = 4
-    pool = Pool(processes=n_cpus, maxtasksperchild=3)
-    results = pool.map(wrapper, input_data_iter)
-    pool.close()
-    pool.join()
+    #n_cpus = 4
+    #pool = Pool(processes=n_cpus, maxtasksperchild=3)
+    results = map(wrapper, input_data_iter)
+    #pool.close()
+    #pool.join()
     start = 1
     for i, tmp in enumerate(results):
         print i
