@@ -116,10 +116,3 @@ if __name__ == '__main__':
     make_event_database(shot,data_fft,location="../Databases/shot159243events.txt")
     od = jt.idlsav_to_ordered_dict("../IDL/shot159243time350to550ms.sav")
     jt.write_master_database("../Databases/shot159243time350to550.txt","# Shot 159243 from 350ms - 550ms",od)
-    # Write master database --
-    # 1. Make IDL save file
-    # 2. Read IDL save file
-    # 3. Save as ordered dict, make sure times are unique!!*!!
-
-
-
