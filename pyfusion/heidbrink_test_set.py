@@ -187,8 +187,6 @@ if __name__ == "__main__":
     shots = [153067, 153071, 153072, 152932, 152938, 157399, 157400, 157401, 157402]
     time_windows = [[2800, 3000], [2800, 3000], [2800, 3000], [2500, 2700], [3000, 3200],
                    [2300, 2500], [2300, 2500], [2300, 2500], [2300, 2500]]
-    #shots = [159243,159244]
-    #time_windows = [[350,500],[350,600]]
     savename="heidbrink_test_set_feature_object.pickle"
     create_feature_object(shots,time_windows,savename)
     datamining_settings = {'n_clusters': 16, 'n_iterations': 20,
