@@ -176,6 +176,7 @@ def create_feature_object(shots,time_windows,savename):
                     misc_data_dict[i] = np.append(misc_data_dict[i], tmp[1][i], axis=0)
         else:
             print 'One shot may have failed....'
+    print("Before clustering.")
     feat_obj = clust.feature_object(instance_array=instance_array,
                                     instance_array_amps=+misc_data_dict['mirnov_data'],
                                     misc_data_dict=misc_data_dict)
@@ -183,11 +184,11 @@ def create_feature_object(shots,time_windows,savename):
     return
 
 if __name__ == "__main__":
-    #shots = [153067, 153071, 153072, 152932, 152938, 157399, 157400, 157401, 157402]
-    #time_windows = [[2800, 3000], [2800, 3000], [2800, 3000], [2500, 2700], [3000, 3200],
-    #               [2300, 2500], [2300, 2500], [2300, 2500], [2300, 2500]]
-    shots = [159243,159244]
-    time_windows = [[350,500],[350,600]]
+    shots = [153067, 153071, 153072, 152932, 152938, 157399, 157400, 157401, 157402]
+    time_windows = [[2800, 3000], [2800, 3000], [2800, 3000], [2500, 2700], [3000, 3200],
+                   [2300, 2500], [2300, 2500], [2300, 2500], [2300, 2500]]
+    #shots = [159243,159244]
+    #time_windows = [[350,500],[350,600]]
     savename="heidbrink_test_set_feature_object.pickle"
     create_feature_object(shots,time_windows,savename)
     datamining_settings = {'n_clusters': 16, 'n_iterations': 20,
