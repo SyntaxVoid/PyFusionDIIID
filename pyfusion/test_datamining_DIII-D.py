@@ -79,7 +79,7 @@ def get_stft(shot, time_window = None):
 
     # Settings for performing the fft, i.e break the above signal into chunks 1024 samples long
     # and allow subsequent chunks to overlap
-    samples = 1024; overlap = 4
+    samples = 2048; overlap = 8
     data_fft = mag_red.generate_frequency_series(samples,samples/overlap)
 
     # Some settings
@@ -109,7 +109,7 @@ def get_stft(shot, time_window = None):
 
     # STFT-clustering includes a clustering step before we get to the main clustering.
     # This is essentially to filter out any rubbish 
-    datamining_settings = {'n_clusters':16, 'n_iterations':20, 'start': 'k_means','verbose':0, 'method':'EM_VMM'}
+    datamining_settings = {'n_clusters':8, 'n_iterations':20, 'start': 'k_means','verbose':0, 'method':'EM_VMM'}
     z = ext.perform_data_datamining(diff_angles, misc_data_dict, datamining_settings)
 
     dt = np.mean(np.diff(mag.timebase))
