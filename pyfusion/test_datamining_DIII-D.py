@@ -159,7 +159,7 @@ wrapper = get_stft_wrapper
 
 # We take advantage of the fact that each shot can be analysed
 # independently, so we can use multiple CPUs to speed things up
-n_cpus = 3
+n_cpus = 1
 
 # Only go through the extra effort required for multiprocessing if n_cpu is greater than 1
 if n_cpus>1:
