@@ -27,12 +27,12 @@ def run(shot,time_window):
         sig = mag.signal[n].tolist()
         name = mag.channels[n].name
         im = cur_ax.plot(time,sig)
-        cur_ax.text(3050,400,name,fontsize=20)
+        cur_ax.text((time_window[1]+time_window[0])/2.3,400,name,fontsize=20)
     fig.canvas.draw()
     fig.show()
 
 
 if __name__ == '__main__':
-
-
-    pass
+    shot = 157399
+    time_window = [3000,3200]
+    run(shot,time_window)
