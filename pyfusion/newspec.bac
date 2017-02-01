@@ -1,0 +1,19 @@
+ SHOT 153071
+ POINT1    MPI66M307D
+ POINT2    MPI66M340D
+ :::::::::::::::::::::::   DTHETA     33.000,        DELAY      0.000
+ XMIN   2800.000,          FMIN      0.000,          NOTCHFMIN      0.000
+ XMAX   3000.000,          FMAX      0.000,          NOTCHFMAX      0.000
+ DX        5.000,          DF        1.000
+ NMIN  -99,                NMAX   99,                NSIGN    0
+ PCUTOFF     10.000,       NMARKS    5,              FMARKER      0.000
+ XDIM      0.000,          YDIM      0.000,          FSPREAD      0.000
+ PMAX    0.00    ,         PSPREAD    0.00    ,      PFACTOR     1.00    
+ ZMIN    0.00    ,         ZMAX       0.00    
+ CMAX       0.000,         CSPREAD       0.000
+ PHMAX      0.000,         PHSPREAD      0.000
+ LOGS    0,                INTEG   0,                ICAL    1
+ X11       ,     INCOLOR   ,     LONGWAYS  ,     OVERLAP   ,
+ NOSQRT    ,     NOLABEL   ,     NOALIAS   ,     LINEAR    ,
+ COMPRESS   1.00
+ NORM KHZ ,      DATANORM abs.,  DUAL      ,     AUTO      ,
