@@ -12,7 +12,7 @@ import pyfusion.clustering.extract_features_scans as ext
 
 def run(shot,time_window):
     dev = pf.getDevice("DIIID")
-    mag = dev.acq.getdata("DIIID_toroidal_mag")
+    mag = dev.acq.getdata(shot,"DIIID_toroidal_mag")
     mag = mag.reduce_time(time_window)
     n_signals = len(mag.channels)
     print("{} Signals".format(n_signals))
