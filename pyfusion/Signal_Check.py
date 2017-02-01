@@ -22,7 +22,7 @@ def run(shot,time_window):
     ncols=4
     fig,ax=plt.subplots(nrows=nrows,ncols=ncols,sharex=True,sharey=True)
     axf = ax.flatten()
-    axf.title("SHOT {}".format(shot))
+    fig.title("SHOT {}".format(shot))
     for n,cur_ax in enumerate(axf):
         if n < n_signals:
             sig = mag.signal[n].tolist()
