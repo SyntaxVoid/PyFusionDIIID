@@ -22,14 +22,13 @@ def run(shot,time_window):
     ncols=4
     fig,ax=plt.subplots(nrows=nrows,ncols=ncols,sharex=True,sharey=True)
     axf = ax.flatten()
-    plt.grid()
     for n,cur_ax in enumerate(axf):
         if n < n_signals:
             sig = mag.signal[n].tolist()
             name = mag.channels[n].name
             cur_ax.grid()
             im = cur_ax.plot(time,sig)
-            cur_ax.text((time_window[1]+time_window[0])/2-50,400,name,fontsize=11)
+            cur_ax.text((time_window[1]+time_window[0])/2-50,700,name,fontsize=11)
     fig.canvas.draw()
     fig.show()
 
