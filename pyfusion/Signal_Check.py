@@ -24,10 +24,11 @@ def run(shot,time_window):
     axf = ax.flatten()
     plt.grid()
     for n,cur_ax in enumerate(axf):
-        sig = mag.signal[n].tolist()
-        name = mag.channels[n].name
-        im = cur_ax.plot(time,sig)
-        cur_ax.text((time_window[1]+time_window[0])/2.3,400,name,fontsize=20)
+        if n < n_signals:
+            sig = mag.signal[n].tolist()
+            name = mag.channels[n].name
+            im = cur_ax.plot(time,sig)
+            cur_ax.text((time_window[1]+time_window[0])/2.3,400,name,fontsize=20)
     fig.canvas.draw()
     fig.show()
 
