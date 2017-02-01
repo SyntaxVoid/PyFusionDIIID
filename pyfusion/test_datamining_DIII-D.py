@@ -79,7 +79,7 @@ def get_stft(shot, time_window = None):
 
     # Settings for performing the fft, i.e break the above signal into chunks 1024 samples long
     # and allow subsequent chunks to overlap
-    samples = 2048; overlap = 8
+    samples = 1024; overlap = 4
     data_fft = mag_red.generate_frequency_series(samples,samples/overlap)
 
     # Some settings
@@ -308,8 +308,8 @@ for cur_ax, cur_ax2, shot, tmp in zip(axf, axf2, shot_list, results):
     dt = np.mean(np.diff(timebase))
     #tmp_sig = np.sqrt(np.sum(sig**2,axis=0))
     tmp_sig = sig[0,:]
-    im = cur_ax.specgram(tmp_sig, NFFT=2048,Fs=1./dt, noverlap=128,xextent=[timebase[0], timebase[-1]])
-    im = cur_ax2.specgram(tmp_sig, NFFT=2048,Fs=1./dt, noverlap=128,xextent=[timebase[0], timebase[-1]])
+    im = cur_ax.specgram(tmp_sig, NFFT=1024,Fs=1./dt, noverlap=128,xextent=[timebase[0], timebase[-1]])
+    im = cur_ax2.specgram(tmp_sig, NFFT=1024,Fs=1./dt, noverlap=128,xextent=[timebase[0], timebase[-1]])
     for i in np.unique(assign):
         mask = (assign==i) * (shot_details==shot)
         if np.sum(mask)>1 and np.mean(details[i,:])>5:
@@ -330,6 +330,8 @@ tmp = len(time_windows)
 for _ in range(tmp-1):
     axf[_].set_xlim(time_windows[_])
     axf2[_].set_xlim(time_windows[_])
+    axf[_].set_ylim([0,100])
+    axf2[_].set_ylim([0,100])
 #axf[0].set_xlim([2800,3000])
 #axf2[0].set_xlim([2800,3000])
 
