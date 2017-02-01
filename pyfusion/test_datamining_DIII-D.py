@@ -293,10 +293,9 @@ print("Plotting...")
 
 nrows = int(np.sqrt(len(shot_list)))
 ncols = int(np.ceil(len(shot_list)/nrows))
-fig, ax = plt.subplots(nrows = nrows, ncols=ncols, sharex=False,
-                       sharey=True)
+fig, ax = plt.subplots(nrows = nrows, ncols=ncols, sharex=False, sharey=False)
 axf = ax.flatten()
-fig2, ax2 = plt.subplots(nrows = nrows, ncols=ncols, sharex=False, sharey=True)
+fig2, ax2 = plt.subplots(nrows = nrows, ncols=ncols, sharex=False, sharey=False)
 axf2 = ax2.flatten()
 plot_colors = {}
 for cur_ax, cur_ax2, shot, tmp in zip(axf, axf2, shot_list, results):
