@@ -261,11 +261,11 @@ z = feat_obj.cluster(**datamining_settings)
 # i.e feat_obj.dump_data("hello.pickle")
 
 # We can make some plots:
-z.plot_VM_distributions()
-z.plot_dimension_histograms()
-dims = [[i,i+1] for i in range(13)]
-z.plot_phase_vs_phase(compare_dimensions=dims)
-z.plot_cumulative_phases()
+#z.plot_VM_distributions()
+#z.plot_dimension_histograms()
+#dims = [[i,i+1] for i in range(13)]
+#z.plot_phase_vs_phase(compare_dimensions=dims)
+#z.plot_cumulative_phases()
 
 #If you want to investigate cluster #4 in more detail
 # In [116]: mask=(z.cluster_assignments==4)
@@ -288,7 +288,7 @@ z.plot_cumulative_phases()
 #         1398.751])
 
 # This information can be used to go and get any extra information that you want to get
-
+print("Plotting...")
 
 nrows = int(np.sqrt(len(shot_list)))
 ncols = int(np.ceil(len(shot_list)/nrows))
