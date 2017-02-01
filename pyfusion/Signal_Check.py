@@ -29,7 +29,7 @@ def run(shot,time_window):
             name = mag.channels[n].name
             cur_ax.grid()
             im = cur_ax.plot(time,sig)
-            cur_ax.text((time_window[1]+time_window[0])/2.3,400,name,fontsize=7)
+            cur_ax.text((time_window[1]+time_window[0])/2,400,name,fontsize=11)
     fig.canvas.draw()
     fig.show()
 
