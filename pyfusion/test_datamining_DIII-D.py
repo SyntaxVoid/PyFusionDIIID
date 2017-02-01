@@ -290,11 +290,12 @@ z = feat_obj.cluster(**datamining_settings)
 # This information can be used to go and get any extra information that you want to get
 print("Plotting...")
 
+
 nrows = int(np.sqrt(len(shot_list)))
 ncols = int(np.ceil(len(shot_list)/nrows))
-fig, ax = plt.subplots(nrows = nrows, ncols=ncols, sharex=True, sharey=True)
+fig, ax = plt.subplots(nrows = nrows, ncols=ncols, sharex=False, sharey=True)
 axf = ax.flatten()
-fig2, ax2 = plt.subplots(nrows = nrows, ncols=ncols, sharex=True, sharey=True)
+fig2, ax2 = plt.subplots(nrows = nrows, ncols=ncols, sharex=False, sharey=True)
 axf2 = ax2.flatten()
 plot_colors = {}
 for cur_ax, cur_ax2, shot, tmp in zip(axf, axf2, shot_list, results):
@@ -306,8 +307,8 @@ for cur_ax, cur_ax2, shot, tmp in zip(axf, axf2, shot_list, results):
     dt = np.mean(np.diff(timebase))
     #tmp_sig = np.sqrt(np.sum(sig**2,axis=0))
     tmp_sig = sig[0,:]
-    im = cur_ax.specgram(tmp_sig, NFFT=1024,Fs=1./dt, noverlap=128,xextent=[timebase[0], timebase[-1]])
-    im = cur_ax2.specgram(tmp_sig, NFFT=1024,Fs=1./dt, noverlap=128,xextent=[timebase[0], timebase[-1]])
+    im = cur_ax.specgram(tmp_sig, NFFT=2048,Fs=1./dt, noverlap=128,xextent=[timebase[0], timebase[-1]])
+    im = cur_ax2.specgram(tmp_sig, NFFT=2048,Fs=1./dt, noverlap=128,xextent=[timebase[0], timebase[-1]])
     for i in np.unique(assign):
         mask = (assign==i) * (shot_details==shot)
         if np.sum(mask)>1 and np.mean(details[i,:])>5:
