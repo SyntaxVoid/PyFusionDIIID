@@ -83,7 +83,7 @@ def get_stft(shot, time_window = None):
     data_fft = mag_red.generate_frequency_series(samples,samples/overlap)
 
     # Some settings
-    n_pts = 10; lower_freq = 1; cutoff_by = 'sigma_eq'; filter_cutoff = 75;
+    n_pts = 10; lower_freq = 1; cutoff_by = 'sigma_eq'; filter_cutoff = 55;
     datamining_settings = None; upper_freq = 500000; filter_item = 'EM_VMM_kappas'
 
     # Find peaks int fft data (i.e probably modes), and only keep those:
@@ -137,8 +137,9 @@ def get_stft_wrapper(input_data):
 #shot_list = [153067, 153071, 153072, 152932, 152938, 157399, 157400, 157401, 157402]
 #time_windows = [[2800, 3000], [2800, 3000], [2800, 3000], [2500, 2700], [3000, 3200],
 #                   [2300, 2500], [2300, 2500], [2300, 2500], [2300, 2500]]
-shot_list = [153071,153072]
-time_windows = [[2800,3000],[2800,3000]]
+shot_list = [153071,153072,152932, 152938, 157399, 157400, 157401, 157402]
+time_windows = [[2800,3000],[2800,3000], [2800, 3000], [2500, 2700], [3000, 3200],
+                [2300, 2500], [2300, 2500], [2300, 2500], [2300, 2500]]
 # Bundle the above data together, note if we wanted we could have different time windows for each shot
 #input_data_iter = itertools.izip(shot_list, itertools.repeat(time_window))
 input_data_iter = itertools.izip(shot_list, time_windows)
