@@ -293,7 +293,8 @@ print("Plotting...")
 
 nrows = int(np.sqrt(len(shot_list)))
 ncols = int(np.ceil(len(shot_list)/nrows))
-fig, ax = plt.subplots(nrows = nrows, ncols=ncols, sharex=False, sharey=True)
+fig, ax = plt.subplots(nrows = nrows, ncols=ncols, sharex=False,
+                       sharey=True)
 axf = ax.flatten()
 fig2, ax2 = plt.subplots(nrows = nrows, ncols=ncols, sharex=False, sharey=True)
 axf2 = ax2.flatten()
@@ -324,10 +325,16 @@ for cur_ax, cur_ax2, shot, tmp in zip(axf, axf2, shot_list, results):
     #cur_ax.plot(misc_data_dict['time'][shot_details==shot], misc_data_dict['freq'][shot_details==shot], '.',color='white',markersize=5)
 #axf[0].set_xlim(time_window)
 #axf2[0].set_xlim(time_window)
-axf[0].set_xlim([2800,3000])
-axf2[0].set_xlim([2800,3000])
-fig.subplots_adjust(bottom=0.02, left=0.02, right=0.95, top=0.95,wspace=0.01,hspace=0.01)
-fig2.subplots_adjust(bottom=0.02, left=0.02, right=0.95, top=0.95,wspace=0.01,hspace=0.01)
+
+tmp = len(time_windows)
+for _ in range(tmp):
+    axf[_].set_xlim(time_windows[_])
+    axf2[_].set_xlim(time_windows[_])
+#axf[0].set_xlim([2800,3000])
+#axf2[0].set_xlim([2800,3000])
+
+#fig.subplots_adjust(bottom=0.02, left=0.02, right=0.95, top=0.95,wspace=0.01,hspace=0.01)
+#fig2.subplots_adjust(bottom=0.02, left=0.02, right=0.95, top=0.95,wspace=0.01,hspace=0.01)
 fig.canvas.draw();fig.show()
 fig2.canvas.draw();fig2.show()
 
