@@ -327,7 +327,7 @@ for cur_ax, cur_ax2, shot, tmp in zip(axf, axf2, shot_list, results):
 #axf2[0].set_xlim(time_window)
 
 tmp = len(time_windows)
-for _ in range(tmp):
+for _ in range(tmp-1):
     axf[_].set_xlim(time_windows[_])
     axf2[_].set_xlim(time_windows[_])
 #axf[0].set_xlim([2800,3000])
