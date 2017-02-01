@@ -27,8 +27,9 @@ def run(shot,time_window):
         if n < n_signals:
             sig = mag.signal[n].tolist()
             name = mag.channels[n].name
+            cur_ax.grid()
             im = cur_ax.plot(time,sig)
-            cur_ax.text((time_window[1]+time_window[0])/2.3,400,name,fontsize=20)
+            cur_ax.text((time_window[1]+time_window[0])/2.3,400,name,fontsize=7)
     fig.canvas.draw()
     fig.show()
 
