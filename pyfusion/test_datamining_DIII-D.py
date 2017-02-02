@@ -109,7 +109,7 @@ def get_stft(shot, time_window = None):
 
     # STFT-clustering includes a clustering step before we get to the main clustering.
     # This is essentially to filter out any rubbish 
-    datamining_settings = {'n_clusters':16, 'n_iterations':20, 'start': 'k_means','verbose':0, 'method':'EM_VMM'}
+    datamining_settings = {'n_clusters':8, 'n_iterations':20, 'start': 'k_means','verbose':0, 'method':'EM_VMM'}
     z = ext.perform_data_datamining(diff_angles, misc_data_dict, datamining_settings)
 
     dt = np.mean(np.diff(mag.timebase))
