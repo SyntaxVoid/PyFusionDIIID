@@ -159,7 +159,7 @@ wrapper = get_stft_wrapper
 
 # We take advantage of the fact that each shot can be analysed
 # independently, so we can use multiple CPUs to speed things up
-n_cpus = 1
+n_cpus = 4
 
 # Only go through the extra effort required for multiprocessing if n_cpu is greater than 1
 if n_cpus>1:
@@ -242,7 +242,7 @@ feat_obj = clust.feature_object(instance_array = instance_array, instance_array_
 
 # Now we are ready to do the actual datamining
 # We need to choose which settings to use:
-datamining_settings = {'n_clusters':16, 'n_iterations':20, 
+datamining_settings = {'n_clusters':8, 'n_iterations':20,
                        'start': 'k_means','verbose':0, 'method':'EM_VMM'}
 
 # Perform the datamining, and return an object with the results!
