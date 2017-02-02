@@ -83,7 +83,7 @@ def get_stft(shot, time_window = None):
     data_fft = mag_red.generate_frequency_series(samples,samples/overlap)
 
     # Some settings
-    n_pts = 10; lower_freq = 1; cutoff_by = 'sigma_eq'; filter_cutoff = 55;
+    n_pts = 10; lower_freq = 1; cutoff_by = 'sigma_eq'; filter_cutoff = 75;
     datamining_settings = None; upper_freq = 500000; filter_item = 'EM_VMM_kappas'
 
     # Find peaks int fft data (i.e probably modes), and only keep those:
