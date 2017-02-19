@@ -111,7 +111,7 @@ if __name__ == '__main__':
     time_window = [300,1400]
     input_data_iter = itertools.izip(shot_list,itertools.repeat(time_window))
     wrapper = get_stft_wrapper
-    n_cpus = 4
+    n_cpus = 1
     if n_cpus > 1:
         pool_size = n_cpus
         pool = Pool(processes=pool_size, maxtasksperchild=3)
