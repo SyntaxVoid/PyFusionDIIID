@@ -12,14 +12,14 @@ import pyfusion.clustering.extract_features_scans as ext
 
 def run(shot,time_window):
     dev = pf.getDevice("DIIID")
-    mag = dev.acq.getdata(shot,"DIIID_toroidal_mag")
+    mag = dev.acq.getdata(shot,"DIIID_poloidal322_mag")
     mag = mag.reduce_time(time_window)
     n_signals = len(mag.channels)
     print("{} Signals".format(n_signals))
     time = mag.timebase.tolist()
 
-    nrows=4
-    ncols=4
+    nrows=6
+    ncols=6
     fig,ax=plt.subplots(nrows=nrows,ncols=ncols,sharex=True,sharey=True)
     axf = ax.flatten()
     fig.suptitle("SHOT {}".format(shot))
@@ -35,6 +35,6 @@ def run(shot,time_window):
 
 
 if __name__ == '__main__':
-    shot = 157399
-    time_window = [3000,3200]
+    shot = 159243
+    time_window = [300,1400]
     run(shot,time_window)
