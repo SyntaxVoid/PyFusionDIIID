@@ -98,13 +98,15 @@ class Analysis:
         if method == "stft":
             func = stft_pickle_workaround
         tmp_data_iter = itertools.izip(itertools.repeat(self),itertools.izip(self.shots,self.time_windows))
+        print(tmp_data_iter.next())
+        raise TypeError("...")
         if self.n_cpus > 1:
             pool = Pool(processes = self.n_cpus, maxtasksperchild=3)
             self.results = pool.map(func, tmp_data_iter)
             pool.close()
             pool.join()
         else:
-            self.results = map(func, self.input_data_iter)
+            self.results = map(func, tmp_data_iter)
         start = True
         instance_array = 0
         misc_data_dict = 0
@@ -179,6 +181,6 @@ if __name__ == '__main__':
     shots = range(159243,159247+1)
     time_windows = [300,1400]
     probes = "DIIID_toroidal_mag"
-    A1 = Analysis(shots = shots, time_windows = time_windows, probes = probes, n_cpus = 1)
+    A1 = Analysis(shots = shots, time_windows = time_windows, probes = probes, n_cpus = 4)
     A1.run_analysis()
     A1.plot_clusters()
