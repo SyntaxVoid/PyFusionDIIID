@@ -325,15 +325,15 @@ for cur_ax, cur_ax2, shot, tmp in zip(axf, axf2, shot_list, results):
                 pl = cur_ax.plot(z.feature_obj.misc_data_dict['time'][mask], z.feature_obj.misc_data_dict['freq'][mask],'o', markersize=markersize, color=plot_colors[i])
                 #pl = cur_ax.scatter(z.feature_obj.misc_data_dict['time'][mask], z.feature_obj.misc_data_dict['freq'][mask], facecolor=plot_colors[i][0],edgecolor=plot_colors[i][1],alpha=0.3)
     #cur_ax.plot(misc_data_dict['time'][shot_details==shot], misc_data_dict['freq'][shot_details==shot], '.',color='white',markersize=5)
-axf[0].set_xlim(time_windows[0])
-axf2[0].set_xlim(time_windows[0])
-#
-# tmp = len(time_windows)
-# for _ in range(tmp):
-#     axf[_].set_xlim(time_windows[_])
-#     axf2[_].set_xlim(time_windows[_])
-#     axf[_].set_ylim([0,100])
-#     axf2[_].set_ylim([0,100])
+#axf[0].set_xlim(time_windows[0])
+#axf2[0].set_xlim(time_windows[0])
+
+tmp = len(time_windows)
+for _ in range(tmp):
+    axf[_].set_xlim(time_windows[_])
+    axf2[_].set_xlim(time_windows[_])
+    axf[_].set_ylim([0,100])
+    axf2[_].set_ylim([0,100])
 #axf[0].set_xlim([2800,3000])
 #axf2[0].set_xlim([2800,3000])
 
