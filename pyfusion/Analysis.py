@@ -16,6 +16,8 @@ def stft_pickle_workaround(input_data):
     a = input_data[0]
     s = input_data[1][0]
     t = input_data[1][1]
+    print(a)
+    print(type(a))
     return copy.deepcopy(input_data[0].get_stft(input_data[1][0]))
 
 
