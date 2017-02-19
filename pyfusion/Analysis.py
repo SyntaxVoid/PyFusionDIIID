@@ -98,7 +98,7 @@ class Analysis:
         if method == "stft":
             func = stft_pickle_workaround
         #tmp_data_iter = itertools.izip(itertools.repeat(self),itertools.izip(self.shots,self.time_windows))
-        tmp_data_iter = itertools.izip(self,self.shots,self.time_windows)
+        tmp_data_iter = itertools.izip(itertools.repeat(self),self.shots,self.time_windows)
         if self.n_cpus > 1:
             pool = Pool(processes = self.n_cpus, maxtasksperchild=3)
             self.results = pool.map(func, tmp_data_iter)
