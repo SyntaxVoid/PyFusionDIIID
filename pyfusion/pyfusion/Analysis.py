@@ -29,6 +29,7 @@ class Analysis:
                 for n in range(len(self.shots)):
                     tmp.append(time_windows)
                 time_windows = copy.deepcopy(tmp)
+        self.time_windows = time_windows
         self.input_data_iter = itertools.izip(self.shots, self.time_windows)
         self.device = device
         self.probes = probes
