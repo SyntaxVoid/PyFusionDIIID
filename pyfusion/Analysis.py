@@ -9,10 +9,15 @@ import pyfusion as pf
 import pyfusion.clustering as clust
 import pyfusion.clustering.extract_features_scans as ext
 
+def stft_pickle_workaround(input_data):
+    # Analysis class is input_data[0]
+    # Shot number is input_data[1][0]
+    # Time window is input_data[1][1]
+    a = input_data[0]
+    s = input_data[1][0]
+    t = input_data[1][1]
+    return copy.deepcopy(input_data[0].get_stft(input_data[1][0]))
 
-def pickle_workaround(A, input_data_iter):
-    A.get_stft_wrapper(input_data_iter)
-    return
 
 
 class Analysis:
@@ -90,10 +95,11 @@ class Analysis:
 
     def run_analysis(self,method="stft",savefile=None):
         if method == "stft":
-            func = pickle_workaround(self,self.input_data_iter)
+            func = stft_pickle_workaround
+        tmp_data_iter = itertools.izip(itertools.repeat(self),self.input_data_iter)
         if self.n_cpus > 1:
             pool = Pool(processes = self.n_cpus, maxtasksperchild=3)
-            self.results = pool.map(func, self.input_data_iter)
+            self.results = pool.map(func, tmp_data_iter)
             pool.close()
             pool.join()
         else:
@@ -172,6 +178,6 @@ if __name__ == '__main__':
     shots = range(159243,159247+1)
     time_windows = [300,1400]
     probes = "DIIID_toroidal_mag"
-    A1 = Analysis(shots = shots, time_windows = time_windows, probes = probes, n_cpus = 4)
+    A1 = Analysis(shots = shots, time_windows = time_windows, probes = probes, n_cpus = 1)
     A1.run_analysis()
     A1.plot_clusters()
