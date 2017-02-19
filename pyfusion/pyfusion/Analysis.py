@@ -165,6 +165,6 @@ if __name__ == '__main__':
     shots = range(159243,159257+1)
     time_windows = [300,1400]
     probes = "DIID_poloidal322_mag"
-    A1 = Analysis(shots = shots, time_windows = time_windows, probes = probes)
+    A1 = Analysis(shots = shots, time_windows = time_windows, probes = probes, n_cpus = 1)
     A1.run_analysis()
     A1.plot_clusters()
