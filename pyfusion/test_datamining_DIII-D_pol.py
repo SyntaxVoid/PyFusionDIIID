@@ -12,10 +12,10 @@ def get_single(shot, time_window=None):
     if time_window==None:
         time_window = [2000,5000]
     cache_name = '/u/haskeysr/tmp/{}.pickle'.format(shot)
-    start_time = time.time()
+    #start_time = time.time()
     dev = pf.getDevice('DIIID')
     mag = dev.acq.getdata(shot,'DIIID_toroidal_mag')
-    print('Data fetch time {:.2f}s'.format(time.time() - start_time))
+    #print('Data fetch time {:.2f}s'.format(time.time() - start_time))
     mag_red = mag.reduce_time(time_window)
     samples= 1024
     overlap = 4
@@ -302,6 +302,10 @@ fig2, ax2 = plt.subplots(nrows = nrows, ncols=ncols, sharex=False, sharey=False)
 axf2 = ax2.flatten()
 plot_colors = {}
 for cur_ax, cur_ax2, shot, tmp in zip(axf, axf2, shot_list, results):
+    # tmp[0] : instance array
+    # tmp[1] : misc_data_dict
+    # tmp[2] : mag.signal
+    # tmp[3] : mag.timebase
     assign = z.cluster_assignments
     details = z.cluster_details['EM_VMM_kappas']
     shot_details = z.feature_obj.misc_data_dict['shot']

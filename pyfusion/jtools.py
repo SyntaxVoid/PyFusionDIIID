@@ -2,6 +2,7 @@
 # John Gresl 10/6/2016
 import os.path
 from copy import deepcopy
+import pickle
 import collections
 import idlsave
 from copy import deepcopy
@@ -31,6 +32,26 @@ def ensure_valid_path(p):
             ans = raw_input("\"{}\" is not a valid input. Please select a choice from {}. . .\n".format(ans, valid_ans)).lower().strip()
         return 0 if ans in ["no","n"] else 1
     return 1
+
+def save_var(var,path):
+    if os.path.isfile(path):
+        # Overwrite, rename, cancel
+        valid_ans = ["y","r","c"]
+        print("File already exists at:  {}\n\tOverwrite?".format(path))
+        ans = raw_input("\ty: Overwrite file\n\tr: Rename your file\n\tc: Cancel and don't save anything").lower().strip()
+        while ans not in valid_ans:
+            ans = raw_input("\"{}\" is not a valid input. Please select a choice from {}. . .\n"\
+                            .format(ans,valid_ans)).lower().strip()
+        if ans == "y":
+            pickle.dump(var,path)
+            print("Variable successfully saved to {}".format(path))
+            return
+        elif ans == "r":
+            new_path = raw_input("Please enter new file path: ")
+            save_var(var,new_path)
+        elif ans == "c":
+            print("Variable has not been saved.")
+        return
 
 def write_master_database(location,header, ord_dict):
     do_write = ensure_valid_path(location)
