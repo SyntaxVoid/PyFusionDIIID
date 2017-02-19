@@ -109,7 +109,7 @@ def get_stft(shot, time_window = None):
 
     # STFT-clustering includes a clustering step before we get to the main clustering.
     # This is essentially to filter out any rubbish 
-    datamining_settings = {'n_clusters':8, 'n_iterations':20, 'start': 'k_means','verbose':0, 'method':'EM_VMM'}
+    datamining_settings = {'n_clusters':16, 'n_iterations':20, 'start': 'k_means','verbose':0, 'method':'EM_VMM'}
     z = ext.perform_data_datamining(diff_angles, misc_data_dict, datamining_settings)
 
     dt = np.mean(np.diff(mag.timebase))
@@ -243,7 +243,7 @@ feat_obj = clust.feature_object(instance_array = instance_array, instance_array_
 
 # Now we are ready to do the actual datamining
 # We need to choose which settings to use:
-datamining_settings = {'n_clusters':8, 'n_iterations':20,
+datamining_settings = {'n_clusters':16, 'n_iterations':20,
                        'start': 'k_means','verbose':0, 'method':'EM_VMM'}
 
 # Perform the datamining, and return an object with the results!
@@ -332,8 +332,8 @@ tmp = len(time_windows)
 for _ in range(tmp):
     axf[_].set_xlim(time_windows[_])
     axf2[_].set_xlim(time_windows[_])
-    #axf[_].set_ylim([0,250])
-    #axf2[_].set_ylim([0,250])
+    axf[_].set_ylim([0,250])
+    axf2[_].set_ylim([0,250])
 #axf[0].set_xlim([2800,3000])
 #axf2[0].set_xlim([2800,3000])
 
