@@ -332,8 +332,8 @@ tmp = len(time_windows)
 for _ in range(tmp):
     axf[_].set_xlim(time_windows[_])
     axf2[_].set_xlim(time_windows[_])
-    axf[_].set_ylim([0,100])
-    axf2[_].set_ylim([0,100])
+    #axf[_].set_ylim([0,250])
+    #axf2[_].set_ylim([0,250])
 #axf[0].set_xlim([2800,3000])
 #axf2[0].set_xlim([2800,3000])
 
