@@ -151,12 +151,12 @@ class Analysis:
                             pl = cur_ax.plot(self.z.feature_obj.misc_data_dict['time'][mask],
                                              self.z.feature_obj.misc_data_dict['freq'][mask], 'o', markersize=markersize,
                                              color=plot_colors[i])
-        # tmp = len(time_windows)
-        # for _ in range(tmp):
-        #     axf[_].set_xlim(time_windows[_])
-        #     axf2[_].set_xlim(time_windows[_])
-        #     axf[_].set_ylim([0, 250])
-        #     axf2[_].set_ylim([0, 250])
+        tmp = len(self.time_windows)
+        for _ in range(tmp):
+            axf[_].set_xlim(time_windows[_])
+            axf2[_].set_xlim(time_windows[_])
+            axf[_].set_ylim([0, 250])
+            axf2[_].set_ylim([0, 250])
         fig.canvas.draw()
         fig.show()
         fig2.canvas.draw()
