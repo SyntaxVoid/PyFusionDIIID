@@ -294,8 +294,8 @@ print("Plotting...")
 
 #nrows = int(np.sqrt(len(shot_list)))
 #ncols = int(np.ceil(len(shot_list)/nrows))
-nrows = 3
-ncols = 3
+nrows = 6
+ncols = 6
 fig, ax = plt.subplots(nrows = nrows, ncols=ncols, sharex=False, sharey=False)
 axf = ax.flatten()
 fig2, ax2 = plt.subplots(nrows = nrows, ncols=ncols, sharex=False, sharey=False)
