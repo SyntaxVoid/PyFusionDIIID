@@ -10,6 +10,11 @@ import pyfusion.clustering as clust
 import pyfusion.clustering.extract_features_scans as ext
 
 
+def pickle_workaround(A, input_data_iter):
+    A.get_stft_wrapper(input_data_iter)
+    return
+
+
 class Analysis:
     def __init__(self, shots, time_windows=None, device = "DIIID", probes = "DIIID_toroidal_mag",
                  samples=1024, overlap=4, cutoffs=None, datamining_settings=None,
@@ -85,7 +90,7 @@ class Analysis:
 
     def run_analysis(self,method="stft",savefile=None):
         if method == "stft":
-            func = self.get_stft_wrapper
+            func = pickle_workaround(self,self.input_data_iter)
         if self.n_cpus > 1:
             pool = Pool(processes = self.n_cpus, maxtasksperchild=3)
             self.results = pool.map(func, self.input_data_iter)
@@ -161,10 +166,12 @@ class Analysis:
         fig2.show()
         return
 
+
+
 if __name__ == '__main__':
     shots = range(159243,159247+1)
     time_windows = [300,1400]
     probes = "DIIID_toroidal_mag"
-    A1 = Analysis(shots = shots, time_windows = time_windows, probes = probes, n_cpus = 1)
+    A1 = Analysis(shots = shots, time_windows = time_windows, probes = probes, n_cpus = 4)
     A1.run_analysis()
     A1.plot_clusters()
