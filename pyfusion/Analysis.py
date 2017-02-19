@@ -10,17 +10,7 @@ import pyfusion.clustering as clust
 import pyfusion.clustering.extract_features_scans as ext
 
 def stft_pickle_workaround(input_data):
-    # Analysis class is input_data[0]
-    # Shot number is input_data[1][0]
-    # Time window is input_data[1][1]
-    a = input_data[0]
-    s = input_data[1]
-    t = input_data[1]
-    print(input_data)
-    print("$$$$$$$$$$$$$$$$$")
     return copy.deepcopy(input_data[0].get_stft(input_data[1]))
-
-
 
 class Analysis:
     def __init__(self, shots, time_windows=None, device = "DIIID", probes = "DIIID_toroidal_mag",
@@ -55,13 +45,11 @@ class Analysis:
         self.n_cpus = n_cpus
         return
 
-
     def get_mags(self,shot,probes):
         dev = pf.getDevice(self.device)
         time_window = self.time_windows[self.shots.index(shot)]
         mag = dev.acq.getdata(shot,probes).reduce_time(time_window)
         return mag
-
 
     def get_stft(self,shot):
         mag = self.get_mags(shot,self.probes)
@@ -134,7 +122,7 @@ class Analysis:
         if nshots > 2:
             nrows = int(np.floor(np.sqrt(nshots)))
             ncols = int(np.ceil(nshots/nrows))
-            fig, ax = plt.subplots(nrows = nrows, ncols=ncols, sharex=True, sharey=True)
+            fig, ax = plt.subplots(nrows = nrows, ncols=ncols, sharex=False, sharey=False)
             axf = ax.flatten()
             fig2, ax2 = plt.subplots(nrows=nrows, ncols=ncols, sharex=False, sharey=False)
             axf2 = ax2.flatten()
@@ -148,7 +136,7 @@ class Analysis:
                 dt = np.mean(np.diff(time_base))
                 tmp_sig = sig[0,:]
                 im = cur_ax.specgram(tmp_sig, NFFT=1024, Fs=1./dt, noverlap=128, xextent=[time_base[0], time_base[-1]])
-                im = cur_ax2.specgram(tmp_sig, NFFT=1024, Fs=1. / dt, noverlap=128, xextent=[time_base[0], time_base[-1]])
+                im = cur_ax2.specgram(tmp_sig, NFFT=1024, Fs=1./dt, noverlap=128, xextent=[time_base[0], time_base[-1]])
                 for i in np.unique(assign):
                     mask = (assign == i) * (shot_details == shot)
                     if np.sum(mask) > 1 and np.mean(details[i, :]) > 5:
@@ -163,12 +151,12 @@ class Analysis:
                             pl = cur_ax.plot(self.z.feature_obj.misc_data_dict['time'][mask],
                                              self.z.feature_obj.misc_data_dict['freq'][mask], 'o', markersize=markersize,
                                              color=plot_colors[i])
-        tmp = len(time_windows)
-        for _ in range(tmp):
-            axf[_].set_xlim(time_windows[_])
-            axf2[_].set_xlim(time_windows[_])
-            axf[_].set_ylim([0, 250])
-            axf2[_].set_ylim([0, 250])
+        # tmp = len(time_windows)
+        # for _ in range(tmp):
+        #     axf[_].set_xlim(time_windows[_])
+        #     axf2[_].set_xlim(time_windows[_])
+        #     axf[_].set_ylim([0, 250])
+        #     axf2[_].set_ylim([0, 250])
         fig.canvas.draw()
         fig.show()
         fig2.canvas.draw()
