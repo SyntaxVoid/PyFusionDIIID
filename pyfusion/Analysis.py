@@ -14,10 +14,11 @@ def stft_pickle_workaround(input_data):
     # Shot number is input_data[1][0]
     # Time window is input_data[1][1]
     a = input_data[0]
-    s = input_data[1][0]
-    t = input_data[1][1]
+    s = input_data[1]
+    t = input_data[1]
     print(input_data)
-    return copy.deepcopy(input_data[0].get_stft(input_data[1][0]))
+    print("$$$$$$$$$$$$$$$$$")
+    return copy.deepcopy(input_data[0].get_stft(input_data[1]))
 
 
 
