@@ -118,8 +118,8 @@ class Analysis:
     def plot_clusters(self):
         nshots = len(self.shots)
         if nshots > 2:
-            nrows = np.floor(np.sqrt(nshots))
-            ncols = np.ceil(nshots/nrows)
+            nrows = int(np.floor(np.sqrt(nshots)))
+            ncols = int(np.ceil(nshots/nrows))
             fig, ax = plt.subplots(nrows = nrows, ncols=ncols, sharex=True, sharey=True)
             axf = ax.flatten()
             fig2, ax2 = plt.subplots(nrows=nrows, ncols=ncols, sharex=False, sharey=False)
