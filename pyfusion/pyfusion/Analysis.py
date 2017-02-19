@@ -80,12 +80,12 @@ class Analysis:
         misc_data_dict = misc_data_dict_cur
         return instance_array, misc_data_dict, mag.signal, mag.timebase
 
-
     def get_stft_wrapper(self,input_data):
         return copy.deepcopy(self.get_stft(input_data[0]))
 
-
-    def run_analysis(self,func=get_stft_wrapper,savefile=None):
+    def run_analysis(self,method="stft",savefile=None):
+        if method == "stft":
+            func = self.get_stft_wrapper
         if self.n_cpus > 1:
             pool = Pool(processes = self.n_cpus, maxtasksperchild=3)
             self.results = pool.map(func, self.input_data_iter)
