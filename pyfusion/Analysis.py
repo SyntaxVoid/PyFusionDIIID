@@ -138,7 +138,7 @@ class Analysis:
         return
 
     def plot_clusters(self):
-        mpl.rcParams["axes.linewidth"] = 2.0
+        mpl.rcParams["axes.linewidth"] = 3.0
         nshots = len(self.shots)
         if nshots > 2:
             nrows, ncols = jt.squareish_grid(nshots, swapxy=True)
@@ -174,16 +174,19 @@ class Analysis:
                                                   'o', markersize=markersize, color=plot_colors[i])
         tmp = len(self.time_windows)
         for _ in range(tmp):
+            shot = str(self.shots[_])
             self.axf[_].set_xlim(self.time_windows[_])
             self.axf2[_].set_xlim(self.time_windows[_])
             self.axf[_].set_ylim([0, 250])
             self.axf2[_].set_ylim([0, 250])
+            self.axf[_].text(700, 200, shot, bbox=dict(facecolor="red", alpha=0.75))
+            self.axf2[_].text(700, 200, shot, bbox=dict(facecolor="red", alpha=0.75))
         self.fig.subplots_adjust(hspace=0, wspace=0)
         self.fig2.subplots_adjust(hspace=0, wspace=0)
-        self.fig.text(0.5, 0.04, "Time (ms)", ha="center")
-        self.fig.text(0.04, 0.5, "Freq (kHz)", va="center", rotation="vertical")
-        self.fig2.text(0.5, 0.04, "Time (ms)", ha="center")
-        self.fig2.text(0.04, 0.5, "Freq (kHz)", va="center", rotation="vertical")
+        self.fig.text(0.5, 0.065, "Time (ms)", ha="center")
+        self.fig.text(0.1, 0.5, "Freq (kHz)", va="center", rotation="vertical")
+        self.fig2.text(0.5, 0.065, "Time (ms)", ha="center")
+        self.fig2.text(0.1, 0.5, "Freq (kHz)", va="center", rotation="vertical")
         self.fig.canvas.draw()
         self.fig.show()
         self.fig2.canvas.draw()
