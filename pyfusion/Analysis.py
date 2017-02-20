@@ -154,9 +154,13 @@ class Analysis:
         tmp = len(self.time_windows)
         for _ in range(tmp):
             axf[_].set_xlim(self.time_windows[_])
+            axf[_].set_xlabel("Time (ms)")
             axf2[_].set_xlim(self.time_windows[_])
+            axf2[_].set_xlabel("Time (ms)")
             axf[_].set_ylim([0, 250])
+            axf[_].set_ylabel("Freq (kHz)")
             axf2[_].set_ylim([0, 250])
+            axf2[_].set_ylabel("Freq (kHz)")
         fig.canvas.draw()
         fig.show()
         fig2.canvas.draw()
