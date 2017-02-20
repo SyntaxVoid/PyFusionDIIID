@@ -122,9 +122,9 @@ class Analysis:
         nshots = len(self.shots)
         if nshots > 2:
             nrows,ncols = jt.squareish_grid(nshots)
-            fig, ax = plt.subplots(nrows = nrows, ncols=ncols, sharex=False, sharey=False)
+            fig, ax = plt.subplots(nrows = nrows, ncols=ncols, sharex=True, sharey=True)
             axf = ax.flatten()
-            fig2, ax2 = plt.subplots(nrows=nrows, ncols=ncols, sharex=False, sharey=False)
+            fig2, ax2 = plt.subplots(nrows=nrows, ncols=ncols, sharex=True, sharey=True)
             axf2 = ax2.flatten()
             plot_colors = {}
             for cur_ax, cur_ax2, shot, tmp in zip(axf, axf2, self.shots, self.results):
