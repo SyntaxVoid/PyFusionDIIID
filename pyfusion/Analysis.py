@@ -126,12 +126,8 @@ class Analysis:
             nrows,ncols = jt.squareish_grid(nshots,swapxy=True)
             fig, ax = plt.subplots(nrows = nrows, ncols=ncols, sharex=True, sharey=True)
             axf = ax.flatten()
-            plt.xlabel("Time (ms)")
-            plt.ylabel("Freq (kHz)")
             fig2, ax2 = plt.subplots(nrows=nrows, ncols=ncols, sharex=True, sharey=True)
             axf2 = ax2.flatten()
-            plt.xlabel("Time (ms)")
-            plt.ylabel("Freq (kHz)")
             plot_colors = {}
             for cur_ax, cur_ax2, shot, tmp in zip(axf, axf2, self.shots, self.results):
                 assign = self.z.cluster_assignments
@@ -165,6 +161,10 @@ class Analysis:
             axf2[_].set_ylim([0, 250])
         fig.subplots_adjust(hspace=0,wspace=0)
         fig2.subplots_adjust(hspace=0,wspace=0)
+        fig.text(0.5, 0.04, "Time (ms)", ha="center")
+        fig.text(0.04, 0.5, "Freq (kHz)", va="center",rotation="vertical")
+        fig2.text(0.5, 0.04, "Time (ms)", ha="center")
+        fig2.text(0.04, 0.5, "Freq (kHz)", va="center", rotation="vertical")
         fig.canvas.draw()
         fig.show()
         fig2.canvas.draw()
