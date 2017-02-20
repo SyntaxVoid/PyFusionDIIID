@@ -123,7 +123,7 @@ class Analysis:
         mpl.rcParams["axes.linewidth"] = 2.0
         nshots = len(self.shots)
         if nshots > 2:
-            nrows,ncols = jt.squareish_grid(nshots)
+            nrows,ncols = jt.squareish_grid(nshots,swapxy=True)
             fig, ax = plt.subplots(nrows = nrows, ncols=ncols, sharex=True, sharey=True)
             axf = ax.flatten()
             fig2, ax2 = plt.subplots(nrows=nrows, ncols=ncols, sharex=True, sharey=True)

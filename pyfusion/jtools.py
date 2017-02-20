@@ -9,7 +9,7 @@ from copy import deepcopy
 
 # Contains useful auxiliary functions for aesthetics. . .
 
-def squareish_grid(n):
+def squareish_grid(n,swapxy=False):
     # Returns the grid closest to a square that will fit n elements
     rows= 1
     cols = 1
@@ -18,7 +18,7 @@ def squareish_grid(n):
             cols += 1
         else:
             rows += 1
-    return (rows,cols)
+    return (rows,cols) if not swapxy else (cols,rows)
 
 def numlist_to_strlist(it):
     out = []
