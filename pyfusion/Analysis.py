@@ -154,6 +154,7 @@ class Analysis:
         tmp = len(self.time_windows)
         for _ in range(tmp):
             print("Now at ", _)
+            print(axf)
             axf[_].set_xlim(time_windows[_])
             axf2[_].set_xlim(time_windows[_])
             axf[_].set_ylim([0, 250])
