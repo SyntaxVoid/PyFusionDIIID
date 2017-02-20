@@ -5,6 +5,7 @@ import copy, itertools
 from multiprocessing import Pool
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib as mpl
 import pyfusion as pf
 import pyfusion.clustering as clust
 import pyfusion.clustering.extract_features_scans as ext
@@ -119,6 +120,7 @@ class Analysis:
         return
 
     def plot_clusters(self):
+        mpl.rcParams["axes.linewidth"] = 2.0
         nshots = len(self.shots)
         if nshots > 2:
             nrows,ncols = jt.squareish_grid(nshots)
