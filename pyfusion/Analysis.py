@@ -42,8 +42,8 @@ class Analysis:
         self.samples = samples
         self.overlap = overlap
         self.cutoffs = cutoffs if cutoffs is not None else \
-            {"min_svs": 2, "power_cutoff": 0.000, "lower_freq": 0, "uppder_freq": 200000}
-        self.datamining_settings = datamining_settings if cutoffs is not None else \
+            {"min_svs": 2, "power_cutoff": 0.000, "lower_freq": 0.1, "uppder_freq": 200000}
+        self.datamining_settings = datamining_settings if datamining_settings is not None else \
             {'n_clusters': 16, 'n_iterations': 20, 'start': 'k_means', 'verbose': 0, 'method': 'EM_VMM'}
         self.n_cpus = n_cpus
         self.results = None
@@ -69,11 +69,11 @@ class Analysis:
         mag = self.get_mags(shot, self.probes)
         data_fft = mag.generate_frequency_series(self.samples, self.samples/self.overlap)
         # SETTINGS #
-        n_pts = 10
+        n_pts = 8
         lower_freq = 1
         upper_freq = 500000
         cutoff_by = "sigma_eq"
-        filter_cutoff = 75
+        filter_cutoff = 85
         filter_item = "EM_VMM_kappas"
         # /SETTINGS #
         good_indices = ext.find_peaks(data_fft, n_pts=n_pts, lower_freq=lower_freq, upper_freq=upper_freq)
@@ -192,7 +192,7 @@ class Analysis:
 
 
 if __name__ == '__main__':
-    A1 = Analysis(shots=range(159243, 159247+1),
+    A1 = Analysis(shots=range(159243, 159246+1),
                   time_windows=[300, 1400],
                   probes="DIIID_poloidal322_mag",
                   n_cpus=4)
