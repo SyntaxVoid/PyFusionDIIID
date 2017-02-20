@@ -161,6 +161,8 @@ class Analysis:
             axf[_].set_ylabel("Freq (kHz)")
             axf2[_].set_ylim([0, 250])
             axf2[_].set_ylabel("Freq (kHz)")
+        fig.subplots_adjust(hspace=0)
+        fig2.subplots_adjust(hspace=0)
         fig.canvas.draw()
         fig.show()
         fig2.canvas.draw()
