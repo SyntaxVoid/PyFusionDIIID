@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import pyfusion as pf
 import pyfusion.clustering as clust
 import pyfusion.clustering.extract_features_scans as ext
+import jtools as jt
 
 def stft_pickle_workaround(input_data):
     return copy.deepcopy(input_data[0].get_stft(input_data[1]))
@@ -120,8 +121,7 @@ class Analysis:
     def plot_clusters(self):
         nshots = len(self.shots)
         if nshots > 2:
-            nrows = int(np.floor(np.sqrt(nshots)))
-            ncols = int(np.ceil(nshots/nrows))
+            nrows,ncols = jt.squareish_grid(nshots)
             fig, ax = plt.subplots(nrows = nrows, ncols=ncols, sharex=False, sharey=False)
             axf = ax.flatten()
             fig2, ax2 = plt.subplots(nrows=nrows, ncols=ncols, sharex=False, sharey=False)
