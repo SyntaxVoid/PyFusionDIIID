@@ -70,7 +70,7 @@ class Analysis:
         data_fft = mag.generate_frequency_series(self.samples, self.samples/self.overlap)
         # SETTINGS #
         n_pts = 8
-        lower_freq = 1
+        lower_freq = 45
         upper_freq = 500000
         cutoff_by = "sigma_eq"
         filter_cutoff = 85
