@@ -160,7 +160,7 @@ class Analysis:
                 self.im = cur_ax2.specgram(tmp_sig, NFFT=1024, Fs=1./dt,
                                            noverlap=128, xextent=[time_base[0], time_base[-1]])
                 for i in np.unique(assign):
-                    markersize = 5
+                    markersize = 1
                     mask = (assign == i) * (shot_details == shot)
                     if np.sum(mask) > 1 and np.mean(details[i, :]) > 5:
                         if i not in plot_colors:
@@ -197,7 +197,7 @@ class Analysis:
 if __name__ == '__main__':
     A1 = Analysis(shots=range(159243, 159257+1),
                   time_windows=[300, 1400],
-                  probes="DIIID_toroidal_mag",
+                  probes="DIIID_poloidal322_mag",
                   n_cpus=4)
     A1.run_analysis()
     A1.plot_clusters()
