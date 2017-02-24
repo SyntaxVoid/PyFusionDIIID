@@ -172,6 +172,7 @@ class Analysis:
                             self.pl = cur_ax.plot(self.z.feature_obj.misc_data_dict['time'][mask],
                                                   self.z.feature_obj.misc_data_dict['freq'][mask],
                                                   'o', markersize=markersize, color=plot_colors[i])
+        print(plot_colors)
         tmp = len(self.time_windows)
         for _ in range(tmp):
             shot = str(self.shots[_])
