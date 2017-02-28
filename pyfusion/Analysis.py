@@ -140,6 +140,7 @@ class Analysis:
     def plot_clusters(self):
         mpl.rcParams["axes.linewidth"] = 3.0
         nshots = len(self.shots)
+        plot_colors = {}
         if nshots > 2:
             nrows, ncols = jt.squareish_grid(nshots, swapxy=True)
             self.fig, self.ax = plt.subplots(nrows=nrows, ncols=ncols, sharex=True, sharey=True)
