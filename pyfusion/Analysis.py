@@ -57,6 +57,7 @@ class Analysis:
         self.axf2 = None
         self.im = None
         self.pl = None
+        self.markersize = 8
         return
 
     def get_mags(self, shot, probes):
@@ -139,7 +140,7 @@ class Analysis:
 
     def plot_clusters(self):
         mpl.rcParams["axes.linewidth"] = 3.0
-        markersize = 5
+        markersize = self.markersize
         nshots = len(self.shots)
         plot_colors = {}
         if nshots > 2:
