@@ -160,7 +160,7 @@ class Analysis:
                 self.im = cur_ax2.specgram(tmp_sig, NFFT=1024, Fs=1./dt,
                                            noverlap=128, xextent=[time_base[0], time_base[-1]])
                 for i in np.unique(assign):
-                    markersize = 1
+                    markersize = 3
                     mask = (assign == i) * (shot_details == shot)
                     if np.sum(mask) > 1 and np.mean(details[i, :]) > 5:
                         if i not in plot_colors:
@@ -172,16 +172,51 @@ class Analysis:
                             self.pl = cur_ax.plot(self.z.feature_obj.misc_data_dict['time'][mask],
                                                   self.z.feature_obj.misc_data_dict['freq'][mask],
                                                   'o', markersize=markersize, color=plot_colors[i])
-        print(plot_colors)
-        tmp = len(self.time_windows)
-        for _ in range(tmp):
-            shot = str(self.shots[_])
-            self.axf[_].set_xlim(self.time_windows[_])
-            self.axf2[_].set_xlim(self.time_windows[_])
-            self.axf[_].set_ylim([0, 250])
-            self.axf2[_].set_ylim([0, 250])
-            self.axf[_].text(700, 200, shot, bbox=dict(facecolor="red", alpha=0.75), fontsize=24)
-            self.axf2[_].text(700, 200, shot, bbox=dict(facecolor="red", alpha=0.75), fontsize=24)
+            print(plot_colors)
+            tmp = len(self.time_windows)
+            for _ in range(tmp):
+                shot = str(self.shots[_])
+                self.axf[_].set_xlim(self.time_windows[_])
+                self.axf2[_].set_xlim(self.time_windows[_])
+                self.axf[_].set_ylim([0, 250])
+                self.axf2[_].set_ylim([0, 250])
+                self.axf[_].text(700, 200, shot, bbox=dict(facecolor="red", alpha=0.75), fontsize=24)
+                self.axf2[_].text(700, 200, shot, bbox=dict(facecolor="red", alpha=0.75), fontsize=24)
+        elif n_shots == 1:
+            # No subplots. Just a single plot.
+            self.fig = plt.figure(1)
+            self.fig2 = plt.figure(2)
+            assign = self.z.cluster_assignments
+            details = self.z.cluster_assignments["EM_VMM_kappas"]
+            shot_details=self.z.feature_obj.misc_data_dict["shot"]
+            shot = self.shots[0]
+            res = self.results[0]
+            time_base = res[3]
+            sig = res[2]
+            dt=np.mean(np.diff(time_base))
+            tmp_sig = sig[0, :]
+            plt.figure(1)
+            self.im = plt.specgram(tmp_sig, NFFT=1024, Fs=1. / dt,
+                                      noverlap=128, xextent=[time_base[0], time_base[-1]])
+            plt.figure(2)
+            self.im = plt.specgram(tmp_sig, NFFT=1024, Fs=1. / dt,
+                                       noverlap=128, xextent=[time_base[0], time_base[-1]])
+            #
+            for i in np.unique(assign):
+                plt.figure(2)
+                markersize = 3
+                mask = (assign == i) * (shot_details == shot)
+                if np.sum(mask) > 1 and np.mean(details[i, :]) > 5:
+                    if i not in plot_colors:
+                        self.pl = plt.plot(self.z.feature_obj.misc_data_dict['time'][mask],
+                                              self.z.feature_obj.misc_data_dict['freq'][mask],
+                                              'o', markersize=markersize)
+                        plot_colors[i] = self.pl[0].get_color()
+                    else:
+                        self.pl = plt.plot(self.z.feature_obj.misc_data_dict['time'][mask],
+                                              self.z.feature_obj.misc_data_dict['freq'][mask],
+                                              'o', markersize=markersize, color=plot_colors[i])
+            #
         self.fig.subplots_adjust(hspace=0, wspace=0)
         self.fig2.subplots_adjust(hspace=0, wspace=0)
         self.fig.text(0.5, 0.065, "Time (ms)", ha="center", fontsize=20)
