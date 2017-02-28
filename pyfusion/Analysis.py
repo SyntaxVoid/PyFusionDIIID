@@ -182,7 +182,7 @@ class Analysis:
                 self.axf2[_].set_ylim([0, 250])
                 self.axf[_].text(700, 200, shot, bbox=dict(facecolor="red", alpha=0.75), fontsize=24)
                 self.axf2[_].text(700, 200, shot, bbox=dict(facecolor="red", alpha=0.75), fontsize=24)
-        elif n_shots == 1:
+        elif nshots == 1:
             # No subplots. Just a single plot.
             self.fig = plt.figure(1)
             self.fig2 = plt.figure(2)
