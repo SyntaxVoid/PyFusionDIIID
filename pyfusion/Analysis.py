@@ -217,10 +217,10 @@ class Analysis:
                                               self.z.feature_obj.misc_data_dict['freq'][mask],
                                               'o', markersize=markersize, color=plot_colors[i])
             plt.figure(1)
-            plt.xlim([self.time_windows[0]])
+            plt.xlim(self.time_windows[0])
             plt.ylim([0,250])
             plt.figure(2)
-            plt.xlim([self.time_windows[0]])
+            plt.xlim(self.time_windows[0])
             plt.ylim([0, 250])
         self.fig.subplots_adjust(hspace=0, wspace=0)
         self.fig2.subplots_adjust(hspace=0, wspace=0)
