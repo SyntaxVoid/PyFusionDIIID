@@ -236,9 +236,6 @@ class Analysis:
 
 
 if __name__ == '__main__':
-    A1 = Analysis(shots=range(159243, 159257+1),
-                  time_windows=[300, 1400],
-                  probes="DIIID_poloidal322_mag",
-                  n_cpus=4)
+    A1 = Analysis(shots=159243, time_windows=[750,850])
     A1.run_analysis()
     A1.plot_clusters()
