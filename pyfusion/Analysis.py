@@ -187,7 +187,7 @@ class Analysis:
             self.fig = plt.figure(1)
             self.fig2 = plt.figure(2)
             assign = self.z.cluster_assignments
-            details = self.z.cluster_assignments["EM_VMM_kappas"]
+            details = self.z.cluster_details["EM_VMM_kappas"]
             shot_details=self.z.feature_obj.misc_data_dict["shot"]
             shot = self.shots[0]
             res = self.results[0]
