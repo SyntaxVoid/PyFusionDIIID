@@ -202,7 +202,6 @@ class Analysis:
             plt.figure(2)
             self.im = plt.specgram(tmp_sig, NFFT=1024, Fs=1. / dt,
                                        noverlap=128, xextent=[time_base[0], time_base[-1]])
-            #
             for i in np.unique(assign):
                 plt.figure(2)
                 markersize = 3
@@ -217,7 +216,12 @@ class Analysis:
                         self.pl = plt.plot(self.z.feature_obj.misc_data_dict['time'][mask],
                                               self.z.feature_obj.misc_data_dict['freq'][mask],
                                               'o', markersize=markersize, color=plot_colors[i])
-            #
+            plt.figure(1)
+            plt.xlim([self.time_windows[0]])
+            plt.ylim([0,250])
+            plt.figure(2)
+            plt.xlim([self.time_windows[0]])
+            plt.ylim([0, 250])
         self.fig.subplots_adjust(hspace=0, wspace=0)
         self.fig2.subplots_adjust(hspace=0, wspace=0)
         self.fig.text(0.5, 0.065, "Time (ms)", ha="center", fontsize=20)
