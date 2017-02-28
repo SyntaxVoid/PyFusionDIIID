@@ -139,6 +139,7 @@ class Analysis:
 
     def plot_clusters(self):
         mpl.rcParams["axes.linewidth"] = 3.0
+        markersize = 5
         nshots = len(self.shots)
         plot_colors = {}
         if nshots > 2:
@@ -161,7 +162,6 @@ class Analysis:
                 self.im = cur_ax2.specgram(tmp_sig, NFFT=1024, Fs=1./dt,
                                            noverlap=128, xextent=[time_base[0], time_base[-1]])
                 for i in np.unique(assign):
-                    markersize = 3
                     mask = (assign == i) * (shot_details == shot)
                     if np.sum(mask) > 1 and np.mean(details[i, :]) > 5:
                         if i not in plot_colors:
@@ -204,7 +204,6 @@ class Analysis:
                                        noverlap=128, xextent=[time_base[0], time_base[-1]])
             for i in np.unique(assign):
                 plt.figure(2)
-                markersize = 3
                 mask = (assign == i) * (shot_details == shot)
                 if np.sum(mask) > 1 and np.mean(details[i, :]) > 5:
                     if i not in plot_colors:
