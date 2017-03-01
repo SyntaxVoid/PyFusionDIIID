@@ -219,7 +219,7 @@ class Analysis:
             plt.figure(1)
             plt.xlim(self.time_windows[0])
             plt.ylim([0,250])
-            x0 = self.time_windows[0] + 0.35 * (sum(self.time_windows[0]))
+            x0 = self.time_windows[0][0] + 0.35 * (sum(self.time_windows[0]))
             y0 = 0.9*250
             plt.text(x0, y0, shot, bbox=dict(facecolor="red", alpha=0.75), fontsize=24)
             plt.figure(2)
