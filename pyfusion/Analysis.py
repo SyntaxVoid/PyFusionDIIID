@@ -57,7 +57,7 @@ class Analysis:
         self.axf2 = None
         self.im = None
         self.pl = None
-        self.markersize = 8
+        self.markersize = 14
         return
 
     def get_mags(self, shot, probes):
