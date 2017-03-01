@@ -222,13 +222,13 @@ class Analysis:
             plt.xticks(np.arange(self.time_windows[0][0], self.time_windows[0][1], 10.0))
             x0 = self.time_windows[0][0] + 0.49 * (self.time_windows[0][1] - self.time_windows[0][0])
             y0 = 50 + 0.9*(150-50)
-            plt.text(x0, y0, shot, bbox=dict(facecolor="red", alpha=0.75), fontsize=24)
+            plt.text(x0, y0, shot+ ": " + self.probes, bbox=dict(facecolor="red", alpha=0.75), fontsize=24)
             plt.plot([790,790],[50,150])
             plt.figure(2)
             plt.xlim(self.time_windows[0])
             plt.ylim([50,150])
             plt.xticks(np.arange(self.time_windows[0][0], self.time_windows[0][1], 10.0))
-            plt.text(x0, y0, shot, bbox=dict(facecolor="red", alpha=0.75), fontsize=24)
+            plt.text(x0, y0, shot + ": " + self.probes, bbox=dict(facecolor="red", alpha=0.75), fontsize=24)
             plt.plot([790, 790], [50, 150])
         self.fig.subplots_adjust(hspace=0, wspace=0)
         self.fig2.subplots_adjust(hspace=0, wspace=0)
@@ -244,6 +244,9 @@ class Analysis:
 
 
 if __name__ == '__main__':
-    A1 = Analysis(shots=159243, time_windows=[750,850])
+    A1 = Analysis(shots=159243, time_windows=[750,850], probes = "DIIID_toroidal_mag")
+    A2 = Analysis(shots=159243, time_windows=[750,850], probes = "DIIID_poloidal322_mag")
     A1.run_analysis()
+    A2.run_analysis()
+    A2.plot_clusters()
     A1.plot_clusters()
