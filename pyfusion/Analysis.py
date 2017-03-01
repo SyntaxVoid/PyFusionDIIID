@@ -84,10 +84,6 @@ class Analysis:
                           "freq": ext.return_non_freq_dependent(data_fft.frequency_base, good_indices),
                           "shot": np.ones(tmp, dtype=int)*shot,
                           "mirnov_data": +rel_data}
-        # misc_data_dict["time"] = ext.return_time_values(data_fft.timebase, good_indices)
-        # misc_data_dict["freq"] = ext.return_non_freq_dependent(data_fft.frequency_base, good_indices)
-        # misc_data_dict["shot"] = np.ones(len(misc_data_dict["freq"]), dtype=int)*shot
-        # misc_data_dict["mirnov_data"] = +rel_data
         rel_data_angles = np.angle(rel_data)
         diff_angles = (np.diff(rel_data_angles)) % (2.*np.pi)
         diff_angles[diff_angles > np.pi] -= (2.*np.pi)
