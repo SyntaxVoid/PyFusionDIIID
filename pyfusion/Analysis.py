@@ -25,13 +25,13 @@ class Analysis:
         # Ensuring time_windows is the proper shape to guarantee consistent behaviour.
         if time_windows is None:  # We fill time_windows with copies of our default time window
             time_windows = []
-            for n in range(len(self.shots)):
+            for _ in range(len(self.shots)):
                 time_windows.append([300, 2300])
         else:
             if type(time_windows[0]) is not list:
                 # Then time_windows looks like [300,2300] but it must look like [[300,2300],[300,2300],...]
                 tmp = []
-                for n in range(len(self.shots)):
+                for _ in range(len(self.shots)):
                     tmp.append(time_windows)
                 time_windows = copy.deepcopy(tmp)
         self.time_windows = time_windows
@@ -190,46 +190,56 @@ class Analysis:
             self.fig2 = plt.figure(2)
             assign = self.z.cluster_assignments
             details = self.z.cluster_details["EM_VMM_kappas"]
-            shot_details=self.z.feature_obj.misc_data_dict["shot"]
+            shot_details = self.z.feature_obj.misc_data_dict["shot"]
             shot = self.shots[0]
             res = self.results[0]
             time_base = res[3]
             sig = res[2]
-            dt=np.mean(np.diff(time_base))
+            dt = np.mean(np.diff(time_base))
             tmp_sig = sig[0, :]
             plt.figure(1)
             self.im = plt.specgram(tmp_sig, NFFT=1024, Fs=1. / dt,
-                                      noverlap=128, xextent=[time_base[0], time_base[-1]])
+                                   noverlap=128, xextent=[time_base[0], time_base[-1]])
             plt.figure(2)
             self.im = plt.specgram(tmp_sig, NFFT=1024, Fs=1. / dt,
-                                       noverlap=128, xextent=[time_base[0], time_base[-1]])
+                                   noverlap=128, xextent=[time_base[0], time_base[-1]])
             for i in np.unique(assign):
                 plt.figure(2)
                 mask = (assign == i) * (shot_details == shot)
                 if np.sum(mask) > 1 and np.mean(details[i, :]) > 5:
                     if i not in plot_colors:
                         self.pl = plt.plot(self.z.feature_obj.misc_data_dict['time'][mask],
-                                              self.z.feature_obj.misc_data_dict['freq'][mask],
-                                              'o', markersize=markersize)
+                                           self.z.feature_obj.misc_data_dict['freq'][mask],
+                                           'o', markersize=markersize)
                         plot_colors[i] = self.pl[0].get_color()
                     else:
                         self.pl = plt.plot(self.z.feature_obj.misc_data_dict['time'][mask],
-                                              self.z.feature_obj.misc_data_dict['freq'][mask],
-                                              'o', markersize=markersize, color=plot_colors[i])
+                                           self.z.feature_obj.misc_data_dict['freq'][mask],
+                                           'o', markersize=markersize, color=plot_colors[i])
             plt.figure(1)
             plt.xlim(self.time_windows[0])
-            plt.ylim([50,150])
+            plt.ylim([50, 150])
             plt.xticks(np.arange(self.time_windows[0][0], self.time_windows[0][1], 10.0))
             x0 = self.time_windows[0][0] + 0.35 * (self.time_windows[0][1] - self.time_windows[0][0])
             y0 = 50 + 0.9*(150-50)
             plt.text(x0, y0, str(shot) + ": " + self.probes, bbox=dict(facecolor="red", alpha=0.75), fontsize=35)
-            plt.plot([790,790],[50,150])
+            plt.plot([790, 790], [50, 150], "black")
+            plt.plot(self.time_windows[0], [67.9, 67.9], "black", linewidth=3)
+            plt.plot(self.time_windows[0], [79.1, 79.1], "black", linewidth=3)
+            plt.plot(self.time_windows[0], [101.1, 101.1], "black", linewidth=3)
+            plt.plot(self.time_windows[0], [107.4, 107.4], "black", linewidth=3)
+            plt.plot(self.time_windows[0], [113.3, 113.3], "black", linewidth=3)
             plt.figure(2)
             plt.xlim(self.time_windows[0])
-            plt.ylim([50,150])
+            plt.ylim([50, 150])
             plt.xticks(np.arange(self.time_windows[0][0], self.time_windows[0][1], 10.0))
             plt.text(x0, y0, str(shot) + ": " + self.probes, bbox=dict(facecolor="red", alpha=0.75), fontsize=35)
-            plt.plot([790, 790], [50, 150])
+            plt.plot([790, 790], [50, 150], "black")
+            plt.plot(self.time_windows[0], [67.9, 67.9], "black", linewidth=3)
+            plt.plot(self.time_windows[0], [79.1, 79.1], "black", linewidth=3)
+            plt.plot(self.time_windows[0], [101.1, 101.1], "black", linewidth=3)
+            plt.plot(self.time_windows[0], [107.4, 107.4], "black", linewidth=3)
+            plt.plot(self.time_windows[0], [113.3, 113.3], "black", linewidth=3)
         self.fig.subplots_adjust(hspace=0, wspace=0)
         self.fig2.subplots_adjust(hspace=0, wspace=0)
         self.fig.text(0.5, 0.065, "Time (ms)", ha="center", fontsize=20)
@@ -244,10 +254,10 @@ class Analysis:
 
 
 if __name__ == '__main__':
-    A1 = Analysis(shots=159243, time_windows=[750,850], probes = "DIIID_toroidal_mag")
+    A1 = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_toroidal_mag")
     A1.run_analysis()
     A1.plot_clusters()
     raw_input("Press any key to continue. . .")
-    A2 = Analysis(shots=159243, time_windows=[750,850], probes = "DIIID_poloidal322_mag")
+    A2 = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_poloidal322_mag")
     A2.run_analysis()
     A2.plot_clusters()
