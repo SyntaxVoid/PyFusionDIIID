@@ -35,7 +35,7 @@ def plot_diagnostics(A):
     positions = [20., 67., 97., 127., 132., 137., 157., 200., 247., 277., 307., 312., 322., 340.]
     phases = rel_data_angles[n].tolist()
     amps = [ ]
-    for prb in mag.signals:
+    for prb in mag.signal:
         amps.append(prb[npr])
 
     plt.plot(amps,positions)
