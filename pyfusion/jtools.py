@@ -9,6 +9,19 @@ from copy import deepcopy
 
 # Contains useful auxiliary functions for aesthetics. . .
 
+
+def find_closest(arr, x):
+    m = abs(arr[0]-x)
+    x0 = arr[0]
+    n0 = 0
+    for n,item in enumerate(arr):
+        if abs(item-x) < m:
+            m = abs(item-x)
+            x0 = item
+            n0 = n
+    return n0, x0
+
+
 def squareish_grid(n,swapxy=False):
     # Returns the grid closest to a square that will fit n elements
     rows= 1
