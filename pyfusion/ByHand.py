@@ -38,7 +38,15 @@ def plot_diagnostics(A):
     for prb in mag.signal:
         amps.append(prb[npr])
 
-    plt.plot(amps,positions)
+    plt.plot(positions,amps,"r")
+    plt.xlabel("Position ($^\circ$)")
+    plt.ylabel("Amplitude")
+    plt.grid()
+    plt.show()
+    plt.plot(phases,amps,"b")
+    plt.xlabel("Phase")
+    plt.ylabel("Amplitude")
+    plt.grid()
     plt.show()
     return
 
