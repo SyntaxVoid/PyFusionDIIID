@@ -26,7 +26,7 @@ def plot_diagnostics(A):
     # Closest index and time in the raw data set
     dev = pf.getDevice("DIIID")
     mag = dev.acq.getdata(159243, "DIIID_toroidal_mag").reduce_time([300,1400])
-    np, tp = jt.find_closest(mag.timebase.tolist(), t0)
+    npr, tpr = jt.find_closest(mag.timebase.tolist(), t0)
 
     rel_data_angles = np.angle(rel_data)
     #diff_angles = (np.diff(rel_data_angles)) % (2. * np.pi)
@@ -36,7 +36,7 @@ def plot_diagnostics(A):
     phases = rel_data_angles[n].tolist()
     amps = [ ]
     for prb in mag.signals:
-        amps.append(prb[np])
+        amps.append(prb[npr])
 
     plt.plot(amps,positions)
     plt.show()
