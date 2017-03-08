@@ -145,11 +145,12 @@ class TimeseriesData(BaseData):
 
 
     def generate_frequency_series(self, NFFT, step, window='hamming'):
+        # Had to change np.fft.rtty to np.fft.fft because there were some bugs with rfft. JG 3/8/2017
         w =scipy.hamming(NFFT)
         if len(self.signal.shape)==2:
-            signal = np.array([np.fft.rfft(w*self.signal[:,i:i+NFFT]/NFFT) for i in range(0, self.signal.shape[1]-NFFT, step)])
+            signal = np.array([np.fft.fft(w*self.signal[:,i:i+NFFT]/NFFT) for i in range(0, self.signal.shape[1]-NFFT, step)])
         else:
-            signal = np.array([np.fft.rfft(w*self.signal[i:i+NFFT]/NFFT) for i in range(0, self.signal.shape[1]-NFFT, step)])
+            signal = np.array([np.fft.fft(w*self.signal[i:i+NFFT]/NFFT) for i in range(0, self.signal.shape[1]-NFFT, step)])
         timebase = np.array([np.average(self.timebase[i:i+NFFT]) 
                              for i in range(0, self.signal.shape[1]-NFFT, step)])
 
