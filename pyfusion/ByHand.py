@@ -62,7 +62,7 @@ def plot_diagnostics(A,time_window,t0):
     ax1.grid()
 
     ax2.plot(positions, phases, "k*-", linewidth=2)
-    ax2.set_xlabel("Shot 159243 at t=791 ms ($^\circ$)")
+    ax2.set_xlabel("Probe Positions ($^\circ$)")
     ax2.set_ylabel("Phase")
     ax2.set_xlim([0, 360])
     ax2.grid()
@@ -73,7 +73,7 @@ def plot_diagnostics(A,time_window,t0):
     ax3.set_xlim(time_window)
     ax3.set_ylim([45,250])
 
-    plt.suptitle("Phase/Amplitude vs. Probe Positions", fontsize=24)
+    plt.suptitle("Shot 159243 at t = {} ms".format(t0), fontsize=24)
     plt.show()
 
 
