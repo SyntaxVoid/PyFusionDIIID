@@ -84,6 +84,6 @@ def plot_diagnostics(A, time_window, t0):
 
 if __name__ == '__main__':
     # First we try looking at only one shot at a time.
-    A1 = Analysis(shots=159243, time_windows=[750, 850], device="DIIID", probes="DIIID_toroidal_mag")
+    A1 = Analysis(shots=159243, time_windows=[750, 850], device="DIIID", probes="DIIID_toroidal_mag",n_cpus=1)
     A1.run_analysis()
     plot_diagnostics(A1, [750, 850], 790)
