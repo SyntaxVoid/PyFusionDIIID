@@ -38,16 +38,25 @@ def plot_diagnostics(A):
     for prb in mag.signal:
         amps.append(prb[npr])
 
-    plt.plot(positions,amps,"r")
-    plt.xlabel("Position ($^\circ$)")
-    plt.ylabel("Amplitude")
-    plt.grid()
+    f, (ax1, ax2) = plt.subplots(2, sharex=False, sharey=False)
+
+    ax1.plot(positions, amps, "k*-", linewidth=2)
+    ax1.set_xlabel("Probe Positions ($^\circ$)")
+    ax1.set_ylabel("Amplitudes")
+    ax1.set_xlim([0, 360])
+    ax1.grid()
+
+    ax2.plot(positions, phases, "k*-", linewidth=2)
+    ax2.set_xlabel("Probe Positions ($^\circ$)")
+    ax2.set_ylabel("Phase")
+    ax2.set_xlim([0, 360])
+    ax2.grid()
+
+    f.subplots_adjust(hspace=0.4)
+    plt.suptitle("Phase/Amplitude vs. Probe Positions", fontsize=24)
     plt.show()
-    plt.plot(positions,phases,"b")
-    plt.xlabel("Phase")
-    plt.ylabel("Amplitude")
-    plt.grid()
-    plt.show()
+
+
     return
 
 
