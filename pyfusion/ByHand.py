@@ -42,12 +42,12 @@ def plot_diagnostics(A, time_window, t0):
     print("Requested t={}ms. Got t={}ms. dt={}ms.".format(t0,t,abs(t0-t)))
     #jt.print_dict(d,"[~~~]")
     format_str = "{:.14f} {:.14f} {:.14f}"
-    print("Amplitudes     Phases        Positions")
-    for i in range(14):
-        print(format_str.format(d["amps"][i],d["phases"][i],d["positions"][i]))
-    print("INDEX: {}\nTIME: {}".format(n,t))
-    print("Length of rel_data: {}".format(len(rel_data)))
-    print("Time Verif: {}".format(times[n]))
+    # print("Amplitudes     Phases        Positions")
+    # for i in range(14):
+    #     print(format_str.format(d["amps"][i],d["phases"][i],d["positions"][i]))
+    # print("INDEX: {}\nTIME: {}".format(n,t))
+    # print("Length of rel_data: {}".format(len(rel_data)))
+    # print("Time Verif: {}".format(times[n]))
 
     tmp = A.results[0]
     # assign = A.z.cluster_assignments
