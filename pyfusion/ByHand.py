@@ -34,9 +34,14 @@ def plot_diagnostics(A, time_window, t0):
     # positions in degrees
     positions = [20., 67., 97., 127., 132., 137., 157., 200., 247., 277., 307., 312., 322., 340.]
     phases = rel_data_angles[n].tolist()
-    amps = []
-    for prb in mag.signal:
-        amps.append(prb[npr])
+
+
+    complex_amps = rel_data[n]
+    amps = jt.complex_mag_list(complex_amps)
+    #for prb in mag.signal:
+    #    amps.append(prb[npr])
+
+
 
     #
     tmp = A.results[0]

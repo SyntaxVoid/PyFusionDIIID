@@ -10,6 +10,15 @@ from copy import deepcopy
 # Contains useful auxiliary functions for aesthetics. . .
 
 
+def complex_mag(z):
+    # Returns the magnitude sqrt(Re(z)^2 + Im(z)^2) of a numpy.complex number, z
+    return np.sqrt(z.real**2 + z.imag**2)
+
+def complex_mag_list(zz):
+    # Takes in an array of complex numbers and returns an array of their magnitudes
+    return [complex_mag(z) for z in zz]
+
+
 def find_closest(arr, x):
     m = abs(arr[0]-x)
     x0 = arr[0]
