@@ -27,6 +27,7 @@ def plot_diagnostics(A,time_window,t0):
     mag = dev.acq.getdata(159243, "DIIID_toroidal_mag").reduce_time(time_window)
     npr, tpr = jt.find_closest(mag.timebase.tolist(), t0)
 
+    print(t-tpr)
     rel_data_angles = np.angle(rel_data)
     #diff_angles = (np.diff(rel_data_angles)) % (2. * np.pi)
     #diff_angles[diff_angles > np.pi] -= (2. * np.pi)
@@ -57,7 +58,7 @@ def plot_diagnostics(A,time_window,t0):
 
     ax1.plot(positions, amps, "k*-", linewidth=2)
     ax1.set_xlabel("Probe Positions ($^\circ$)")
-    ax1.set_ylabel("Amplitudes")
+    ax1.set_ylabel("Amplitudes of each probe")
     ax1.set_xlim([0, 360])
     ax1.grid()
 
