@@ -17,8 +17,8 @@ from Analysis import *
 def plot_diagnostics(A, time_window, t0):
     # Will be used to plot amplitude vs. position and amplitude vs. phase.
     # For shot 159243, one time of interest is about 791 ms (101.1 kHz ECE Freq)
-    rel_data = A.results[0][1]["mirnov_data"]
-    times = A.results[0][1]["time"]
+    rel_data = A.raw_mirnov_data
+    times = A.raw_time
     # Closest index and time in the mirnov data set (as defined by good_indices in Analysis...)
     n, t = jt.find_closest(times, t0)
 
