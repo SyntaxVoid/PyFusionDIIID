@@ -47,7 +47,8 @@ def plot_diagnostics(A, time_window, t0):
         print(format_str.format(d["amps"][i],d["phases"][i],d["positions"][i]))
     print("INDEX: {}\nTIME: {}".format(n,t))
     print("Length of rel_data: {}".format(len(rel_data)))
-
+    print("Time Verif: {}".format(times[n]))
+    
     tmp = A.results[0]
     # assign = A.z.cluster_assignments
     # details = A.z.cluster_details["EM_VMM_kappas"]
