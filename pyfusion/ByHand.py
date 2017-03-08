@@ -45,7 +45,7 @@ def plot_diagnostics(A, time_window, t0):
     print("Amplitudes     Phases        Positions")
     for i in range(14):
         print(format_str.format(d["amps"][i],d["phases"][i],d["positions"][i]))
-
+    print("INDEX: {}\nTIME: {}".format(n,t))
 
     tmp = A.results[0]
     # assign = A.z.cluster_assignments
