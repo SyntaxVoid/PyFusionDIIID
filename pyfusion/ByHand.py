@@ -38,6 +38,7 @@ def plot_diagnostics(A, time_window, t0):
 
     complex_amps = rel_data[n]
     amps = jt.complex_mag_list(complex_amps)
+    amps = []
     #for prb in mag.signal:
     #    amps.append(prb[npr])
 
