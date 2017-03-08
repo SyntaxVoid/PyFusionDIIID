@@ -38,7 +38,23 @@ def plot_diagnostics(A):
     for prb in mag.signal:
         amps.append(prb[npr])
 
-    f, (ax1, ax2) = plt.subplots(2, sharex=False, sharey=False)
+    #
+    tmp = A.results[0]
+    assign = A.z.cluster_assignments
+    details = A.z.cluster_details["EM_VMM_kappas"]
+    shot_details = A.z.feature_obj.misc_data_dict["shot"]
+    time_base = tmp[3]
+    sig = tmp[2]
+    dt = np.mean(np.diff(time_base))
+    tmp_sig = sig[0, :]
+
+    #
+    #f, (ax1, ax2) = plt.subplots(2, sharex=False, sharey=False)
+
+
+    ax1 = plt.subplot2grid((2, 3), (0, 0))
+    ax2 = plt.subplot2grid((2, 3), (1, 0))
+    ax3 = plt.subplot2grid((2, 3), (0, 1), rowspan=2, colspan=2)
 
     ax1.plot(positions, amps, "k*-", linewidth=2)
     ax1.set_xlabel("Probe Positions ($^\circ$)")
@@ -47,12 +63,15 @@ def plot_diagnostics(A):
     ax1.grid()
 
     ax2.plot(positions, phases, "k*-", linewidth=2)
-    ax2.set_xlabel("Probe Positions ($^\circ$)")
+    ax2.set_xlabel("Shot 159243 at t=791 ms ($^\circ$)")
     ax2.set_ylabel("Phase")
     ax2.set_xlim([0, 360])
     ax2.grid()
 
-    f.subplots_adjust(hspace=0.4)
+    ax3.specgram(tmp_sig, NFFT=1024, Fs=1. / dt,
+                 noverlap=128, xextent=[time_base[0], time_base[-1]])
+
+
     plt.suptitle("Phase/Amplitude vs. Probe Positions", fontsize=24)
     plt.show()
 
