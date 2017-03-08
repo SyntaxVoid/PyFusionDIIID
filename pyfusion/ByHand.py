@@ -69,7 +69,7 @@ def plot_diagnostics(A,time_window,t0):
 
     ax3.specgram(tmp_sig, NFFT=1024, Fs=1. / dt,
                  noverlap=128, xextent=[time_base[0], time_base[-1]])
-    ax3.plot([791,791],[45,250])
+    ax3.plot([791,791],[45,250], linewidth=3)
     ax3.set_xlim(time_window)
     ax3.set_ylim([45,250])
 
