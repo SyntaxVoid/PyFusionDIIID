@@ -23,11 +23,11 @@ def plot_diagnostics(A, time_window, t0):
     n, t = jt.find_closest(times, t0)
 
     # Closest index and time in the raw data set
-    dev = pf.getDevice("DIIID")
-    mag = dev.acq.getdata(159243, "DIIID_toroidal_mag").reduce_time(time_window)
-    npr, tpr = jt.find_closest(mag.timebase.tolist(), t0)
+    #dev = pf.getDevice("DIIID")
+    #mag = dev.acq.getdata(159243, "DIIID_toroidal_mag").reduce_time(time_window)
+    #npr, tpr = jt.find_closest(mag.timebase.tolist(), t0)
 
-    print(t-tpr)
+    #print(t-tpr)
     rel_data_angles = np.angle(rel_data)
     # diff_angles = (np.diff(rel_data_angles)) % (2. * np.pi)
     # diff_angles[diff_angles > np.pi] -= (2. * np.pi)
@@ -44,7 +44,7 @@ def plot_diagnostics(A, time_window, t0):
 
     d = {"amps":amps,"phases":phases,"positions":positions}
     print("Requested t={}ms. Got t={}ms. dt={}ms.".format(t0,t,abs(t0-t)))
-    jt.print_dict(d,"??")
+    jt.print_dict(d,"[~~~]")
     tmp = A.results[0]
     # assign = A.z.cluster_assignments
     # details = A.z.cluster_details["EM_VMM_kappas"]
