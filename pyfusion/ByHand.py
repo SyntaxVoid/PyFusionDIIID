@@ -76,7 +76,7 @@ def plot_diagnostics(A, time_window, t0):
     ax3.set_xlim(time_window)
     ax3.set_ylim([45, 250])
 
-    plt.suptitle("Shot 159243 at t = {} ms".format(t0), fontsize=24)
+    plt.suptitle("Shot 159243 at t = {} ms".format(t), fontsize=24)
     plt.show()
 
     return
