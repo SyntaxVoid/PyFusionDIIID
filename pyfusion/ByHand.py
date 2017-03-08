@@ -46,6 +46,7 @@ def plot_diagnostics(A, time_window, t0):
     for i in range(14):
         print(format_str.format(d["amps"][i],d["phases"][i],d["positions"][i]))
     print("INDEX: {}\nTIME: {}".format(n,t))
+    print("Length of good_indices: {}".format(len(rel_data_angles)))
 
     tmp = A.results[0]
     # assign = A.z.cluster_assignments
