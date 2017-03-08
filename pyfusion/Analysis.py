@@ -82,6 +82,10 @@ class Analysis:
         # /SETTINGS #
         good_indices = ext.find_peaks(data_fft, n_pts=n_pts, lower_freq=lower_freq, upper_freq=upper_freq)
         rel_data = ext.return_values(data_fft.signal, good_indices)
+        #
+        print(good_indices)
+        raw_input("Press enter to continue. . .")
+        #
         tmp = len(ext.return_non_freq_dependent(data_fft.frequency_base, good_indices))
         misc_data_dict = {"time": ext.return_time_values(data_fft.timebase, good_indices),
                           "freq": ext.return_non_freq_dependent(data_fft.frequency_base, good_indices),
