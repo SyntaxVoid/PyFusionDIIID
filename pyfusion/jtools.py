@@ -6,7 +6,7 @@ import pickle
 import collections
 import idlsave
 from copy import deepcopy
-
+import numpy as np
 # Contains useful auxiliary functions for aesthetics. . .
 
 
