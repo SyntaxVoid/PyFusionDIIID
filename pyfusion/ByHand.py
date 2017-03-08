@@ -70,6 +70,7 @@ def plot_diagnostics(A):
 
     ax3.specgram(tmp_sig, NFFT=1024, Fs=1. / dt,
                  noverlap=128, xextent=[time_base[0], time_base[-1]])
+    ax3.plot([791,791],[45,250])
     ax3.set_xlim([750,850])
     ax3.set_ylim([45,250])
 
