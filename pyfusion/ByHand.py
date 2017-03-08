@@ -25,7 +25,7 @@ def plot_diagnostics(A):
 
     # Closest index and time in the raw data set
     dev = pf.getDevice("DIIID")
-    mag = dev.acq.getdata(159243, "DIIID_toroidal_mag").reduce_time([780,800])
+    mag = dev.acq.getdata(159243, "DIIID_toroidal_mag").reduce_time([750,850])
     npr, tpr = jt.find_closest(mag.timebase.tolist(), t0)
 
     rel_data_angles = np.angle(rel_data)
@@ -70,7 +70,7 @@ def plot_diagnostics(A):
 
     ax3.specgram(tmp_sig, NFFT=1024, Fs=1. / dt,
                  noverlap=128, xextent=[time_base[0], time_base[-1]])
-    ax3.set_xlim([780,800])
+    ax3.set_xlim([750,850])
     ax3.set_ylim([45,250])
 
     plt.suptitle("Phase/Amplitude vs. Probe Positions", fontsize=24)
@@ -82,6 +82,6 @@ def plot_diagnostics(A):
 
 if __name__ == '__main__':
     # First we try looking at only one shot at a time.
-    A1 = Analysis(shots=159243,time_windows=[780,800],device="DIIID",probes="DIIID_toroidal_mag")
+    A1 = Analysis(shots=159243,time_windows=[750,850],device="DIIID",probes="DIIID_toroidal_mag")
     A1.run_analysis()
     plot_diagnostics(A1)
