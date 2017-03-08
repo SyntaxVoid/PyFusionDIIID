@@ -88,7 +88,9 @@ class Analysis:
         misc_data_dict = {"time": ext.return_time_values(data_fft.timebase, good_indices),
                           "freq": ext.return_non_freq_dependent(data_fft.frequency_base, good_indices),
                           "shot": np.ones(tmp, dtype=int)*shot,
-                          "mirnov_data": +rel_data}
+                          "mirnov_data": +rel_data,
+                          "raw_mirnov_data": data_fft.signal,
+                          "raw_time": data_fft.timebase}
         rel_data_angles = np.angle(rel_data)
         diff_angles = (np.diff(rel_data_angles)) % (2.*np.pi)
         diff_angles[diff_angles > np.pi] -= (2.*np.pi)
