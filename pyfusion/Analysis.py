@@ -73,7 +73,7 @@ class Analysis:
         mag = self.get_mags(shot, self.probes)
         data_fft = mag.generate_frequency_series(self.samples, self.samples/self.overlap)
         print("Length of data_fft: {}".format(len(data_fft.signal)))
-        throw_away = input("press a key to continue")
+        throw_away = str(input("press a key to continue"))
         # SETTINGS #
         n_pts = 8
         lower_freq = 45
