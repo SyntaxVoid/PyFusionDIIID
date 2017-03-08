@@ -42,9 +42,9 @@ def plot_diagnostics(A, time_window, t0):
     for prb in mag.signal:
         amps.append(prb[npr])
 
-
-
-    #
+    d = {"amps":amps,"phases":phases,"positions":positions}
+    print("Requested t={}ms. Got t={}ms. dt={}ms.".format(t0,t,abs(t0-t)))
+    jt.print_dict(d,"??")
     tmp = A.results[0]
     # assign = A.z.cluster_assignments
     # details = A.z.cluster_details["EM_VMM_kappas"]
