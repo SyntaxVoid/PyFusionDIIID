@@ -21,34 +21,51 @@ def help_me(A):
     return
 
 
-def plot_diagnostics(A, time_window, t0):
+def plot_diagnostics(A, time_window, t0, f0):
     # Will be used to plot amplitude vs. position and amplitude vs. phase.
     # For shot 159243, one time of interest is about 791 ms (101.1 kHz ECE Freq)
-    rel_data = A.results[0][1]["mirnov_data"]
-    times = A.results[0][1]["time"]
+    fft = A.raw_fft
+    raw_mirnov = fft.signal
+    raw_times = fft.timebase
+    raw_freqs = fft.frequency_base
+
+    nt, t = jt.find_closest(raw_times,t0)
+    nf, f = jt.find_closest(raw_freqs, f0)
+    print("Requested t={}ms. Got t={}ms. dt={}ms".format(t0,t,abs(t0-t)))
+    print("Requested f={}kHz. Got f={}kHz. df={}kHz".format(f0, f, abs(f0 - f)))
+
+    complex_amps = []
+    tmp = raw_mirnov[nt]
+    for prb in tmp:
+        complex_amps.append(prb[nf])
+    amps = jt.complex_mag_list(complex_amps)
+    phases = np.angle(complex_amps)
+    
+    # rel_data = A.results[0][1]["mirnov_data"]
+    # times = A.results[0][1]["time"]
     # Closest index and time in the mirnov data set (as defined by good_indices in Analysis...)
-    n, t = jt.find_closest(times, t0)
+    # n, t = jt.find_closest(times, t0)
 
     # Closest index and time in the raw data set
-    #dev = pf.getDevice("DIIID")
-    #mag = dev.acq.getdata(159243, "DIIID_toroidal_mag").reduce_time(time_window)
-    #npr, tpr = jt.find_closest(mag.timebase.tolist(), t0)
+    # dev = pf.getDevice("DIIID")
+    # mag = dev.acq.getdata(159243, "DIIID_toroidal_mag").reduce_time(time_window)
+    # npr, tpr = jt.find_closest(mag.timebase.tolist(), t0)
 
-    #print(t-tpr)
-    rel_data_angles = np.angle(rel_data)
+    # print(t-tpr)
+    # rel_data_angles = np.angle(rel_data)
     # diff_angles = (np.diff(rel_data_angles)) % (2. * np.pi)
     # diff_angles[diff_angles > np.pi] -= (2. * np.pi)
     # positions in degrees
     positions = [20., 67., 97., 127., 132., 137., 157., 200., 247., 277., 307., 312., 322., 340.]
-    phases = rel_data_angles[n].tolist()
+    # phases = rel_data_angles[n].tolist()
 
-    complex_amps = rel_data[n]
-    amps = jt.complex_mag_list(complex_amps)
+    # complex_amps = rel_data[n]
+    # amps = jt.complex_mag_list(complex_amps)
 
-    d = {"amps":amps,"phases":phases,"positions":positions}
-    print("Requested t={}ms. Got t={}ms. dt={}ms.".format(t0,t,abs(t0-t)))
-    #jt.print_dict(d,"[~~~]")
-    format_str = "{:.14f} {:.14f} {:.14f}"
+    # d = {"amps":amps,"phases":phases,"positions":positions}
+    # print("Requested t={}ms. Got t={}ms. dt={}ms.".format(t0,t,abs(t0-t)))
+    # jt.print_dict(d,"[~~~]")
+    # format_str = "{:.14f} {:.14f} {:.14f}"
     # print("Amplitudes     Phases        Positions")
     # for i in range(14):
     #     print(format_str.format(d["amps"][i],d["phases"][i],d["positions"][i]))

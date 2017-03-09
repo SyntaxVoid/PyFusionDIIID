@@ -90,6 +90,7 @@ class Analysis:
                           "shot": np.ones(tmp, dtype=int)*shot,
                           "mirnov_data": +rel_data}
         print("######################"*50)
+        self.raw_fft = data_fft
         self.raw_mirnov_data = data_fft.signal
         self.raw_time = data_fft.timebase
         rel_data_angles = np.angle(rel_data)
