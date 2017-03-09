@@ -101,5 +101,4 @@ if __name__ == '__main__':
     times_peaks = A.results[0][1]["time"]
     rel_data = A.raw_mirnov_data
     time = A.raw_time
-
-    #plot_diagnostics(A, [750, 850], 790)
+    plot_diagnostics(A, [750, 850], 790)
