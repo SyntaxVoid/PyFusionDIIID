@@ -108,7 +108,7 @@ def plot_diagnostics(A, time_window, t0, f0):
 
     plt.suptitle("Shot 159243 at t = {} ms, f = {} kHz".format(t,f), fontsize=24)
 
-    file_format_str = "~/PyFusionDIIID/Plots/Shot{}_Time{}_Freq{}.png"
+    file_format_str = "../Plots/Shot{}_Time{}_Freq{}.png"
     plt.savefig(file_format_str.format(A.shots[0],t0,f0))
     return
 
