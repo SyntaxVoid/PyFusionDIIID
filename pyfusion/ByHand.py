@@ -107,8 +107,9 @@ def plot_diagnostics(A, time_window, t0, f0):
     ax3.set_ylim([45, 250])
 
     plt.suptitle("Shot 159243 at t = {} ms, f = {} kHz".format(t,f), fontsize=24)
-    plt.show()
 
+    file_format_str = "~/PyFusionDIIID/Plots/Shot{}_Time{}_Freq{}.png"
+    plt.savefig(file_format_str.format(A.shots[0],t,f))
     return
 
 
@@ -116,8 +117,8 @@ if __name__ == '__main__':
     # First we try looking at only one shot at a time.
     A = Analysis(shots=159243, time_windows=[750, 850], device="DIIID", probes="DIIID_toroidal_mag",n_cpus=1)
     A.run_analysis()
-    rel_data_peaks = A.results[0][1]["mirnov_data"]
-    times_peaks = A.results[0][1]["time"]
-    rel_data = A.raw_mirnov_data
-    time = A.raw_time
-    plot_diagnostics(A, [750, 850], 805, 72)
+    times = [791,793,790]
+    freqs = [102,107,68]
+    for t,f in zip(times,freqs):
+        plot_diagnostics(A, [750, 850], t, f)
+    
