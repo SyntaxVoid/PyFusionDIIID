@@ -50,6 +50,8 @@ class Analysis:
             {'n_clusters': 16, 'n_iterations': 20, 'start': 'k_means', 'verbose': 0, 'method': 'EM_VMM'}
         self.n_cpus = n_cpus
         self.results = None
+        self.raw_mirnov_data = None
+        self.raw_time = None
         self.feature_object = None
         self.z = None
         self.fig = None
