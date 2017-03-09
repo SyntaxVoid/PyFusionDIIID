@@ -14,6 +14,13 @@ import jtools as jt
 from Analysis import *
 
 
+def help_me(A):
+
+
+
+    return
+
+
 def plot_diagnostics(A, time_window, t0):
     # Will be used to plot amplitude vs. position and amplitude vs. phase.
     # For shot 159243, one time of interest is about 791 ms (101.1 kHz ECE Freq)
@@ -90,6 +97,11 @@ def plot_diagnostics(A, time_window, t0):
 
 if __name__ == '__main__':
     # First we try looking at only one shot at a time.
-    A1 = Analysis(shots=159243, time_windows=[750, 850], device="DIIID", probes="DIIID_toroidal_mag",n_cpus=1)
-    A1.run_analysis()
-    plot_diagnostics(A1, [750, 850], 790)
+    A = Analysis(shots=159243, time_windows=[750, 850], device="DIIID", probes="DIIID_toroidal_mag",n_cpus=1)
+    A.run_analysis()
+    rel_data_peaks = A.results[0][1]["mirnov_data"]
+    times_peaks = A.results[0][1]["time"]
+    rel_data = A.raw_mirnov_data
+    time = A.raw_time
+
+    #plot_diagnostics(A, [750, 850], 790)
