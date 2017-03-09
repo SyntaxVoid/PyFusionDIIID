@@ -40,7 +40,7 @@ def plot_diagnostics(A, time_window, t0, f0):
         complex_amps.append(prb[nf])
     amps = jt.complex_mag_list(complex_amps)
     phases = np.angle(complex_amps)
-    
+
     # rel_data = A.results[0][1]["mirnov_data"]
     # times = A.results[0][1]["time"]
     # Closest index and time in the mirnov data set (as defined by good_indices in Analysis...)
@@ -118,4 +118,4 @@ if __name__ == '__main__':
     times_peaks = A.results[0][1]["time"]
     rel_data = A.raw_mirnov_data
     time = A.raw_time
-    plot_diagnostics(A, [750, 850], 790)
+    plot_diagnostics(A, [750, 850], 805, 72)
