@@ -100,8 +100,9 @@ def plot_diagnostics(A, time_window, t0, f0):
 
     ax3.specgram(tmp_sig, NFFT=1024, Fs=1. / dt,
                  noverlap=128, xextent=[time_base[0], time_base[-1]])
-    ax3.plot([t0, t0], [45, 250], linewidth=3)
-    ax3.plot(time_window, [f0,f0], linewidth=3)
+    # Plot a small square around the point of interest and zoom in
+    ax3.plot([t0, t0], [45, 250], "k")
+    ax3.plot(time_window, [f0,f0], "k")
     ax3.set_xlim(time_window)
     ax3.set_ylim([45, 250])
 
