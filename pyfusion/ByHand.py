@@ -19,6 +19,8 @@ def plot_diagnostics(A, time_window, t0):
     # For shot 159243, one time of interest is about 791 ms (101.1 kHz ECE Freq)
     rel_data = A.raw_mirnov_data
     times = A.raw_time
+    print(rel_data)
+    print(times)
     # Closest index and time in the mirnov data set (as defined by good_indices in Analysis...)
     n, t = jt.find_closest(times, t0)
 
