@@ -104,11 +104,11 @@ def plot_single_cluster():
 
 if __name__ == '__main__':
     # Want to compare ~20 different data points from different modes (10 torroidal / 10 poloidal)
-    Apol = Analysis(shots=159243, time_windows=[750, 850], device="DIIIID", probes="DIIID_poloidal322_mag", n_cpus=1)
+    Apol = Analysis(shots=159243, time_windows=[750, 850], device="DIIID", probes="DIIID_poloidal322_mag", n_cpus=1)
 
     # 10 (time,freq) tuples from clustering. 3 in one cluster, 3 in another and 4 in the final (arbitrary)
     ## Toroidal
-    Ator = Analysis(shots=159243, time_windows=[750, 850], device="DIIIID", probes="DIIID_toroidal_mag", n_cpus=1)
+    Ator = Analysis(shots=159243, time_windows=[750, 850], device="DIIID", probes="DIIID_toroidal_mag", n_cpus=1)
     Ator.run_analysis()
     plot_diagnostics(Ator,[750,850],790,110)
     # A = Analysis(shots=159243, time_windows=[750, 850], device="DIIID", probes="DIIID_toroidal_mag",n_cpus=1)
