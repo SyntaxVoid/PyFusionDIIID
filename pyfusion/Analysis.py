@@ -47,7 +47,7 @@ class Analysis:
         self.cutoffs = cutoffs if cutoffs is not None else \
             {"min_svs": 2, "power_cutoff": 0.000, "lower_freq": 0.1, "uppder_freq": 200000}
         self.datamining_settings = datamining_settings if datamining_settings is not None else \
-            {'n_clusters': 16, 'n_iterations': 20, 'start': 'k_means', 'verbose': 0, 'method': 'EM_VMM', "seed": 7254}
+            {'n_clusters': 16, 'n_iterations': 20, 'start': 'k_means', 'verbose': 0, 'method': 'EM_VMM', "seeds": 7254}
         self.n_cpus = n_cpus
         self.results = None
         self.raw_mirnov_data = None
@@ -264,7 +264,7 @@ if __name__ == '__main__':
     A1 = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_toroidal_mag")
     A1.run_analysis()
     A1.plot_clusters()
-    
+
     #raw_input("Press any key to continue. . .")
     #A2 = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_poloidal322_mag")
     #A2.run_analysis()
