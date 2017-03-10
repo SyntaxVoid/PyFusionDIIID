@@ -68,9 +68,9 @@ def plot_diagnostics(A, time_window, t0, f0):
     ax2.set_xlim([0, 360])
     ax2.grid()
 
-    mask1 = (Ator.z.cluster_assignments == 2)
-    mask2 = (Ator.z.cluster_assignments == 6)
-    mask3 = (Ator.z.cluster_assignments == 5)
+    mask1 = (Ator.z.cluster_assignments == 1)
+    mask2 = (Ator.z.cluster_assignments == 2)
+    mask3 = (Ator.z.cluster_assignments == 3)
 
     ax3.specgram(tmp_sig, NFFT=1024, Fs=1. / dt,
                  noverlap=128, xextent=[time_base[0], time_base[-1]])
