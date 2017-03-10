@@ -118,8 +118,8 @@ if __name__ == '__main__':
     # First we try looking at only one shot at a time.
     A = Analysis(shots=159243, time_windows=[750, 850], device="DIIID", probes="DIIID_toroidal_mag",n_cpus=1)
     A.run_analysis()
-    times = [791,793,790]
-    freqs = [102,107,68]
+    times = [790,795,810]
+    freqs = [69.5,93.2,75]
     for t,f in zip(times,freqs):
         plot_diagnostics(A, [750, 850], t, f)
 
