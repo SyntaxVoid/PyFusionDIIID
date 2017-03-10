@@ -77,7 +77,7 @@ class Analysis:
         # SETTINGS #
         n_pts = 8
         lower_freq = 45
-        upper_freq = 500000
+        upper_freq = 150
         cutoff_by = "sigma_eq"
         filter_cutoff = 85
         filter_item = "EM_VMM_kappas"
