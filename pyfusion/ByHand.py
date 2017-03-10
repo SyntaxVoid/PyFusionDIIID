@@ -82,7 +82,7 @@ def plot_diagnostics(A, time_window, t0, f0):
              "go", markersize=A.markersize)
     ax3.plot(A.z.feature_obj.misc_data_dict["time"][mask3],
              A.z.feature_obj.misc_data_dict["freq"][mask3],
-             "po", markersize=A.markersize)
+             "co", markersize=A.markersize)
 
     ax3.plot([t0, t0], [45, 250], "k")
     ax3.plot(time_window, [f0,f0], "k")
