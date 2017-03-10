@@ -68,9 +68,22 @@ def plot_diagnostics(A, time_window, t0, f0):
     ax2.set_xlim([0, 360])
     ax2.grid()
 
+    mask1 = (Ator.z.cluster_assignments == 2)
+    mask2 = (Ator.z.cluster_assignments == 6)
+    mask3 = (Ator.z.cluster_assignments == 5)
+
     ax3.specgram(tmp_sig, NFFT=1024, Fs=1. / dt,
                  noverlap=128, xextent=[time_base[0], time_base[-1]])
-    # Plot a small square around the point of interest and zoom in
+    ax3.plot(A.z.feature_obj.misc_data_dict["time"][mask1],
+             A.z.feature_obj.misc_data_dict["freq"][mask1],
+             "ro", maskersize=A.markersize)
+    ax3.plot(A.z.feature_obj.misc_data_dict["time"][mask2],
+             A.z.feature_obj.misc_data_dict["freq"][mask2],
+             "go", maskersize=A.markersize)
+    ax3.plot(A.z.feature_obj.misc_data_dict["time"][mask3],
+             A.z.feature_obj.misc_data_dict["freq"][mask3],
+             "po", maskersize=A.markersize)
+
     ax3.plot([t0, t0], [45, 250], "k")
     ax3.plot(time_window, [f0,f0], "k")
     ax3.set_xlim(time_window)
@@ -83,16 +96,21 @@ def plot_diagnostics(A, time_window, t0, f0):
     plt.show()
     return
 
+def plot_single_cluster():
+    # ??
+
+    return
+
 
 if __name__ == '__main__':
     # Want to compare ~20 different data points from different modes (10 torroidal / 10 poloidal)
-    Ator = Analysis(shots=159243, time_windows=[750, 850], device="DIIIID", probes="DIIID_toroidal_mag", n_cpus=1)
     Apol = Analysis(shots=159243, time_windows=[750, 850], device="DIIIID", probes="DIIID_poloidal322_mag", n_cpus=1)
 
     # 10 (time,freq) tuples from clustering. 3 in one cluster, 3 in another and 4 in the final (arbitrary)
-    #
-
-
+    ## Toroidal
+    Ator = Analysis(shots=159243, time_windows=[750, 850], device="DIIIID", probes="DIIID_toroidal_mag", n_cpus=1)
+    Ator.run_analysis()
+    plot_diagnostics(Ator,[750,850],790,110)
     # A = Analysis(shots=159243, time_windows=[750, 850], device="DIIID", probes="DIIID_toroidal_mag",n_cpus=1)
     # A.run_analysis()
     # times = [790,795,810]
