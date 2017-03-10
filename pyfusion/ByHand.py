@@ -40,43 +40,13 @@ def plot_diagnostics(A, time_window, t0, f0):
         complex_amps.append(prb[nf])
     amps = jt.complex_mag_list(complex_amps)
     phases = np.angle(complex_amps)
-
-    # rel_data = A.results[0][1]["mirnov_data"]
-    # times = A.results[0][1]["time"]
-    # Closest index and time in the mirnov data set (as defined by good_indices in Analysis...)
-    # n, t = jt.find_closest(times, t0)
-
-    # Closest index and time in the raw data set
-    # dev = pf.getDevice("DIIID")
-    # mag = dev.acq.getdata(159243, "DIIID_toroidal_mag").reduce_time(time_window)
-    # npr, tpr = jt.find_closest(mag.timebase.tolist(), t0)
-
-    # print(t-tpr)
-    # rel_data_angles = np.angle(rel_data)
-    # diff_angles = (np.diff(rel_data_angles)) % (2. * np.pi)
-    # diff_angles[diff_angles > np.pi] -= (2. * np.pi)
     # positions in degrees
     positions = [20., 67., 97., 127., 132., 137., 157., 200., 247., 277., 307., 312., 322., 340.]
-    # phases = rel_data_angles[n].tolist()
-
-    # complex_amps = rel_data[n]
-    # amps = jt.complex_mag_list(complex_amps)
-
-    # d = {"amps":amps,"phases":phases,"positions":positions}
-    # print("Requested t={}ms. Got t={}ms. dt={}ms.".format(t0,t,abs(t0-t)))
-    # jt.print_dict(d,"[~~~]")
-    # format_str = "{:.14f} {:.14f} {:.14f}"
-    # print("Amplitudes     Phases        Positions")
-    # for i in range(14):
-    #     print(format_str.format(d["amps"][i],d["phases"][i],d["positions"][i]))
-    # print("INDEX: {}\nTIME: {}".format(n,t))
-    # print("Length of rel_data: {}".format(len(rel_data)))
-    # print("Time Verif: {}".format(times[n]))
 
     tmp = A.results[0]
-    # assign = A.z.cluster_assignments
-    # details = A.z.cluster_details["EM_VMM_kappas"]
-    # shot_details = A.z.feature_obj.misc_data_dict["shot"]
+    assign = A.z.cluster_assignments
+    details = A.z.cluster_details["EM_VMM_kappas"]
+    shot_details = A.z.feature_obj.misc_data_dict["shot"]
     time_base = tmp[3]
     sig = tmp[2]
     dt = np.mean(np.diff(time_base))
@@ -115,11 +85,18 @@ def plot_diagnostics(A, time_window, t0, f0):
 
 
 if __name__ == '__main__':
-    # First we try looking at only one shot at a time.
-    A = Analysis(shots=159243, time_windows=[750, 850], device="DIIID", probes="DIIID_toroidal_mag",n_cpus=1)
-    A.run_analysis()
-    times = [790,795,810]
-    freqs = [69.5,93.2,75]
-    for t,f in zip(times,freqs):
-        plot_diagnostics(A, [750, 850], t, f)
+    # Want to compare ~20 different data points from different modes (10 torroidal / 10 poloidal)
+    Ator = Analysis(shots=159243, time_windows=[750, 850], device="DIIIID", probes="DIIID_toroidal_mag", n_cpus=1)
+    Apol = Analysis(shots=159243, time_windows=[750, 850], device="DIIIID", probes="DIIID_poloidal322_mag", n_cpus=1)
+
+    # 10 (time,freq) tuples from clustering. 3 in one cluster, 3 in another and 4 in the final (arbitrary)
+    #
+
+
+    # A = Analysis(shots=159243, time_windows=[750, 850], device="DIIID", probes="DIIID_toroidal_mag",n_cpus=1)
+    # A.run_analysis()
+    # times = [790,795,810]
+    # freqs = [69.5,93.2,75]
+    # for t,f in zip(times,freqs):
+    #     plot_diagnostics(A, [750, 850], t, f)
 

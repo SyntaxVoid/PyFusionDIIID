@@ -47,7 +47,7 @@ class Analysis:
         self.cutoffs = cutoffs if cutoffs is not None else \
             {"min_svs": 2, "power_cutoff": 0.000, "lower_freq": 0.1, "uppder_freq": 200000}
         self.datamining_settings = datamining_settings if datamining_settings is not None else \
-            {'n_clusters': 16, 'n_iterations': 20, 'start': 'k_means', 'verbose': 0, 'method': 'EM_VMM'}
+            {'n_clusters': 16, 'n_iterations': 20, 'start': 'k_means', 'verbose': 0, 'method': 'EM_VMM', "seed": 7254}
         self.n_cpus = n_cpus
         self.results = None
         self.raw_mirnov_data = None
@@ -229,24 +229,24 @@ class Analysis:
             x0 = self.time_windows[0][0] + 0.35 * (self.time_windows[0][1] - self.time_windows[0][0])
             y0 = 50 + 0.9*(150-50)
             plt.text(x0, y0, str(shot) + ": " + self.probes, bbox=dict(facecolor="red", alpha=0.75), fontsize=35)
-            plt.plot([790, 790], [50, 150], "black", linewidth=3)
-            plt.plot(self.time_windows[0], [67.9, 67.9], "black", linewidth=3)
-            plt.plot(self.time_windows[0], [79.1, 79.1], "black", linewidth=3)
-            plt.plot(self.time_windows[0], [101.1, 101.1], "black", linewidth=3)
-            plt.plot(self.time_windows[0], [107.4, 107.4], "black", linewidth=3)
-            plt.plot(self.time_windows[0], [113.3, 113.3], "black", linewidth=3)
+            # plt.plot([790, 790], [50, 150], "black", linewidth=3)
+            # plt.plot(self.time_windows[0], [67.9, 67.9], "black", linewidth=3)
+            # plt.plot(self.time_windows[0], [79.1, 79.1], "black", linewidth=3)
+            # plt.plot(self.time_windows[0], [101.1, 101.1], "black", linewidth=3)
+            # plt.plot(self.time_windows[0], [107.4, 107.4], "black", linewidth=3)
+            # plt.plot(self.time_windows[0], [113.3, 113.3], "black", linewidth=3)
             plt.figure(2)
             plt.xlim(self.time_windows[0])
             plt.ylim([50, 150])
             plt.xticks(np.arange(self.time_windows[0][0], self.time_windows[0][1], 5.0))
             plt.yticks(np.arange(50, 150, 5.0))
             plt.text(x0, y0, str(shot) + ": " + self.probes, bbox=dict(facecolor="red", alpha=0.75), fontsize=35)
-            plt.plot([790, 790], [50, 150], "black", linewidth=3)
-            plt.plot(self.time_windows[0], [67.9, 67.9], "black", linewidth=3)
-            plt.plot(self.time_windows[0], [79.1, 79.1], "black", linewidth=3)
-            plt.plot(self.time_windows[0], [101.1, 101.1], "black", linewidth=3)
-            plt.plot(self.time_windows[0], [107.4, 107.4], "black", linewidth=3)
-            plt.plot(self.time_windows[0], [113.3, 113.3], "black", linewidth=3)
+            # plt.plot([790, 790], [50, 150], "black", linewidth=3)
+            # plt.plot(self.time_windows[0], [67.9, 67.9], "black", linewidth=3)
+            # plt.plot(self.time_windows[0], [79.1, 79.1], "black", linewidth=3)
+            # plt.plot(self.time_windows[0], [101.1, 101.1], "black", linewidth=3)
+            # plt.plot(self.time_windows[0], [107.4, 107.4], "black", linewidth=3)
+            # plt.plot(self.time_windows[0], [113.3, 113.3], "black", linewidth=3)
         self.fig.subplots_adjust(hspace=0, wspace=0)
         self.fig2.subplots_adjust(hspace=0, wspace=0)
         self.fig.text(0.5, 0.065, "Time (ms)", ha="center", fontsize=20)
@@ -264,7 +264,8 @@ if __name__ == '__main__':
     A1 = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_toroidal_mag")
     A1.run_analysis()
     A1.plot_clusters()
-    raw_input("Press any key to continue. . .")
-    A2 = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_poloidal322_mag")
-    A2.run_analysis()
-    A2.plot_clusters()
+    
+    #raw_input("Press any key to continue. . .")
+    #A2 = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_poloidal322_mag")
+    #A2.run_analysis()
+    #A2.plot_clusters()
