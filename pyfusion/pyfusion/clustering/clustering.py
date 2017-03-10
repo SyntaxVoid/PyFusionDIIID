@@ -2544,10 +2544,14 @@ def EM_VMM_clustering_wrapper(instance_array, n_clusters = 9, n_iterations = 20,
     if seeds == None:
         seed_list = [int(np.random.rand()*10000) for i in range(number_of_starts)]# )[None]*number_of_starts
         print 'Seeds: ', seed_list
-    if (seeds.__class__ == int) and (number_of_starts==1):
+    elif (seeds.__class__ == int) and (number_of_starts==1):
         seed_list = [seed_list]
-    if (seeds.__class__ == int) and (number_of_starts!=1):
+    elif (seeds.__class__ == int) and (number_of_starts!=1):
         raise Exception('Only one seed given for more than one start - This will give duplicate results, fix and try again!!!')
+    ## Added by JG
+    else:
+        seed_list = seeds
+    ##
     if len(seed_list)!=number_of_starts:
         raise Exception('The length of the seed list is different to the number of starts - fix and try again!!!')
 
