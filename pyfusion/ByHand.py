@@ -108,7 +108,7 @@ if __name__ == '__main__':
 
     # 10 (time,freq) tuples from clustering. 3 in one cluster, 3 in another and 4 in the final (arbitrary)
     ## Toroidal
-    Ator = Analysis(shots=159243, time_windows=[750, 850], device="DIIID", probes="DIIID_toroidal_mag", n_cpus=1)
+    Ator = Analysis(shots=159243, time_windows=[750, 850], device="DIIID", probes="DIIID_toroidal_mag", n_cpus=1, markersize=5)
     Ator.run_analysis()
     plot_diagnostics(Ator,[750,850],790,110)
     # A = Analysis(shots=159243, time_windows=[750, 850], device="DIIID", probes="DIIID_toroidal_mag",n_cpus=1)

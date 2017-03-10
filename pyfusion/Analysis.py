@@ -22,7 +22,7 @@ def stft_pickle_workaround(input_data):
 
 class Analysis:
     def __init__(self, shots, time_windows=None, device="DIIID", probes="DIIID_toroidal_mag",
-                 samples=1024, overlap=4, cutoffs=None, datamining_settings=None, n_cpus=4):
+                 samples=1024, overlap=4, cutoffs=None, datamining_settings=None, n_cpus=4, markersize=14):
         # Put in description and example run of this... #
         self.shots = shots if type(shots) is list else [shots]
         # Ensuring time_windows is the proper shape to guarantee consistent behaviour.
@@ -62,7 +62,7 @@ class Analysis:
         self.axf2 = None
         self.im = None
         self.pl = None
-        self.markersize = 14
+        self.markersize = markersize
         return
 
     def get_mags(self, shot, probes):
