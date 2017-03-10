@@ -76,7 +76,7 @@ def plot_diagnostics(A, time_window, t0, f0):
                  noverlap=128, xextent=[time_base[0], time_base[-1]])
     ax3.plot(A.z.feature_obj.misc_data_dict["time"][mask1],
              A.z.feature_obj.misc_data_dict["freq"][mask1],
-             "ro", maskersize=A.markersize)
+             "ro", markersize=A.markersize)
     ax3.plot(A.z.feature_obj.misc_data_dict["time"][mask2],
              A.z.feature_obj.misc_data_dict["freq"][mask2],
              "go", markersize=A.markersize)
