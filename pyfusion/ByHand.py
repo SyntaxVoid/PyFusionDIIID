@@ -61,7 +61,7 @@ def plot_diagnostics(A, time_window, t0, f0):
     ax1.set_ylabel("Amplitudes of each probe")
     ax1.set_xlim([0, 360])
     ax1.grid()
-    plt.xticks(np.arange(0,360+1,60))
+    ax1.xticks(np.arange(0,360+1,60))
 
     ax2.plot(positions, phases, "k*-", linewidth=2)
     ax2.set_xlabel("Probe Positions ($^\circ$)")
