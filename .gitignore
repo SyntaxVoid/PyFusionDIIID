@@ -1,0 +1,7 @@
+.idea
+ShaunHaskeyThesis.pdf
+DavidPrettyThesis.pdf
+*.pyc
+*.py~
+desktop.ini
+Thumbs.db

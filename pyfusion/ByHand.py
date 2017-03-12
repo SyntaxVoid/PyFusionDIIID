@@ -68,9 +68,9 @@ def plot_diagnostics(A, time_window, t0, f0):
     ax2.set_xlim([0, 360])
     ax2.grid()
 
-    mask1 = (Ator.z.cluster_assignments == 1)
-    mask2 = (Ator.z.cluster_assignments == 2)
-    mask3 = (Ator.z.cluster_assignments == 3)
+    mask1 = (A.z.cluster_assignments == 1)
+    mask2 = (A.z.cluster_assignments == 2)
+    mask3 = (A.z.cluster_assignments == 3)
 
     ax3.specgram(tmp_sig, NFFT=1024, Fs=1. / dt,
                  noverlap=128, xextent=[time_base[0], time_base[-1]])
@@ -111,6 +111,26 @@ if __name__ == '__main__':
     Ator = Analysis(shots=159243, time_windows=[750, 850], device="DIIID", probes="DIIID_toroidal_mag", n_cpus=1, markersize=11)
     Ator.run_analysis()
     plot_diagnostics(Ator,[750,850],790,110)
+    mask1 = (Ator.z.cluster_assignments == 1)
+    mask2 = (Ator.z.cluster_assignments == 2)
+    mask3 = (Ator.z.cluster_assignments == 3)
+    cluster1times = Ator.feature_object.misc_data_dict["time"][mask1]
+    cluster2times = Ator.feature_object.misc_data_dict["time"][mask2]
+    cluster3times = Ator.feature_object.misc_data_dict["time"][mask3]
+    cluster1freqs = Ator.feature_object.misc_data_dict["freq"][mask1]
+    cluster2freqs = Ator.feature_object.misc_data_dict["freq"][mask2]
+    cluster3freqs = Ator.feature_object.misc_data_dict["freq"][mask3]
+
+    # Cluster 1
+    times1 =  [805.807,805.295,810.415]
+    freqs1 =  [70.8, 70.3125, 71.78]
+    # Cluster 2
+    times2 = [791.471]
+    freqs2 = [87.4]
+
+    # Cluster 3
+
+
     # A = Analysis(shots=159243, time_windows=[750, 850], device="DIIID", probes="DIIID_toroidal_mag",n_cpus=1)
     # A.run_analysis()
     # times = [790,795,810]
