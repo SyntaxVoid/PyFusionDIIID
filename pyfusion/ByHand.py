@@ -99,7 +99,7 @@ def plot_diagnostics(A, time_window, t0, f0):
     #plt.subplot_tool()
     #file_format_str = "../Plots/Shot{}_Time{}_Freq{}.png"
     #plt.savefig(file_format_str.format(A.shots[0],t0,f0))
-    #plt.subplots_adjust(wspace=1)
+    plt.subplots_adjust(wspace=0.4)
     plt.show()
     return
 
