@@ -12,6 +12,9 @@ import pyfusion.clustering.extract_features_scans as ext
 import jtools as jt
 
 from Analysis import *
+import sys  
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 pi = np.pi
 
