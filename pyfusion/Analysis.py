@@ -1,4 +1,4 @@
-# coding=utf-8
+
 ##
 # John Gresl -- Feb 19 2017
 ##
