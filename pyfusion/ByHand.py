@@ -63,13 +63,13 @@ def plot_diagnostics(A, time_window, t0, f0):
     ax1.set_xlim([0, 360])
     ax1.set_xticks(np.arange(0,360+1,60))
     ax1.grid()
-    
+
     ax2.plot(positions, phases, "k*-", linewidth=2)
     ax2.set_xlabel("Probe Positions ($^\circ$)")
     ax2.set_ylabel("Phase")
     ax2.set_xlim([0, 360])
     ax2.set_xticks(np.arange(0, 360 + 1, 60))
-    ax2.set_yticks([-np.pi, -3/4*np.pi, -1/2*np.pi, -1/4*np.pi, 0,
+    ax2.set_yticklabels([-np.pi, -3/4*np.pi, -1/2*np.pi, -1/4*np.pi, 0,
                     1/4 * np.pi, 1/2 *np.pi, 3/4 * np.pi, np.pi],
                    ["$-\pi$", r"$-\frac{3\pi}{4}$", r"$-\frac{\pi}{2}$", r"$-\frac{\pi}{4}$", "$0$",
                     r"$\frac{\pi}{2}$", r"$\pi$", r"$\frac{3\pi}{2}$", r"$2\pi$"])
