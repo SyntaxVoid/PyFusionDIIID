@@ -12,10 +12,6 @@ import pyfusion.clustering.extract_features_scans as ext
 import jtools as jt
 
 from Analysis import *
-import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
-
 pi = np.pi
 
 def help_me(A):
@@ -57,8 +53,8 @@ def plot_diagnostics(A, time_window, t0, f0):
     tmp_sig = sig[0, :]
 
     plt.figure(num=None, figsize=(11,8.5), dpi=100, facecolor="w", edgecolor="k")
-    plt.rc("text", usetex=True)
-    plt.rc("text.latex", unicode=True)
+    #plt.rc("text", usetex=True)
+    #plt.rc("text.latex", unicode=True)
     ax1 = plt.subplot2grid((2, 3), (0, 0))
     ax2 = plt.subplot2grid((2, 3), (1, 0))
     ax3 = plt.subplot2grid((2, 3), (0, 1), rowspan=2, colspan=2)
