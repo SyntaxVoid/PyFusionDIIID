@@ -12,7 +12,7 @@ import pyfusion.clustering.extract_features_scans as ext
 import jtools as jt
 
 from Analysis import *
-import sys  
+import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -63,20 +63,20 @@ def plot_diagnostics(A, time_window, t0, f0):
     ax3 = plt.subplot2grid((2, 3), (0, 1), rowspan=2, colspan=2)
 
     ax1.plot(positions, amps, "k*-", linewidth=2)
-    ax1.set_xlabel("Probe Positions ($^\circ$)")
-    ax1.set_ylabel("Amplitudes")
+    #ax1.set_xlabel("Probe Positions ($^\circ$)")
+    #ax1.set_ylabel("Amplitudes")
     ax1.set_xlim([0, 360])
     ax1.set_xticks(np.arange(0,360+1,60))
     ax1.grid()
 
     ax2.plot(positions, phases, "k*-", linewidth=2)
-    ax2.set_xlabel("Probe Positions ($^\circ$)")
-    ax2.set_ylabel("Phase")
+    #ax2.set_xlabel("Probe Positions ($^\circ$)")
+    #ax2.set_ylabel("Phase")
     ax2.set_xlim([0, 360])
-    ax2.set_xticks(np.arange(0, 360 + 1, 60))
-    ax2.set_yticks([-pi, -3*pi/4, -pi/2, -pi/4, 0, pi/4, pi/2, 3*pi/4, pi])
-    ax2.set_yticklabels(["$-\pi$", r"$-\frac{3\pi}{4}$", r"$-\frac{\pi}{2}$", r"$-\frac{\pi}{4}$", "$0$",
-                         r"$\frac{\pi}{2}$", r"$\pi$", r"$\frac{3\pi}{2}$", r"$2\pi$"])
+    #ax2.set_xticks(np.arange(0, 360 + 1, 60))
+    #ax2.set_yticks([-pi, -3*pi/4, -pi/2, -pi/4, 0, pi/4, pi/2, 3*pi/4, pi])
+    #ax2.set_yticklabels(["$-\pi$", r"$-\frac{3\pi}{4}$", r"$-\frac{\pi}{2}$", r"$-\frac{\pi}{4}$", "$0$",
+    #                     r"$\frac{\pi}{2}$", r"$\pi$", r"$\frac{3\pi}{2}$", r"$2\pi$"])
 
     ax2.grid()
 
