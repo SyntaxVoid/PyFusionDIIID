@@ -1,4 +1,3 @@
-
 ##
 # John Gresl -- Feb 19 2017
 ##
@@ -16,7 +15,7 @@ import jtools as jt
 
 def stft_pickle_workaround(input_data):
     # This looks a little funny. Because of how python treats multiprocessing, any function
-    # using mp must be at the highest level (not within a class) to operate correctly. ¯\_(ツ)_/¯
+    # using mp must be at the highest level (not within a class) to operate correctly.
     return copy.deepcopy(input_data[0].get_stft(input_data[1]))
 
 
