@@ -52,7 +52,7 @@ def plot_diagnostics(A, time_window, t0, f0):
     dt = np.mean(np.diff(time_base))
     tmp_sig = sig[0, :]
 
-    plt.figure(num=None, figsize=(10,10), dpi=80, facecolor="w", edgecolor="k")
+    plt.figure(num=None, figsize=(10,15), dpi=80, facecolor="w", edgecolor="k")
     ax1 = plt.subplot2grid((2, 3), (0, 0))
     ax2 = plt.subplot2grid((2, 3), (1, 0))
     ax3 = plt.subplot2grid((2, 3), (0, 1), rowspan=2, colspan=2)
