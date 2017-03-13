@@ -53,10 +53,9 @@ def plot_diagnostics(A, time_window, t0, f0):
     tmp_sig = sig[0, :]
 
     plt.figure(num=None, figsize=(11,8.5), dpi=100, facecolor="w", edgecolor="k")
-    plt.rc('font', family='serif')
-    plt.rc('font', serif='Times New Roman')
-    # plt.rc("text", usetex=True)
-    # plt.rc("text.latex", unicode=True)
+    mpl.rcParams['mathtext.fontset'] = 'stix'
+    mpl.rcParams['font.family'] = 'STIXGeneral'
+    mpl.pyplot.title(r'ABC123 vs $\mathrm{ABC123}^{123}$')
     ax1 = plt.subplot2grid((2, 3), (0, 0))
     ax2 = plt.subplot2grid((2, 3), (1, 0))
     ax3 = plt.subplot2grid((2, 3), (0, 1), rowspan=2, colspan=2)
