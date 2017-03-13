@@ -8,7 +8,6 @@ pi = np.pi
 
 def plot_diagnostics(A, time_window, t0, f0, idx="", doplot=True, dosave=None):
     # Will be used to plot amplitude vs. position and amplitude vs. phase.
-    # For shot 159243, one time of interest is about 791 ms (101.1 kHz ECE Freq)
     fft = A.raw_fft
     raw_mirnov = fft.signal
     raw_times = fft.timebase
@@ -25,7 +24,6 @@ def plot_diagnostics(A, time_window, t0, f0, idx="", doplot=True, dosave=None):
         complex_amps.append(prb[nf])
     amps = jt.complex_mag_list(complex_amps)
     phases = np.angle(complex_amps)
-    # positions in degrees
     positions = []
     if idx.lower() == "tor":
         positions = [20., 67., 97., 127., 132., 137., 157., 200., 247., 277., 307., 312., 322., 340.]
@@ -82,7 +80,6 @@ def plot_diagnostics(A, time_window, t0, f0, idx="", doplot=True, dosave=None):
                  A.z.feature_obj.misc_data_dict["freq"][mask3],
                  "co", markersize=A.markersize)
     elif idx.lower() == "pol":
-        # Clusters do not correlate between toroidal and poloidal (i think.) so we do not plot them.
         pass
     ax3.set_xlabel("Time (ms)", fontsize=16)
     ax3.set_ylabel("Freq (kHz)", fontsize=16)
@@ -106,7 +103,6 @@ if __name__ == '__main__':
                'verbose': 0, 'method': 'EM_VMM', "seeds": [732]}
     dms_pol = {'n_clusters': 16, 'n_iterations': 20, 'start': 'k_means',
                'verbose': 0, 'method': 'EM_VMM', "seeds": None}
-    # Want to compare ~20 different data points from different modes (10 torroidal / 10 poloidal)
     Ator = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_toroidal_mag",
                     n_cpus=1, markersize=8, datamining_settings=dms_tor)
     Apol = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_poloidal322_mag",
@@ -114,17 +110,6 @@ if __name__ == '__main__':
     Ator.run_analysis()
     Apol.run_analysis()
 
-    # mask1 = (Ator.z.cluster_assignments == 1)
-    # mask2 = (Ator.z.cluster_assignments == 2)
-    # mask3 = (Ator.z.cluster_assignments == 3)
-    # cluster1times = Ator.feature_object.misc_data_dict["time"][mask1]
-    # cluster2times = Ator.feature_object.misc_data_dict["time"][mask2]
-    # cluster3times = Ator.feature_object.misc_data_dict["time"][mask3]
-    # cluster1freqs = Ator.feature_object.misc_data_dict["freq"][mask1]
-    # cluster2freqs = Ator.feature_object.misc_data_dict["freq"][mask2]
-    # cluster3freqs = Ator.feature_object.misc_data_dict["freq"][mask3]
-
-    # These points were picked by looking at a graph of the clusters
     # Cluster 1
     times1 = [805.807, 805.295, 810.415]
     freqs1 = [70.8, 70.3125, 71.78]
