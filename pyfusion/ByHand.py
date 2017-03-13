@@ -31,7 +31,7 @@ def plot_clusters(A, clust_arr, ax=None):
             mask = (A.z.cluster_assignments==cl)
             plt.plot(A.z.feature_obj.misc_data_dict["time"][mask],
                      A.z.feature_obj.misc_data_dict["freq"][mask],
-                     color=plot_colors[cl], marker="o", linestyle=None,
+                     color=plot_colors[cl], marker="o", linestyle="None",
                      markersize=A.markersize)
 
     else:
@@ -41,7 +41,7 @@ def plot_clusters(A, clust_arr, ax=None):
             mask = (A.z.cluster_assignments == cl)
             ax.plot(A.z.feature_obj.misc_data_dict["time"][mask],
                      A.z.feature_obj.misc_data_dict["freq"][mask],
-                     color=plot_colors[cl], marker="o", linestyle=None,
+                     color=plot_colors[cl], marker="o", linestyle="None",
                      markersize=A.markersize)
     return
 
