@@ -24,9 +24,9 @@ def plot_clusters(A, clust_arr, ax=None):
     if ax is None:
         plt.specgram(A.results[0][2][0, :], NFFT=1024, Fs=1./np.mean(np.diff(A.results[0][3])),
                      noverlap=128, xextent=[A.results[0][3][0], A.results[0][3][-1]])
-        plot_colors = CycledList(["silver", "red", "sienna", "gold", "olivedrab", "chartreuse",
-                                  "mediumspringgreen", "lightseagreen", "darkcyan", "c", "deepskyblue",
-                                  "royalblue", "darkorchid", "m", "mediumvioletred", "lightsalmon"])
+        plot_colors = CycledList(["silvero", "redo", "siennao", "goldo", "olivedrabo", "chartreuseo",
+                                  "mediumspringgreeno", "lightseagreeno", "darkcyano", "co", "deepskyblueo",
+                                  "royalblueo", "darkorchido", "mo", "mediumvioletredo", "lightsalmono"])
         for cl in clust_arr:
             mask = (A.z.cluster_assignments==cl)
             plt.plot(A.z.feature_obj.misc_data_dict["time"][mask],
