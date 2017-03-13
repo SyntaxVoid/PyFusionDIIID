@@ -101,7 +101,8 @@ def plot_diagnostics(A, time_window, t0, f0):
 
     plt.suptitle("Shot 159243 at t = {} ms, f = {} kHz".format(t,f), fontsize=24)
     plt.subplots_adjust(wspace=0.4)
-    plt.savefig("../Plots/Shot159243_{}_{}".format(t0,f0))
+    fname = "../Plots/Shot159243_{}_{}.png".format(t0,f0)
+    plt.savefig(fname)
     #plt.show()
     return
 
