@@ -53,6 +53,8 @@ def plot_diagnostics(A, time_window, t0, f0):
     tmp_sig = sig[0, :]
 
     plt.figure(num=None, figsize=(11,8.5), dpi=100, facecolor="w", edgecolor="k")
+    plt.rc('font', family='serif')
+    plt.rc('font', serif='Times New Roman')
     # plt.rc("text", usetex=True)
     # plt.rc("text.latex", unicode=True)
     ax1 = plt.subplot2grid((2, 3), (0, 0))
