@@ -149,7 +149,7 @@ if __name__ == '__main__':
     Apol = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_poloidal322_mag",
                     n_cpus=1, markersize=8, datamining_settings=dms_pol)
     Ator.run_analysis()
-    #Apol.run_analysis()
+    Apol.run_analysis()
 
     # Cluster 1
     times1 = [805.807, 805.295, 810.415]
@@ -166,9 +166,9 @@ if __name__ == '__main__':
 
     tor_save_name = "../Plots/Shot159243_Tor_{}_{}.png"
     pol_save_name = "../Plots/Shot159243_Pol_{}_{}.png"
-    # for (t, f) in zip(TIMES, FREQS):
-    #     tor_file = tor_save_name.format(t, f)
-    #     pol_file = pol_save_name.format(t, f)
-    #     plot_diagnostics(Ator, [750, 850], t, f, "Tor", doplot=False, dosave=tor_file)
-    #     plot_diagnostics(Apol, [750, 850], t, f, "Pol", doplot=False, dosave=pol_file)
-    plot_diagnostics(Ator, [750, 850], t0=805.8, f0=70.8, idx="Tor", doplot=True)
+    for (t, f) in zip(TIMES, FREQS):
+        tor_file = tor_save_name.format(t, f)
+        pol_file = pol_save_name.format(t, f)
+        plot_diagnostics(Ator, [750, 850], t, f, "Tor", doplot=False, dosave=tor_file)
+        plot_diagnostics(Apol, [750, 850], t, f, "Pol", doplot=False, dosave=pol_file)
+
