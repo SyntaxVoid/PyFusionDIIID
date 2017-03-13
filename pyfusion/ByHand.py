@@ -7,7 +7,7 @@ from Analysis import *
 pi = np.pi
 
 
-def plot_clusters(A, clust_arr, ax=None):
+def plot_clusters(A, clust_arr, ax=None, doplot=True, dosave=None):
     # Inputs:
     #   A: Result from Analysis class (A.run_analysis() must have already been run.
     #   clust_arr: Array of the clusters we want to plot. eg: [1,4,6] will plot clusters 1,4 and 6
@@ -25,6 +25,7 @@ def plot_clusters(A, clust_arr, ax=None):
                               "mediumspringgreen", "lightseagreen", "darkcyan", "deepskyblue",
                               "c", "sienna","m", "mediumvioletred", "lightsalmon"])
     if ax is None:
+        plt.figure(figsize=(11,8.5), dpi=100, facecolor="w", edgecolor="k")
         plt.specgram(A.results[0][2][0, :], NFFT=1024, Fs=1./np.mean(np.diff(A.results[0][3])),
                      noverlap=128, xextent=[A.results[0][3][0], A.results[0][3][-1]])
         for cl in clust_arr:
@@ -33,7 +34,19 @@ def plot_clusters(A, clust_arr, ax=None):
                      A.z.feature_obj.misc_data_dict["freq"][mask],
                      color=plot_colors[cl], marker="o", linestyle="None",
                      markersize=A.markersize)
-
+        # Cause I'm lazy.
+        if dosave is not None and "toroidal" in dosave.lower():
+            plt.title("Shot 159243 Toroidal Array")
+        if dosave is not None and "poloidal" in dosave.lower():
+            plt.title("Shot 159243 Poloidal Array")
+        plt.xlabel("Time (ms)")
+        plt.ylabel("Freq (ms)")
+        plt.xlim([750,850])
+        plt.ylim([45,250])
+        if doplot:
+            plt.show()
+        if dosave is not None:
+            plt.savefig(dosave)
     else:
         ax.specgram(A.results[0][2][0, :], NFFT=1024, Fs=1. / np.mean(np.diff(A.results[0][3])),
                      noverlap=128, xextent=[A.results[0][3][0], A.results[0][3][-1]])
@@ -164,11 +177,14 @@ if __name__ == '__main__':
     TIMES = times1+times2+times3
     FREQS = freqs1+freqs2+freqs3
 
-    tor_save_name = "../Plots/Shot159243_Tor_{}_{}.png"
-    pol_save_name = "../Plots/Shot159243_Pol_{}_{}.png"
-    for (t, f) in zip(TIMES, FREQS):
-        tor_file = tor_save_name.format(t, f)
-        pol_file = pol_save_name.format(t, f)
-        plot_diagnostics(Ator, [750, 850], t, f, "Tor", doplot=False, dosave=tor_file)
-        plot_diagnostics(Apol, [750, 850], t, f, "Pol", doplot=False, dosave=pol_file)
+    plot_clusters(Ator,[],doplot=False,dosave="../Plots/Shot159243Toroidal")
+    plot_clusters(Apol,[],doplot=False,dosave="../Plots/Shot159243Poloidal")
+    # tor_save_name = "../Plots/Shot159243_Tor_{}_{}.png"
+    # pol_save_name = "../Plots/Shot159243_Pol_{}_{}.png"
+    # for (t, f) in zip(TIMES, FREQS):
+    #     tor_file = tor_save_name.format(t, f)
+    #     pol_file = pol_save_name.format(t, f)
+    #     plot_diagnostics(Ator, [750, 850], t, f, "Tor", doplot=False, dosave=tor_file)
+    #     plot_diagnostics(Apol, [750, 850], t, f, "Pol", doplot=False, dosave=pol_file)
+
 
