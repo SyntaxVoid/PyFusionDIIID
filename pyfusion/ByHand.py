@@ -40,7 +40,7 @@ def plot_clusters(A, clust_arr, ax=None, doplot=True, dosave=None):
         if dosave is not None and "poloidal" in dosave.lower():
             plt.title("Shot 159243 Poloidal Array")
         plt.xlabel("Time (ms)")
-        plt.ylabel("Freq (ms)")
+        plt.ylabel("Freq (kHz)")
         plt.xlim([750,850])
         plt.ylim([45,250])
         if doplot:
