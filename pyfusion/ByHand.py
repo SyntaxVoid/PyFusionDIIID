@@ -138,6 +138,10 @@ if __name__ == '__main__':
     TIMES = times1+times2+times3
     FREQS = freqs1+freqs2+freqs3
 
+    tor_save_name = "../Plots/Shot159243_Tor_{}_{}.png"
+    pol_save_name = "../Plots/Shot159243_Pol_{}_{}.png"
     for (t, f) in zip(TIMES, FREQS):
-        plot_diagnostics(Ator, [750, 850], t, f, "Tor")
-        plot_diagnostics(Apol, [750, 850], t, f, "Pol")
+        tor_file = tor_save_name.format(t,f)
+        pol_file = pol_save_name.format(t,f)
+        plot_diagnostics(Ator, [750, 850], t, f, "Tor", doplot=False, dosave=tor_file)
+        plot_diagnostics(Apol, [750, 850], t, f, "Pol", doplot=False, dosave=pol_file)
