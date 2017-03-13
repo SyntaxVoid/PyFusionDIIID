@@ -149,7 +149,7 @@ if __name__ == '__main__':
     Apol = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_poloidal322_mag",
                     n_cpus=1, markersize=8, datamining_settings=dms_pol)
     Ator.run_analysis()
-    Apol.run_analysis()
+    #Apol.run_analysis()
 
     # Cluster 1
     times1 = [805.807, 805.295, 810.415]
