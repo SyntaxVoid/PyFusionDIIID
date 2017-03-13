@@ -77,17 +77,22 @@ def plot_diagnostics(A, time_window, t0, f0, id="", doplot=True, dosave=None):
     mask2 = (A.z.cluster_assignments == 2)
     mask3 = (A.z.cluster_assignments == 3)
 
+
     ax3.specgram(tmp_sig, NFFT=1024, Fs=1. / dt,
                  noverlap=128, xextent=[time_base[0], time_base[-1]])
-    ax3.plot(A.z.feature_obj.misc_data_dict["time"][mask1],
-             A.z.feature_obj.misc_data_dict["freq"][mask1],
-             "ro", markersize=A.markersize)
-    ax3.plot(A.z.feature_obj.misc_data_dict["time"][mask2],
-             A.z.feature_obj.misc_data_dict["freq"][mask2],
-             "go", markersize=A.markersize)
-    ax3.plot(A.z.feature_obj.misc_data_dict["time"][mask3],
-             A.z.feature_obj.misc_data_dict["freq"][mask3],
-             "co", markersize=A.markersize)
+    if id.lower() == "tor":
+        ax3.plot(A.z.feature_obj.misc_data_dict["time"][mask1],
+                 A.z.feature_obj.misc_data_dict["freq"][mask1],
+                 "ro", markersize=A.markersize)
+        ax3.plot(A.z.feature_obj.misc_data_dict["time"][mask2],
+                 A.z.feature_obj.misc_data_dict["freq"][mask2],
+                 "go", markersize=A.markersize)
+        ax3.plot(A.z.feature_obj.misc_data_dict["time"][mask3],
+                 A.z.feature_obj.misc_data_dict["freq"][mask3],
+                 "co", markersize=A.markersize)
+    elif id.lower() == "pol":
+        # Clusters do not correlate between toroidal and poloidal (i think.) so we do not plot them.
+        pass
     ax3.set_xlabel("Time (ms)", fontsize=16)
     ax3.set_ylabel("Freq (kHz)", fontsize=16)
 
