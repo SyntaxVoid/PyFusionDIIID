@@ -21,7 +21,7 @@ def help_me(A):
     return
 
 
-def plot_diagnostics(A, time_window, t0, f0):
+def plot_diagnostics(A, time_window, t0, f0, id=""):
     # Will be used to plot amplitude vs. position and amplitude vs. phase.
     # For shot 159243, one time of interest is about 791 ms (101.1 kHz ECE Freq)
     fft = A.raw_fft
@@ -99,9 +99,9 @@ def plot_diagnostics(A, time_window, t0, f0):
     ax3.set_xlim(time_window)
     ax3.set_ylim([45, 250])
 
-    plt.suptitle("Shot 159243 at t = {} ms, f = {} kHz".format(t,f), fontsize=24)
+    plt.suptitle("Shot 159243 ({}) at t = {} ms, f = {} kHz".format(id,t,f), fontsize=24)
     plt.subplots_adjust(wspace=0.4)
-    fname = "../Plots/Shot159243_{}_{}.png".format(t0,f0)
+    fname = "../Plots/Shot159243_{}_{}_{}.png".format(id,t0,f0)
     plt.savefig(fname)
     #plt.show()
     return
@@ -114,13 +114,11 @@ def plot_single_cluster():
 
 if __name__ == '__main__':
     # Want to compare ~20 different data points from different modes (10 torroidal / 10 poloidal)
-    Apol = Analysis(shots=159243, time_windows=[750, 850], device="DIIID", probes="DIIID_poloidal322_mag", n_cpus=1)
-
-    # 10 (time,freq) tuples from clustering. 3 in one cluster, 3 in another and 4 in the final (arbitrary)
-    ## Toroidal
-    Ator = Analysis(shots=159243, time_windows=[750, 850], device="DIIID", probes="DIIID_toroidal_mag", n_cpus=1, markersize=8)
+    Ator = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_toroidal_mag", n_cpus=1, markersize=8)
+    Apol = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_poloidal322_mag", n_cpus=1, markersize=8)
     Ator.run_analysis()
-    plot_diagnostics(Ator,[750,850],790,110)
+    Apol.run_analysis()
+
     mask1 = (Ator.z.cluster_assignments == 1)
     mask2 = (Ator.z.cluster_assignments == 2)
     mask3 = (Ator.z.cluster_assignments == 3)
@@ -146,7 +144,8 @@ if __name__ == '__main__':
     FREQS = freqs1+freqs2+freqs3
 
     for (t,f) in zip(TIMES,FREQS):
-        plot_diagnostics(Ator,[750,850],t,f)
+        plot_diagnostics(Ator,[750,850],t,f,"Tor")
+        plot_diagnostics(Apol, [750, 850], t, f, "Pol")
 
 
 
