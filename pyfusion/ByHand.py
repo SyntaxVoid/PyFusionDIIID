@@ -2,8 +2,48 @@
 # Script for checking how a human would normally identify clusters by hand
 
 import matplotlib.pyplot as plt
+import numpy as np
 from Analysis import *
 pi = np.pi
+
+
+def plot_clusters(A, clust_arr, ax=None):
+    # Inputs:
+    #   A: Result from Analysis class (A.run_analysis() must have already been run.
+    #   clust_arr: Array of the clusters we want to plot. eg: [1,4,6] will plot clusters 1,4 and 6
+    #   ax: if ax is supplied, will plot it on the specified axes
+    # Outputs:
+    #   A graph.
+    class CycledList:
+        def __init__(self, arr):
+            self.arr = arr
+            return
+        def __getitem__(self, key):
+            return self.arr[np.mod(key, len(self.arr))]
+
+    if ax is None:
+        plt.specgram(A.results[0][2][0, :], NFFT=1024, Fs=1./np.mean(np.diff(A.results[0][3])),
+                     noverlap=128, xextent=[A.results[0][3][0], A.results[0][3][-1]])
+        plot_colors = CycledList(["silver", "red", "sienna", "gold", "olivedrab", "chartreuse",
+                                  "mediumspringgreen", "lightseagreen", "darkcyan", "c", "deepskyblue",
+                                  "royalblue", "darkorchid", "m", "mediumvioletred", "lightsalmon"])
+        for cl in clust_arr:
+            mask = (A.z.cluster_assignments==cl)
+            plt.plot(A.z.feature_obj.misc_data_dict["time"][mask],
+                     A.z.feature_obj.misc_data_dict["freq"][mask],
+                     plot_colors[cl], markersize=A.markersize)
+    else:
+        ax.specgram(A.results[0][2][0, :], NFFT=1024, Fs=1. / np.mean(np.diff(A.results[0][3])),
+                     noverlap=128, xextent=[A.results[0][3][0], A.results[0][3][-1]])
+        plot_colors = CycledList(["silver", "red", "sienna", "gold", "olivedrab", "chartreuse",
+                                  "mediumspringgreen", "lightseagreen", "darkcyan", "c", "deepskyblue",
+                                  "royalblue", "darkorchid", "m", "mediumvioletred", "lightsalmon"])
+        for cl in clust_arr:
+            mask = (A.z.cluster_assignments == cl)
+            ax.plot(A.z.feature_obj.misc_data_dict["time"][mask],
+                     A.z.feature_obj.misc_data_dict["freq"][mask],
+                     plot_colors[cl], markersize=A.markersize)
+    return
 
 
 def plot_diagnostics(A, time_window, t0, f0, idx="", doplot=True, dosave=None):
@@ -70,15 +110,16 @@ def plot_diagnostics(A, time_window, t0, f0, idx="", doplot=True, dosave=None):
     ax3.specgram(tmp_sig, NFFT=1024, Fs=1. / dt,
                  noverlap=128, xextent=[time_base[0], time_base[-1]])
     if idx.lower() == "tor":
-        ax3.plot(A.z.feature_obj.misc_data_dict["time"][mask1],
-                 A.z.feature_obj.misc_data_dict["freq"][mask1],
-                 "ro", markersize=A.markersize)
-        ax3.plot(A.z.feature_obj.misc_data_dict["time"][mask2],
-                 A.z.feature_obj.misc_data_dict["freq"][mask2],
-                 "go", markersize=A.markersize)
-        ax3.plot(A.z.feature_obj.misc_data_dict["time"][mask3],
-                 A.z.feature_obj.misc_data_dict["freq"][mask3],
-                 "co", markersize=A.markersize)
+        plot_clusters(A,[1, 2, 3], ax3)
+        # ax3.plot(A.z.feature_obj.misc_data_dict["time"][mask1],
+        #          A.z.feature_obj.misc_data_dict["freq"][mask1],
+        #          "ro", markersize=A.markersize)
+        # ax3.plot(A.z.feature_obj.misc_data_dict["time"][mask2],
+        #          A.z.feature_obj.misc_data_dict["freq"][mask2],
+        #          "go", markersize=A.markersize)
+        # ax3.plot(A.z.feature_obj.misc_data_dict["time"][mask3],
+        #          A.z.feature_obj.misc_data_dict["freq"][mask3],
+        #          "co", markersize=A.markersize)
     elif idx.lower() == "pol":
         pass
     ax3.set_xlabel("Time (ms)", fontsize=16)
@@ -126,7 +167,7 @@ if __name__ == '__main__':
     tor_save_name = "../Plots/Shot159243_Tor_{}_{}.png"
     pol_save_name = "../Plots/Shot159243_Pol_{}_{}.png"
     for (t, f) in zip(TIMES, FREQS):
-        tor_file = tor_save_name.format(t,f)
-        pol_file = pol_save_name.format(t,f)
+        tor_file = tor_save_name.format(t, f)
+        pol_file = pol_save_name.format(t, f)
         plot_diagnostics(Ator, [750, 850], t, f, "Tor", doplot=False, dosave=tor_file)
         plot_diagnostics(Apol, [750, 850], t, f, "Pol", doplot=False, dosave=pol_file)
