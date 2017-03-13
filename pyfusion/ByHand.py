@@ -102,7 +102,7 @@ def plot_diagnostics(A, time_window, t0, f0):
     ax3.set_xlim(time_window)
     ax3.set_ylim([45, 250])
 
-    tmp = "/mathrm{{Shot 159243 at t = {} ms, f = {} kHz}}".format(t,f)
+    tmp = "$/mathrm{{Shot 159243 at t = {} ms, f = {} kHz}}$".format(t,f)
     plt.suptitle(tmp, fontsize=24)
     #plt.subplot_tool()
     #file_format_str = "../Plots/Shot{}_Time{}_Freq{}.png"
