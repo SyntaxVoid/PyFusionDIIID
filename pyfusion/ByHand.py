@@ -14,14 +14,8 @@ import jtools as jt
 from Analysis import *
 pi = np.pi
 
-def help_me(A):
 
-
-
-    return
-
-
-def plot_diagnostics(A, time_window, t0, f0, id=""):
+def plot_diagnostics(A, time_window, t0, f0, id="", doplot=True, dosave=None):
     # Will be used to plot amplitude vs. position and amplitude vs. phase.
     # For shot 159243, one time of interest is about 791 ms (101.1 kHz ECE Freq)
     fft = A.raw_fft
@@ -75,7 +69,7 @@ def plot_diagnostics(A, time_window, t0, f0, id=""):
     ax2.set_xticks(np.arange(0, 360 + 1, 60))
     ax2.set_yticks([-pi, -3*pi/4, -pi/2, -pi/4, 0, pi/4, pi/2, 3*pi/4, pi])
     ax2.set_yticklabels(["$-\pi$", r"$-\frac{3\pi}{4}$", r"$-\frac{\pi}{2}$", r"$-\frac{\pi}{4}$", "$0$",
-                         r"$\frac{\pi}{2}$", r"$\pi$", r"$\frac{3\pi}{2}$", r"$2\pi$"])
+                         r"$\frac{\pi}{2}$", r"$\pi$", r"$\frac{3\pi}{2}$", r"$\pi$"])
     ax2.set_ylim([-pi,pi])
     ax2.grid()
 
@@ -106,20 +100,21 @@ def plot_diagnostics(A, time_window, t0, f0, id=""):
     plt.suptitle("Shot 159243 ({}) at t = {} ms, f = {} kHz".format(id,t,f), fontsize=24)
     plt.subplots_adjust(wspace=0.4)
     fname = "../Plots/Shot159243_{}_{}_{}.png".format(id,t0,f0)
-    plt.savefig(fname)
-    #plt.show()
-    return
-
-def plot_single_cluster():
-    # ??
-
+    if doplot:
+        plt.show()
+    if dosave is not None:
+        plt.savefig(dosave)
     return
 
 
 if __name__ == '__main__':
+    dms_tor = {'n_clusters': 16, 'n_iterations': 20, 'start': 'k_means', 'verbose': 0, 'method': 'EM_VMM', "seeds":[732]}
+    dms_pol = {'n_clusters': 16, 'n_iterations': 20, 'start': 'k_means', 'verbose': 0, 'method': 'EM_VMM', "seeds":None}
     # Want to compare ~20 different data points from different modes (10 torroidal / 10 poloidal)
-    Ator = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_toroidal_mag", n_cpus=1, markersize=8)
-    Apol = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_poloidal322_mag", n_cpus=1, markersize=8)
+    Ator = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_toroidal_mag",
+                    n_cpus=1, markersize=8, datamining_settings=dms_tor)
+    Apol = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_poloidal322_mag",
+                    n_cpus=1, markersize=8, datamining_settings = dms_pol)
     Ator.run_analysis()
     Apol.run_analysis()
 

@@ -46,7 +46,7 @@ class Analysis:
         self.cutoffs = cutoffs if cutoffs is not None else \
             {"min_svs": 2, "power_cutoff": 0.000, "lower_freq": 0.1, "uppder_freq":150}
         self.datamining_settings = datamining_settings if datamining_settings is not None else \
-            {'n_clusters': 16, 'n_iterations': 20, 'start': 'k_means', 'verbose': 0, 'method': 'EM_VMM', "seeds":[732]}
+            {'n_clusters': 16, 'n_iterations': 20, 'start': 'k_means', 'verbose': 0, 'method': 'EM_VMM', "seeds":None}
         self.n_cpus = n_cpus
         self.results = None
         self.raw_mirnov_data = None
