@@ -44,9 +44,6 @@ def plot_diagnostics(A, time_window, t0, f0):
     positions = [20., 67., 97., 127., 132., 137., 157., 200., 247., 277., 307., 312., 322., 340.]
 
     tmp = A.results[0]
-    assign = A.z.cluster_assignments
-    details = A.z.cluster_details["EM_VMM_kappas"]
-    shot_details = A.z.feature_obj.misc_data_dict["shot"]
     time_base = tmp[3]
     sig = tmp[2]
     dt = np.mean(np.diff(time_base))
@@ -103,11 +100,9 @@ def plot_diagnostics(A, time_window, t0, f0):
     ax3.set_ylim([45, 250])
 
     plt.suptitle("Shot 159243 at t = {} ms, f = {} kHz".format(t,f), fontsize=24)
-    #plt.subplot_tool()
-    #file_format_str = "../Plots/Shot{}_Time{}_Freq{}.png"
-    #plt.savefig(file_format_str.format(A.shots[0],t0,f0))
     plt.subplots_adjust(wspace=0.4)
-    plt.show()
+    plt.savefig("../Plots/Shot159243_{}_{}".format(t0,f0))
+    #plt.show()
     return
 
 def plot_single_cluster():
@@ -145,6 +140,12 @@ if __name__ == '__main__':
     # Cluster 3
     times3 = [801.711, 806.318, 797.615, 809.39]
     freqs3 = [85.938, 90.820, 82.0311, 89.84]
+
+    TIMES = times1+times2+times3
+    FREQS = freqs1+freqs2+freqs3
+
+    for (t,f) in zip(TIMES,FREQS):
+        plot_diagnostics(Ator,[750,850],t,f)
 
 
 
