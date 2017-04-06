@@ -14,6 +14,8 @@ def plot_clusters(A, clust_arr, ax=None, doplot=True, dosave=None):
     #   ax: if ax is supplied, will plot it on the specified axes
     # Outputs:
     #   A graph.
+    if clust_arr == "all":
+        clust_arr = np.unique(A.z.cluster_assignments)
     class CycledList:
         def __init__(self, arr):
             self.arr = arr
