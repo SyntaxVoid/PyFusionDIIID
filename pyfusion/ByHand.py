@@ -191,6 +191,6 @@ if __name__ == '__main__':
     #     plot_diagnostics(Apol, [750, 850], t, f, "Pol", doplot=False, dosave=pol_file)
     '''
     Aece = Analysis(shots=159243, time_windows=[750,850],probes="ECE_array2",n_cpus=1,markersize=8)
-    Aece.run_analysis()
+    Aece.run_analysis_ece()
 
 

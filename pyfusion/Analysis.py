@@ -19,6 +19,11 @@ def stft_pickle_workaround(input_data):
     return copy.deepcopy(input_data[0].get_stft(input_data[1]))
 
 
+def stft_ece_pickle_workaround(input_data):
+    # This looks a little funny. Because of how python treats multiprocessing, any function
+    # using mp must be at the highest level (not within a class) to operate correctly.
+    return copy.deepcopy(input_data[0].get_stft_ece(input_data[1]))
+
 class Analysis:
     def __init__(self, shots, time_windows=None, device="DIIID", probes="DIIID_toroidal_mag",
                  samples=1024, overlap=4, cutoffs=None, datamining_settings=None, n_cpus=4, markersize=14):
@@ -258,6 +263,82 @@ class Analysis:
         self.fig2.show()
         return
 
+
+    ### ECE ###
+    def get_stft_ece(self, shot):
+        mag = self.get_mags(shot, self.probes)
+        data_fft = mag.generate_frequency_series(self.samples, self.samples / self.overlap)
+        # SETTINGS #
+        n_pts = 8
+        lower_freq = 45
+        upper_freq = 150
+        cutoff_by = "sigma_eq"
+        filter_cutoff = 85
+        filter_item = "EM_VMM_kappas"
+        # /SETTINGS #
+        good_indices = ext.find_peaks(data_fft, n_pts=n_pts, lower_freq=lower_freq, upper_freq=upper_freq)
+        rel_data = ext.return_values(data_fft.signal, good_indices)
+        tmp = len(ext.return_non_freq_dependent(data_fft.frequency_base, good_indices))
+        misc_data_dict = {"time": ext.return_time_values(data_fft.timebase, good_indices),
+                          "freq": ext.return_non_freq_dependent(data_fft.frequency_base, good_indices),
+                          "shot": np.ones(tmp, dtype=int) * shot,
+                          "mirnov_data": +rel_data}
+        print("######################" * 50)
+        self.raw_fft = data_fft
+        self.raw_mirnov_data = data_fft.signal
+        self.raw_time = data_fft.timebase
+        rel_data_angles = np.angle(rel_data)
+        diff_angles = (np.diff(rel_data_angles)) % (2. * np.pi)
+        diff_angles[diff_angles > np.pi] -= (2. * np.pi)
+
+        # This is where ECE is different. Use magnitudes as clustering instead of angles
+        z = ext.perform_data_datamining(rel_data, misc_data_dict, self.datamining_settings)
+        instance_array_cur, misc_data_dict_cur = \
+            ext.filter_by_kappa_cutoff(z, ave_kappa_cutoff=filter_cutoff, ax=None,
+                                       cutoff_by=cutoff_by, filter_item=filter_item)
+        instance_array = np.array(instance_array_cur)
+        misc_data_dict = misc_data_dict_cur
+        return instance_array, misc_data_dict, mag.signal, mag.timebase
+
+    def get_stft_ece_wrapper(self, input_data):
+        return copy.deepcopy(self.get_stft_ece(input_data[0]))
+
+    def run_analysis_ece(self, method="stft", savefile=None):
+        if method == "stft":
+            func = stft_ece_pickle_workaround
+        else:
+            func = None
+        # tmp_data_iter = itertools.izip(itertools.repeat(self),itertools.izip(self.shots,self.time_windows))
+        tmp_data_iter = itertools.izip(itertools.repeat(self), self.shots, self.time_windows)
+        if self.n_cpus > 1:
+            pool = Pool(processes=self.n_cpus, maxtasksperchild=3)
+            self.results = pool.map(func, tmp_data_iter)
+            pool.close()
+            pool.join()
+        else:
+            self.results = map(func, tmp_data_iter)
+        start = True
+        instance_array = 0
+        misc_data_dict = 0
+        for n, res in enumerate(self.results):
+            if res[0] is not None:
+                if start:
+                    instance_array = copy.deepcopy(res[0])
+                    misc_data_dict = copy.deepcopy(res[1])
+                    start = False
+                else:
+                    instance_array = np.append(instance_array, res[0], axis=0)
+                    for i in misc_data_dict.keys():
+                        misc_data_dict[i] = np.append(misc_data_dict[i], res[1][i], axis=0)
+            else:
+                print("One shot may have failed!")
+        self.feature_object = clust.feature_object(instance_array=instance_array, misc_data_dict=misc_data_dict,
+                                                   instance_array_amps=+misc_data_dict["mirnov_data"])
+        self.z = self.feature_object.cluster(**self.datamining_settings)
+        if savefile is not None:
+            self.feature_object.dump_data(savefile)
+        return
+        ### /ECE ###
 
 if __name__ == '__main__':
     A1 = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_toroidal_mag")
