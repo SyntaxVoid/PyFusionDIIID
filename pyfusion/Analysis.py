@@ -291,8 +291,10 @@ class Analysis:
         diff_angles = (np.diff(rel_data_angles)) % (2. * np.pi)
         diff_angles[diff_angles > np.pi] -= (2. * np.pi)
 
+        diff_amps = np.abs(np.diff(jt.complex_mag_list(rel_data)))
+
         # This is where ECE is different. Use magnitudes as clustering instead of angles
-        z = ext.perform_data_datamining(rel_data, misc_data_dict, self.datamining_settings)
+        z = ext.perform_data_datamining(diff_amps, misc_data_dict, self.datamining_settings)
         instance_array_cur, misc_data_dict_cur = \
             ext.filter_by_kappa_cutoff(z, ave_kappa_cutoff=filter_cutoff, ax=None,
                                        cutoff_by=cutoff_by, filter_item=filter_item)
