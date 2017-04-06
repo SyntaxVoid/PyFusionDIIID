@@ -153,6 +153,7 @@ def plot_diagnostics(A, time_window, t0, f0, idx="", doplot=True, dosave=None):
 
 
 if __name__ == '__main__':
+    '''
     dms_tor = {'n_clusters': 16, 'n_iterations': 20, 'start': 'k_means',
                'verbose': 0, 'method': 'EM_VMM', "seeds": [732]}
     dms_pol = {'n_clusters': 16, 'n_iterations': 20, 'start': 'k_means',
@@ -186,5 +187,8 @@ if __name__ == '__main__':
     #     pol_file = pol_save_name.format(t, f)
     #     plot_diagnostics(Ator, [750, 850], t, f, "Tor", doplot=False, dosave=tor_file)
     #     plot_diagnostics(Apol, [750, 850], t, f, "Pol", doplot=False, dosave=pol_file)
-
+    '''
+    Aece = Analysis(shots=159243, time_windows=[750,850],probes="ECE_array2",n_cpus=1,markersize=8)
+    Aece.run_analysis()
+    
 
