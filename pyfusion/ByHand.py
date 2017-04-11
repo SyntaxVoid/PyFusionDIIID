@@ -190,7 +190,11 @@ if __name__ == '__main__':
     #     plot_diagnostics(Ator, [750, 850], t, f, "Tor", doplot=False, dosave=tor_file)
     #     plot_diagnostics(Apol, [750, 850], t, f, "Pol", doplot=False, dosave=pol_file)
     '''
-    Aece = Analysis(shots=159243, time_windows=[750,850],probes="ECE_array3",n_cpus=1,markersize=8)
+
+    # ECE datamining settings
+    dms = {'n_clusters': 16, 'n_iterations': 20, 'start': 'k_means', 'verbose': 0, 'method': 'k_means', "seeds":None}
+    Aece = Analysis(shots=159243, time_windows=[750,850],probes="ECE_array3",
+                    n_cpus=1,markersize=8, datamining_settings = dms)
     Aece.run_analysis_ece()
     plot_clusters(Aece,clust_arr="all")
 
