@@ -274,7 +274,7 @@ class Analysis:
         upper_freq = 150
         cutoff_by = "sigma_eq"
         filter_cutoff = 85
-        filter_item = "EM_VMM_kappas"
+        filter_item = "k_means"
         # /SETTINGS #
         good_indices = ext.find_peaks(data_fft, n_pts=n_pts, lower_freq=lower_freq, upper_freq=upper_freq)
         rel_data = ext.return_values(data_fft.signal, good_indices)
