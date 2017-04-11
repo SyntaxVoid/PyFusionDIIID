@@ -101,6 +101,7 @@ class Analysis:
         diff_angles = (np.diff(rel_data_angles)) % (2.*np.pi)
         diff_angles[diff_angles > np.pi] -= (2.*np.pi)
         z = ext.perform_data_datamining(diff_angles, misc_data_dict, self.datamining_settings)
+        self.temp_z = z
         instance_array_cur, misc_data_dict_cur = \
             ext.filter_by_kappa_cutoff(z, ave_kappa_cutoff=filter_cutoff, ax=None,
                                        cutoff_by=cutoff_by, filter_item=filter_item)
