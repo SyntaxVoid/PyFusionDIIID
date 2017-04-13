@@ -205,8 +205,7 @@ if __name__ == '__main__':
     dms = {'n_clusters': 16, 'method': 'EM_GMM'}
     Aece = Analysis(shots=159243, time_windows=[750,850],probes="ECE_array3",
                     n_cpus=1,markersize=8, datamining_settings = dms)
-    #Aece.run_analysis_ece()
+    Aece.run_analysis_ece()
     #plot_clusters(Aece,clust_arr="all")
 
     plot_ece_signals(Aece.raw_mirnov_data,1)
-    
