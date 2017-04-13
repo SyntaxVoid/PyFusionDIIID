@@ -717,7 +717,7 @@ def filter_by_kappa_cutoff(z, ave_kappa_cutoff=25, ax = None, prob_cutoff = None
             ave_kappa = np.sum(z.cluster_details[filter_item][i,:])/n_dims
             std_eq, std_bar = clust.sigma_eq_sigma_bar(z.cluster_details[filter_item][i,:],deg=True)
 
-        elif filter_item == 'EM_GMM_variances':
+        elif filter_item == 'EM_GMM_variances_sc':
             std_bar = np.mean(np.sqrt(z.cluster_details[filter_item][i,:]))
             std_eq = (np.product(np.sqrt(z.cluster_details[filter_item][i,:])))**(1./n_dims)
 
