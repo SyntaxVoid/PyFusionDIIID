@@ -86,6 +86,8 @@ def plot_diagnostics(A, time_window, t0, f0, idx="", doplot=True, dosave=None):
         positions = [000.0, 018.4, 036.0, 048.7, 059.2, 069.6, 078.0, 085.1, 093.4, 100.7, 107.7,
                      114.9, 121.0, 129.2, 143.6, 165.3, 180.1, 195.0, 216.3, 230.8, 238.9, 244.9,
                      253.5, 262.1, 271.1, 279.5, 290.6, 300.6, 311.8, 324.2, 341.9]
+    elif idx.lower() == "ece3":
+        positions = [0,1,2,3,4,5,6,7,8,9]
     tmp = A.results[0]
     time_base = tmp[3]
     sig = tmp[2]
@@ -156,10 +158,10 @@ def plot_diagnostics(A, time_window, t0, f0, idx="", doplot=True, dosave=None):
 def plot_ece_signals(A, n):
     x = A.mag.timebase
     y = []
+    f, ax = plt.subplots(n,sharex=True)
     for i in range(n):
         y = A.mag.signal[i]
-        plt.plot(x,y)
-
+        ax[i].plot(x,y)
     plt.show()
     return
 
@@ -208,4 +210,4 @@ if __name__ == '__main__':
     Aece.run_analysis_ece()
     #plot_clusters(Aece,clust_arr="all")
 
-    plot_ece_signals(Aece.raw_mirnov_data,1)
+    plot_ece_signals(Aece,1)
