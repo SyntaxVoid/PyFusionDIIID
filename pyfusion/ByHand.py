@@ -153,11 +153,11 @@ def plot_diagnostics(A, time_window, t0, f0, idx="", doplot=True, dosave=None):
         plt.savefig(dosave)
     return
 
-def plot_ece_signals(mag, n):
-    x = mag.timebase
+def plot_ece_signals(A, n):
+    x = A.mag.timebase
     y = []
     for i in range(n):
-        y = mag.signal[i]
+        y = A.mag.signal[i]
         plt.plot(x,y)
 
     plt.show()

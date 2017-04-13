@@ -268,6 +268,7 @@ class Analysis:
     ### ECE ###
     def get_stft_ece(self, shot):
         mag = self.get_mags(shot, self.probes)
+        self.mag = mag
         data_fft = mag.generate_frequency_series(self.samples, self.samples / self.overlap)
         # SETTINGS #
         n_pts = 8
