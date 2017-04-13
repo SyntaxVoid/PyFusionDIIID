@@ -274,8 +274,8 @@ class Analysis:
         lower_freq = 45
         upper_freq = 150
         cutoff_by = "sigma_eq"
-        filter_cutoff = 85
-        filter_item = "k_means"
+        filter_cutoff = 20
+        filter_item = "EM_GMM_variances"
         # /SETTINGS #
         good_indices = ext.find_peaks(data_fft, n_pts=n_pts, lower_freq=lower_freq, upper_freq=upper_freq)
         rel_data = ext.return_values(data_fft.signal, good_indices)
@@ -297,9 +297,11 @@ class Analysis:
         # This is where ECE is different. Use magnitudes as clustering instead of angles
         z = ext.perform_data_datamining(diff_amps, misc_data_dict, self.datamining_settings)
         self.temp_z = z
+
         instance_array_cur, misc_data_dict_cur = \
             ext.filter_by_kappa_cutoff(z, ave_kappa_cutoff=filter_cutoff, ax=None,
                                        cutoff_by=cutoff_by, filter_item=filter_item)
+
         instance_array = np.array(instance_array_cur)
         misc_data_dict = misc_data_dict_cur
         return instance_array, misc_data_dict, mag.signal, mag.timebase
