@@ -87,7 +87,7 @@ def plot_diagnostics(A, time_window, t0, f0, idx="", doplot=True, dosave=None):
                      114.9, 121.0, 129.2, 143.6, 165.3, 180.1, 195.0, 216.3, 230.8, 238.9, 244.9,
                      253.5, 262.1, 271.1, 279.5, 290.6, 300.6, 311.8, 324.2, 341.9]
     elif idx.lower() == "ece3":
-        positions = [0,1,2,3,4,5,6,7,8,9]
+        positions = [36*0,36*1,36*2,36*3,36*4,36*5,36*6,36*7,36*8,36*9]
     tmp = A.results[0]
     time_base = tmp[3]
     sig = tmp[2]
