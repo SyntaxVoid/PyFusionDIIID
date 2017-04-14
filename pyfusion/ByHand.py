@@ -205,9 +205,11 @@ if __name__ == '__main__':
 
     # ECE datamining settings
     dms = {'n_clusters': 16, 'method': 'EM_GMM'}
-    Aece = Analysis(shots=159243, time_windows=[750,850],probes="ECE_array2",
+    Aece = Analysis(shots=159243, time_windows=[750,850],probes="ECE_array3",
                     n_cpus=1,markersize=8, datamining_settings = dms)
     Aece.run_analysis_ece()
+    plot_diagnostics(Aece,time_window=[750,850],t0=790,f0=120,idx="ece3")
     #plot_clusters(Aece,clust_arr="all")
 
-    plot_ece_signals(Aece,1)
+
+    #plot_ece_signals(Aece,1)
