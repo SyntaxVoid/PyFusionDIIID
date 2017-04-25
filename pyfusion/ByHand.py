@@ -61,7 +61,7 @@ def plot_clusters(A, clust_arr, ax=None, doplot=True, dosave=None):
     return
 
 
-def plot_diagnostics(A, time_window, t0, f0, idx="", doplot=True, dosave=None):
+def plot_diagnostics(A, time_window, t0, f0, idx="", doplot=True, dosave=None, clustarr=None):
     # Will be used to plot amplitude vs. position and amplitude vs. phase.
     fft = A.raw_fft
     raw_mirnov = fft.signal
@@ -137,6 +137,8 @@ def plot_diagnostics(A, time_window, t0, f0, idx="", doplot=True, dosave=None):
         # ax3.plot(A.z.feature_obj.misc_data_dict["time"][mask3],
         #          A.z.feature_obj.misc_data_dict["freq"][mask3],
         #          "co", markersize=A.markersize)
+    if idx.lower() == "ece3":
+        plot_clusters(A, "all", ax3)
     elif idx.lower() == "pol":
         pass
     ax3.set_xlabel("Time (ms)", fontsize=16)
