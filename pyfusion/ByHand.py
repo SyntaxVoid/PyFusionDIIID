@@ -211,6 +211,14 @@ if __name__ == '__main__':
                     n_cpus=1,markersize=8, datamining_settings = dms)
     Aece.run_analysis_ece()
     plot_diagnostics(Aece,time_window=[750,850],t0=790,f0=120,idx="ece3")
+
+    times_ece = [795.06, 791.985, 751.025]
+    freqs_ece = [122.5586, 101.0742, 101.0742]
+    for (t,f) in zip(times_ece, freqs_ece):
+        imag = "..Plots/Shot159243_ECE3_{}_{}.png".format(t,f)
+        plot_diagnostics(Aece,[750,850],t,f,"ECE3",doplot=False,dosave=imag)
+
+
     #plot_clusters(Aece,clust_arr="all")
 
 
