@@ -40,12 +40,15 @@ class DIIIDDataFetcherPTdata(MDSPlusDataFetcher):
         coords = get_coords_for_channel(**self.__dict__)
         ch = Channel(self.pointname, coords)
         if self.NC is not None and self.write_cache:
-            print('   Writing pointname to NC file\n')
-            self.NC.createDimension(t_name, len(t_axis))
-            f_time = self.NC.createVariable(t_name,'d',(t_name,))
-            f_time[:] = +t_axis
-            sig = self.NC.createVariable(self.pointname,'f',(t_name,))
-            sig[:] = +data
+
+            print("\t Writing to NC file disabled temporarily.")
+
+            #print('   Writing pointname to NC file\n')
+            #self.NC.createDimension(t_name, len(t_axis))
+            #f_time = self.NC.createVariable(t_name,'d',(t_name,))
+            #f_time[:] = +t_axis
+            # sig = self.NC.createVariable(self.pointname,'f',(t_name,))
+            #sig[:] = +data
         output_data = TimeseriesData(timebase=Timebase(t_axis),
                                 signal=Signal(data), channels=ch)
         output_data.config_name = ch
