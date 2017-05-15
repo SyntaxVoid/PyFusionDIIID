@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     28736,        519]
-NotebookOptionsPosition[     28388,        502]
-NotebookOutlinePosition[     28762,        518]
-CellTagsIndexPosition[     28719,        515]
+NotebookDataLength[     37261,        733]
+NotebookOptionsPosition[     36794,        712]
+NotebookOutlinePosition[     37168,        728]
+CellTagsIndexPosition[     37125,        725]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -492,17 +492,227 @@ oCpw0X7N/wGyeA73
     Scaled[0.02], 
     Scaled[0.02]},
   Ticks->{Automatic, Automatic, Automatic},
-  ViewPoint->{2.535462530500642, -0.1442833245421586, 2.2362048382664637`},
-  ViewVertical->{-0.30396937957078024`, 0.16846500223058383`, 
-   3.0817386229538473`}]], "Output",
+  ViewPoint->{2.580155031216693, -0.13070651282503748`, 2.1853411226607857`},
+  ViewVertical->{-0.243363004340522, 0.17157771385390166`, 
+   3.0854235028880286`}]], "Output",
  CellChangeTimes->{{3.7016646363883543`*^9, 3.701664707470742*^9}, 
    3.701664741436009*^9, {3.701664808169527*^9, 3.70166482849644*^9}, {
    3.7016650093663692`*^9, 3.701665046370702*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"plot1", " ", "=", " ", 
+   RowBox[{"ParametricPlot3D", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"5", ",", "t", ",", 
+       RowBox[{"Cos", "[", 
+        RowBox[{"2", "t"}], "]"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"t", ",", "0", ",", 
+       RowBox[{"3", "\[Pi]"}]}], "}"}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0", ",", 
+          RowBox[{"4", "\[Pi]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", 
+          RowBox[{"5", "\[Pi]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "5"}], ",", "5"}], "}"}]}], "}"}]}], ",", 
+     RowBox[{"Evaluate", "[", 
+      RowBox[{"Sequence", "[", 
+       RowBox[{
+        RowBox[{"BoundaryStyle", "\[Rule]", "Thick"}], ",", 
+        RowBox[{"AxesEdge", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "10"}], ",", "10"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "1"}], ",", 
+             RowBox[{"-", "1"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "1"}], ",", 
+             RowBox[{"-", "1"}]}], "}"}]}], "}"}]}], ",", 
+        RowBox[{"Boxed", "\[Rule]", "False"}], ",", " ", 
+        RowBox[{"Ticks", "\[Rule]", "False"}]}], "]"}], "]"}], ",", " ", 
+     RowBox[{"PlotStyle", "\[Rule]", 
+      RowBox[{"Directive", "[", 
+       RowBox[{
+        RowBox[{"ColorData", "[", 
+         RowBox[{"97", ",", "\"\<ColorList\>\""}], "]"}], "[", 
+        RowBox[{"[", "2", "]"}], "]"}], "]"}]}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"arrow1", " ", "=", " ", 
+   RowBox[{"Graphics3D", "[", 
+    RowBox[{"{", 
+     RowBox[{"Black", ",", 
+      RowBox[{"Arrow", "[", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"5", ",", "0", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"11", ",", "0", ",", "1"}], "}"}]}], "}"}], "]"}]}], "}"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"arrow2", " ", "=", " ", 
+   RowBox[{"Graphics3D", "[", 
+    RowBox[{"{", 
+     RowBox[{"Black", ",", 
+      RowBox[{"Arrow", "[", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"5", ",", "0", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"5", ",", "0", ",", "4"}], "}"}]}], "}"}], "]"}]}], "}"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"arrow3", " ", "=", " ", 
+   RowBox[{"Graphics3D", "[", 
+    RowBox[{"{", 
+     RowBox[{"Black", ",", 
+      RowBox[{"Arrow", "[", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"5", ",", 
+           RowBox[{"3.2", "\[Pi]"}], ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"5", ",", 
+           RowBox[{"4.5", "\[Pi]"}], ",", "1"}], "}"}]}], "}"}], "]"}]}], 
+     "}"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"text1", " ", "=", " ", 
+   RowBox[{"Graphics3D", "[", 
+    RowBox[{"Text", "[", 
+     RowBox[{
+     "\"\<\!\(\*OverscriptBox[SubscriptBox[\(E\), \(1\)], \(\[RightVector]\)]\
+\), \!\(\*OverscriptBox[SubscriptBox[\(j\), \(1\)], \
+\(\[RightVector]\)]\)\>\"", ",", 
+      RowBox[{"{", 
+       RowBox[{"11", ",", "1", ",", "0.5"}], "}"}]}], "]"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"text2", " ", "=", " ", 
+   RowBox[{"Graphics3D", "[", 
+    RowBox[{"Text", "[", 
+     RowBox[{
+     "\"\<\!\(\*OverscriptBox[SubscriptBox[\(v\), \(1\)], \(\[RightVector]\)]\
+\), \!\(\*OverscriptBox[SubscriptBox[\(B\), \(1\)], \
+\(\[RightVector]\)]\)\>\"", ",", 
+      RowBox[{"{", 
+       RowBox[{"5", ",", "0", ",", "4.5"}], "}"}]}], "]"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"text3", " ", "=", " ", 
+   RowBox[{"Graphics3D", "[", 
+    RowBox[{"Text", "[", 
+     RowBox[{
+     "\"\<\!\(\*OverscriptBox[\(k\), \(\[RightVector]\)]\), \
+\!\(\*OverscriptBox[SubscriptBox[\(B\), \(0\)], \(\[RightVector]\)]\)\>\"", 
+      ",", 
+      RowBox[{"{", 
+       RowBox[{"5", ",", 
+        RowBox[{"3.75", "\[Pi]"}], ",", "1.8"}], "}"}]}], "]"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"finalplot", "=", 
+  RowBox[{"Show", "[", 
+   RowBox[{
+   "plot1", ",", "text1", ",", "text2", ",", "text3", ",", "arrow1", ",", 
+    "arrow2", ",", "arrow3"}], "]"}]}]}], "Input",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGCQAGIQ/Sb/7sLa6a8dRaYvXwqiH2/oWwmiOW5YbADR+55z
+7ADRU3gUD4Bor3sVZ0D0jOwl50F0HUftNRD9o9vhBohmvc5yB0Tb6tjdB9FJ
+XvOegc3b/O45iN6Re+ktiD7n5fgObL7D1x8g+v+jGT9BtM2WC2x1QPpwZB0X
+iFboc+cH0c51lUIguuDcGgkQndRQKQmie3Z+UwDRDU0N+iA6Uu2MCYiO+Ftl
+C6KZTq11BNFpnOGeIPrqB44gEO1RtSUVbM6Sd1kguqj7SR6IvnumsAJE18o+
+nAiiXe5tnAmiXwYazwfRD6Tl1oFotSeqYNrq9sRtIFrvpMRuEJ1z988+EP34
+6v2jINrP49BpEC2mEHcORG+4/eAyiP738Q2YBgAEmtXz
+  "]],
+
+Cell[BoxData[
+ Graphics3DBox[{{{}, {}, 
+    {RGBColor[0.880722, 0.611041, 0.142051], AbsoluteThickness[2], 
+     Line3DBox[CompressedData["
+1:eJxF1Xs0lHkYB/ApGoahmTHkbmY6kUvR1qq0eZ8uumlVKGVt5ERbe0SXzdBQ
+SSNFm1irhByd0SHSZkJSybR2CqHGbap1S8aMcZlmaRht//j93nPe857z+eM5
+7/v8vu/zsEMjfcPmkkgk72+3Dmn2YsIFW5pQ0pzsGa79+u0aIWZ9LT29YLyk
+giAXlm9edRK7QniBPFZST1BdQtIEkmHkv5zbJx5e10osbXykjFAOIe90iJrf
+d7eDuG31e07r+ADyt1LNRb5/L6Fk9nR3hXUhv52RJTm/YpBYka+zsbSoBLnn
+e2WqJl1JZJBnHCeDJE9nvbCg8uyWDeOE8Pjok8zBfuS2oUnchn9VRMDBH6cY
+u2XIM1h7onby1MTSa8HP9lQrkG/Mnor1oU8Qi1KzXl0dVSJXm+Zf2C6YJDI+
+GjTSxkaQ616nn2GwNISzrOo7/VrsDOsEbsf1KSLT3WuTWxyuY1LX3cBbriXu
+7H4n8lXJkTOPEGx24wyRM+0hWrh9EPnhg+I30/0k2KW0X66gfkA+t1ns2PfT
+XBBbyc8u832K/EpwZVfhuA7YGgQ/OBjYgvoWPXEsdsXReUA1W2h62bMPeZjk
+xYRsDRlWefrbcNWfkPs9sPgtj6IHN1knzpQL5cj3j3RMpb3Rg7EqC1+9HUrk
+h52zEhJz9CH5xkJhajXOSYH8MUm6jwJlho8GmlTY3xf3xC8zM4CrudFtHHPs
+tPg4p+heA3AK99AXaxTIN+y0aHtcaggqdf46twoZcj2tlTXNxQh0a61XMsk9
+yJ80UmvWiY0hpOev6Tq6CHnAkiOVp1xpcKz9hrHfxibUt5noB8llCho0eMer
++Ft7kfsITChefnQI767eULvoE/LctycudlbRQXlAUixj4nMkv+Dr3LJgAK8/
+TZtUP4w8Qng9PjyGAQPrPVY7ReGc9PmHxnu3M+BEXuRLxVfs+z47xbt9bwJq
+Ye60ioe9wfoe0yjbBOIUfM/zNbg+4bW8WPbtWTqkaqpoGUIudj2ydjKYCVF3
+Hz5s4uD397PMf01+yoQJNj3G/w7+3gNz+GyTVFMwTdJGOIy+Qp6yqY0XFGAG
+t4al3P5tf6N+DsxPeU1hLoBCypdzr1O6ka+WV+4QdC8A0eKxiqEBfF4ay4TL
+9mAODly13sQIPt/qbd71gjxz0DgdciRP4lxdcnyZ5KU1h/30fJFqCOckUH/r
+lv5AC6B7Lwk83ojdPup8XuwzC3BdOe/QjVhcZ7y95j+avSW4XekrzVLjPLfN
+Kd7amWgJyW6Z6V05g8irnLNu5vdZQqigWvX8aD/ymDRZJPu+FexcVXZfJ6QV
+z73TtzzmHbMG3cBR1of9QtS3k3XPje2X2IBkzZ3Eox+lyGNsgmjuX2zAuFIx
+sVQf/+/pKVJq1F5bKNhleHovH+eqZCqQUlRhCy4h74JO0fE8Ean+uCm1tQNx
+0uPDzQKcky55s6sR3w4CvowF2X3G/vVa7eaf5XZQ5qp3sUmL6zBsOu/tWcwC
+0RtqclcLnodlLUVVfwawoJclbTCqx/PTh8+r6+CzIEowEkF99xF5Elca4TvM
+gk3dpdkJ1Dbk7S7DJjPb2fCqyWfO/cRM1Df3q+We/xSxoXnbIR+7HzqQp/FW
+ki7ROEDJdUhxL8D74qVf6wcd4MAp/mBDzK94v+g6R9TERXJAk13dK/bG+6jc
+0Mwq7jYHXC6N+zB34ZyEKZ5weZ0cmN13/wN6WXk3
+      "]]}}, 
+   Text3DBox["\<\"\\!\\(\\*OverscriptBox[SubscriptBox[\\(E\\), \\(1\\)], \\(\
+\[RightVector]\\)]\\), \\!\\(\\*OverscriptBox[SubscriptBox[\\(j\\), \\(1\\)], \
+\\(\[RightVector]\\)]\\)\"\>", {11, 1, 0.5}], 
+   Text3DBox["\<\"\\!\\(\\*OverscriptBox[SubscriptBox[\\(v\\), \\(1\\)], \\(\
+\[RightVector]\\)]\\), \\!\\(\\*OverscriptBox[SubscriptBox[\\(B\\), \\(1\\)], \
+\\(\[RightVector]\\)]\\)\"\>", {5, 0, 4.5}], 
+   Text3DBox["\<\"\\!\\(\\*OverscriptBox[\\(k\\), \\(\[RightVector]\\)]\\), \
+\\!\\(\\*OverscriptBox[SubscriptBox[\\(B\\), \\(0\\)], \
+\\(\[RightVector]\\)]\\)\"\>", {5, 11.780972450961723`, 1.8}], 
+   {GrayLevel[0], Arrow3DBox[{{5, 0, 1}, {11, 0, 1}}]}, 
+   {GrayLevel[0], Arrow3DBox[{{5, 0, 1}, {5, 0, 4}}]}, 
+   {GrayLevel[0], 
+    Arrow3DBox[{{5, 10.053096491487338`, 1}, {5, 14.137166941154069`, 1}}]}},
+  Axes->True,
+  AxesEdge->{{-10, 10}, {-1, -1}, {-1, -1}},
+  Boxed->False,
+  DisplayFunction->Identity,
+  FaceGridsStyle->Automatic,
+  ImageSize->{361.72136063854947`, 244.98388561072912`},
+  Method->{},
+  PlotRange->
+   NCache[{{0, 4 Pi}, {0, 5 Pi}, {-5, 5}}, {{0, 12.566370614359172`}, {
+     0, 15.707963267948966`}, {-5, 5}}],
+  PlotRangePadding->{Automatic, Automatic, Automatic},
+  Ticks->{False, False, False},
+  ViewPoint->{3.081441748262849, 1.1257291481068183`, 0.8291264301453066},
+  ViewVertical->{0.42811741837396183`, 0.15069810719361793`, 
+   1.4566864112980515`}]], "Output",
+ CellChangeTimes->{
+  3.7033057753434973`*^9, {3.703305823310568*^9, 3.7033058474911504`*^9}, 
+   3.7033058888788075`*^9}]
 }, Open  ]]
 },
-WindowSize->{759, 833},
-WindowMargins->{{Automatic, 892}, {244, Automatic}},
-Magnification:>1.7 Inherited,
+WindowSize->{2560, 1357},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+Magnification:>2.4 Inherited,
 FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (July 28, 2016)",
 StyleDefinitions->"Default.nb"
 ]
@@ -518,12 +728,14 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[580, 22, 1289, 32, 184, "Input"],
-Cell[1872, 56, 26500, 443, 498, "Output"]
+Cell[580, 22, 1289, 32, 121, "Input"],
+Cell[1872, 56, 26499, 443, 703, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[28408, 504, 4930, 139, 595, "Input"],
+Cell[33341, 645, 3437, 64, 654, "Output"]
 }, Open  ]]
 }
 ]
 *)
-
-(* End of internal cache information *)
 
