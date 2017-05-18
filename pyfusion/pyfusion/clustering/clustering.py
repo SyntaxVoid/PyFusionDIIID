@@ -555,12 +555,12 @@ class clustering_object():
             current_items = self.cluster_assignments==cluster
             if np.sum(current_items)>10:
                 if color_by_cumul_phase:
-                    ax_kh[cluster].scatter((misc_data_dict[time_plot_item][current_items]), (misc_data_dict[freq_plot_item][current_items])/1000., s=20, c=total_phase[current_items], vmin = min_lim, vmax = max_lim, marker='o', cmap='jet', norm=None, alpha=0.8)
+                    ax_kh[cluster].scatter((misc_data_dict[time_plot_item][current_items]), (misc_data_dict[freq_plot_item][current_items]), s=20, c=total_phase[current_items], vmin = min_lim, vmax = max_lim, marker='o', cmap='jet', norm=None, alpha=0.8)
                 else:
-                    ax_kh[cluster].scatter((misc_data_dict[time_plot_item][current_items]), (misc_data_dict[freq_plot_item][current_items])/1000, s=100, c='b', marker='o', cmap=None, norm=None)
+                    ax_kh[cluster].scatter((misc_data_dict[time_plot_item][current_items]), (misc_data_dict[freq_plot_item][current_items]), s=100, c='b', marker='o', cmap=None, norm=None)
                 ax_kh[cluster].legend(loc='best')
-        ax_kh[-1].set_xlim([0.,0.1])
-        ax_kh[-1].set_ylim([0.,150.])
+        #ax_kh[-1].set_xlim([0.,0.1])
+        #ax_kh[-1].set_ylim([0.,150.])
         fig_kh.subplots_adjust(hspace=0, wspace=0,left=0.05, bottom=0.05,top=0.95, right=0.95)
         fig_kh.suptitle(suptitle,fontsize=8)
         fig_kh.canvas.draw(); fig_kh.show()
@@ -1706,7 +1706,7 @@ class clusterer_wrapper(clustering_object):
 
     SH: 6May2013
     '''
-    def __init__(self, feature_obj, method='k_means',comment='', **kwargs):
+    def __init__(self, feature_obj, method='k_means',comment='',amplitude = False, **kwargs):
         self.feature_obj = feature_obj
         #print 'kwargs', kwargs
         #Default settings are declared first, which are overwritten by kwargs
@@ -1751,20 +1751,29 @@ class clusterer_wrapper(clustering_object):
         print("\n")
         cluster_func = cluster_funcs[method]
         #print method, self.settings
+        if amplitude is False:
+            print("Amplitude is False")
+            input_array = self.feature_obj.instance_array
+        else:
+            print("Amplitude is True")
+            input_array = np.abs(self.feature_obj.misc_data_dict["mirnov_data"])
+
         if cluster_func_class[method]=='func':
             #print 'func based...'
             if method=='EM_VMM_GMM':
-                self.cluster_assignments, self.cluster_details = cluster_func(self.feature_obj.instance_array, self.feature_obj.misc_data_dict['mirnov_data'], **self.settings)
+                self.cluster_assignments, self.cluster_details = cluster_func(input_array,
+                                                                              self.feature_obj.misc_data_dict[
+                                                                                  'mirnov_data'], **self.settings)
             if method=='EM_GMM_GMM2':
                 self.cluster_assignments, self.cluster_details = cluster_func(self.feature_obj.misc_data_dict['mirnov_data'], **self.settings)
             elif method=='EM_GMM_GMM':
                 self.cluster_assignments, self.cluster_details = cluster_func(self.feature_obj.instance_array_amps, **self.settings)
                 #self.cluster_assignments, self.cluster_details = cluster_func(self.feature_obj.misc_data_dict['mirnov_data'], **self.settings)
             else:
-                self.cluster_assignments, self.cluster_details = cluster_func(self.feature_obj.instance_array, **self.settings)
+                self.cluster_assignments, self.cluster_details = cluster_func(input_array, **self.settings)
         else:
             #print 'class based...'
-            tmp = cluster_func(self.feature_obj.instance_array, **self.settings)
+            tmp = cluster_func(input_array, **self.settings)
             self.cluster_assignments, self.cluster_details = tmp.cluster_assignments, tmp.cluster_details
         self.settings['method']=method
         self.cluster_details['comments'] = comment
