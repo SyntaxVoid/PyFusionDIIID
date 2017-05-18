@@ -24,7 +24,7 @@ if __name__ == '__main__':
     lower_freq = 1
     cutoff_by = "sigma_eq"
     filter_cutoff = 70
-    datamining_settings = None
+    dms = None
     upper_freq = 500000
     filter_item = "EM_VMM_kappas"
 
@@ -44,7 +44,7 @@ if __name__ == '__main__':
     diff_angles[diff_angles>np.pi] -= (2.*np.pi)
     ia_amps = +rel_data
     dms = {"n_clusters":16, "n_iterations":20, "start": "k_means", "verbose":0, "method": "EM_VMM"}
-    z = ext.perform_data_datamining(diff_angles, mdd, datamining_settings)
+    z = ext.perform_data_datamining(diff_angles, mdd, dms)
 
     dt = np.mean(np.diff(mag.timebase))
     ia_cur, mdd_cur = ext.filter_by_kappa_cutoff(z, ave_kappa_cutoff = filter_cutoff, ax = None,
