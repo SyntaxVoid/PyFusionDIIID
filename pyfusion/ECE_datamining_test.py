@@ -61,7 +61,7 @@ if __name__ == '__main__':
     feat_obj = clust.feature_object(instance_array=ia, instance_array_amps=+mdd['mirnov_data'],
                                     misc_data_dict=mdd)
     dms = {'n_clusters': 16, 'n_iterations': 20,
-                           'start': 'k_means', 'verbose': 0, 'method': 'EM_VMM'}
+                           'start': 'k_means', 'verbose': 0, 'method': 'EM_GMM'}
     dms = {'n_clusters': 12, 'sin_cos': 0,
                            'verbose': 0, 'method': 'k_means'}
     z = feat_obj.cluster(amplitude=True, **dms)
