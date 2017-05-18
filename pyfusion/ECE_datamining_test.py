@@ -39,7 +39,7 @@ if __name__ == '__main__':
 
 
     rel_data_angles = np.angle(rel_data)
-    diff_angles = (np.diff(rel_data_angles))&(2.*np.pi)
+    diff_angles = (np.diff(rel_data_angles))%(2.*np.pi)
 
     diff_angles[diff_angles>np.pi] -= (2.*np.pi)
     ia_amps = +rel_data
