@@ -5,3 +5,5 @@ DavidPrettyThesis.pdf
 *.py~
 desktop.ini
 Thumbs.db
+/pyfusion/test_ECE.py
+ExternalPackages/.py_packages/idlsave/idlsave/__pycache__/
