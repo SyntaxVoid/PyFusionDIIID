@@ -352,7 +352,9 @@ class Analysis:
 if __name__ == '__main__':
     shots = range(159243, 159257+1)
     time_windows = [300, 1400]
-    A1 = Analysis(shots=shots, time_windows=time_windows, probes="DIIID_toroidal_mag", markersize=7)
+    A1 = Analysis(shots=shots, time_windows=time_windows, probes="DIIID_toroidal_mag", markersize=7,
+                  datamining_settings = {'n_clusters': 16, 'n_iterations': 20,
+                           'start': 'k_means', 'verbose': 0, 'method': 'EM_VMM'})
     A1.run_analysis()
     A1.plot_clusters()
 
