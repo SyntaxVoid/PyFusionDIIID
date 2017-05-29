@@ -350,11 +350,9 @@ class Analysis:
         ### /ECE ###
 
 if __name__ == '__main__':
-    shots = 153071
-    time_windows = [2800, 3000]
-    A1 = Analysis(shots=shots, time_windows=time_windows, probes="DIIID_toroidal_mag", markersize=7,
-                  datamining_settings = {'n_clusters': 16, 'n_iterations': 20,
-                           'start': 'k_means', 'verbose': 0, 'method': 'EM_VMM'})
+    shots = 159243
+    time_windows = [750, 850]
+    A1 = Analysis(shots=shots, time_windows=time_windows, probes="DIIID_toroidal_mag", markersize=7)
     A1.run_analysis()
     A1.plot_clusters()
 
