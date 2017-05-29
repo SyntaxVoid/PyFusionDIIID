@@ -149,7 +149,8 @@ class Analysis:
         return
 
     def plot_clusters(self):
-        mpl.rcParams["axes.linewidth"] = 3.0
+        fontsize = 35
+        mpl.rcParams["axes.linewidth"] = 4.0
         markersize = self.markersize
         nshots = len(self.shots)
         plot_colors = {}
@@ -192,8 +193,8 @@ class Analysis:
                 self.axf2[_].set_xlim(self.time_windows[_])
                 self.axf[_].set_ylim([0, 250])
                 self.axf2[_].set_ylim([0, 250])
-                self.axf[_].text(700, 200, shot, bbox=dict(facecolor="red", alpha=0.75), fontsize=24)
-                self.axf2[_].text(700, 200, shot, bbox=dict(facecolor="red", alpha=0.75), fontsize=24)
+                self.axf[_].text(680, 200, shot, bbox=dict(facecolor="green", alpha=0.90), fontsize=fontsize)
+                self.axf2[_].text(680, 200, shot, bbox=dict(facecolor="green", alpha=0.90), fontsize=fontsize)
         elif nshots == 1:
             # No subplots. Just a single plot.
             self.fig = plt.figure(1)
@@ -233,7 +234,7 @@ class Analysis:
             plt.yticks(np.arange(50, 150, 5.0))
             x0 = self.time_windows[0][0] + 0.35 * (self.time_windows[0][1] - self.time_windows[0][0])
             y0 = 50 + 0.9*(150-50)
-            plt.text(x0, y0, str(shot) + ": " + self.probes, bbox=dict(facecolor="red", alpha=0.75), fontsize=35)
+            plt.text(x0, y0, str(shot) + ": " + self.probes, bbox=dict(facecolor="red", alpha=0.75), fontsize=fontsize)
             # plt.plot([790, 790], [50, 150], "black", linewidth=3)
             # plt.plot(self.time_windows[0], [67.9, 67.9], "black", linewidth=3)
             # plt.plot(self.time_windows[0], [79.1, 79.1], "black", linewidth=3)
@@ -245,7 +246,7 @@ class Analysis:
             plt.ylim([50, 150])
             plt.xticks(np.arange(self.time_windows[0][0], self.time_windows[0][1], 5.0))
             plt.yticks(np.arange(50, 150, 5.0))
-            plt.text(x0, y0, str(shot) + ": " + self.probes, bbox=dict(facecolor="red", alpha=0.75), fontsize=35)
+            plt.text(x0, y0, str(shot) + ": " + self.probes, bbox=dict(facecolor="red", alpha=0.75), fontsize=fontsize)
             # plt.plot([790, 790], [50, 150], "black", linewidth=3)
             # plt.plot(self.time_windows[0], [67.9, 67.9], "black", linewidth=3)
             # plt.plot(self.time_windows[0], [79.1, 79.1], "black", linewidth=3)
@@ -254,10 +255,10 @@ class Analysis:
             # plt.plot(self.time_windows[0], [113.3, 113.3], "black", linewidth=3)
         self.fig.subplots_adjust(hspace=0, wspace=0)
         self.fig2.subplots_adjust(hspace=0, wspace=0)
-        self.fig.text(0.5, 0.065, "Time (ms)", ha="center", fontsize=20)
-        self.fig.text(0.1, 0.5, "Freq (kHz)", va="center", rotation="vertical", fontsize=20)
-        self.fig2.text(0.5, 0.065, "Time (ms)", ha="center", fontsize=20)
-        self.fig2.text(0.1, 0.5, "Freq (kHz)", va="center", rotation="vertical", fontsize=20)
+        self.fig.text(0.5, 0.065, "Time (ms)", ha="center", fontsize=fontsize-10)
+        self.fig.text(0.1, 0.5, "Freq (kHz)", va="center", rotation="vertical", fontsize=fontsize-10)
+        self.fig2.text(0.5, 0.065, "Time (ms)", ha="center", fontsize=fontsize-10)
+        self.fig2.text(0.1, 0.5, "Freq (kHz)", va="center", rotation="vertical", fontsize=fontsize-10)
         self.fig.canvas.draw()
         self.fig.show()
         self.fig2.canvas.draw()
@@ -349,8 +350,8 @@ class Analysis:
 
 if __name__ == '__main__':
     shots = range(159243, 159257+1)
-    time_windows = [750, 850]
-    A1 = Analysis(shots=shots, time_windows=time_windows, probes="DIIID_toroidal_mag")
+    time_windows = [300, 1400]
+    A1 = Analysis(shots=shots, time_windows=time_windows, probes="DIIID_toroidal_mag", markersize=7)
     A1.run_analysis()
     A1.plot_clusters()
 
