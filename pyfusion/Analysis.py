@@ -150,17 +150,18 @@ class Analysis:
 
     def plot_clusters(self):
         fontsize = 35
+        plot_colors = {1: "#ff0000", 2: "#ff9400", 3: "#ffe100", 4: "#bfff00", 5: "#2aff00",
+                       6: "#00ffa9", 7: "#00f6ff", 8: "#0090ff", 9: "#0033ff", 10:"#8700ff",
+                       11:"#cb00ff", 12:"#ff00f2", 13:"#ff006a"}
         mpl.rcParams["axes.linewidth"] = 4.0
         markersize = self.markersize
         nshots = len(self.shots)
-        plot_colors = {}
         if nshots > 2:
             nrows, ncols = jt.squareish_grid(nshots, swapxy=True)
             self.fig, self.ax = plt.subplots(nrows=nrows, ncols=ncols, sharex=True, sharey=True)
             self.axf = self.ax.flatten()
             self.fig2, self.ax2 = plt.subplots(nrows=nrows, ncols=ncols, sharex=True, sharey=True)
             self.axf2 = self.ax2.flatten()
-            plot_colors = {}
             for cur_ax, cur_ax2, shot, tmp in zip(self.axf, self.axf2, self.shots, self.results):
                 assign = self.z.cluster_assignments
                 details = self.z.cluster_details["EM_VMM_kappas"]
