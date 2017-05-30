@@ -199,7 +199,7 @@ def avg_amplitude(A, time_window, t, f, idx="", doplot=True, dosave=None, clusta
     mpl.rcParams['mathtext.fontset'] = 'stix'
     mpl.rcParams['font.family'] = 'STIXGeneral'
     for amp in all_amps:
-        ax1.plot(positions,amp, "k*-", linewidth = 0.1)
+        ax1.plot(positions,amp, "k-", linewidth = 0.1)
     ax1.plot(positions, amps_average, "k*-", linewidth=3)
     ax1.set_xlabel("Probe Positions ($^\circ$)", fontsize=16)
     ax1.set_ylabel("Amplitudes", fontsize=16)
