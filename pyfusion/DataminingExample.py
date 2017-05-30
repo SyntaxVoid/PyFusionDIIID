@@ -9,7 +9,7 @@ datamining_settings = {'n_clusters': 8, 'n_iterations': 20, 'start': 'k_means',
 ## First, we create the Analysis object which conveniently stores all our information in one place.
 A1 = Analysis.Analysis(shots=shots, time_windows=time_window,
                        probes=probes,datamining_settings=datamining_settings,
-                       markersize=7)
+                       markersize=7, n_cpus=1)
 ## Then we run the analysis, which will perform all the datamining and clustering
 A1.run_analysis()
 ## Then, we can plot the clusters for reference
