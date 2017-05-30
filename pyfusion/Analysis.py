@@ -387,7 +387,7 @@ class Analysis:
         ax3.specgram(tmp_sig, NFFT=1024, Fs=1. / dt,
                      noverlap=128, xextent=[time_base[0], time_base[-1]])
         if idx.lower() == "tor":
-            plot_seperate_clusters(self, [1, 2, 3], ax3)
+            plot_seperate_clusters(self, [ ], ax3)
             # ax3.plot(A.z.feature_obj.misc_data_dict["time"][mask1],
             #          A.z.feature_obj.misc_data_dict["freq"][mask1],
             #          "ro", markersize=A.markersize)
