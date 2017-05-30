@@ -169,16 +169,16 @@ def plot_ece_signals(A, n):
 
 
 if __name__ == '__main__':
-    '''
+
     dms_tor = {'n_clusters': 16, 'n_iterations': 20, 'start': 'k_means',
                'verbose': 0, 'method': 'EM_VMM', "seeds": [732]}
     dms_pol = {'n_clusters': 16, 'n_iterations': 20, 'start': 'k_means',
                'verbose': 0, 'method': 'EM_VMM', "seeds": None}
-    Ator = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_toroidal_mag",
-                    n_cpus=1, markersize=8, datamining_settings=dms_tor)
+    #Ator = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_toroidal_mag",
+    #                n_cpus=1, markersize=8, datamining_settings=dms_tor)
     Apol = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_poloidal322_mag",
                     n_cpus=1, markersize=8, datamining_settings=dms_pol)
-    Ator.run_analysis()
+    #Ator.run_analysis()
     Apol.run_analysis()
 
     # Cluster 1
@@ -194,29 +194,29 @@ if __name__ == '__main__':
     TIMES = times1+times2+times3
     FREQS = freqs1+freqs2+freqs3
 
-    plot_clusters(Ator,[],doplot=False,dosave="../Plots/Shot159243Toroidal")
+    #plot_clusters(Ator,[],doplot=False,dosave="../Plots/Shot159243Toroidal")
     plot_clusters(Apol,[],doplot=False,dosave="../Plots/Shot159243Poloidal")
     # tor_save_name = "../Plots/Shot159243_Tor_{}_{}.png"
-    # pol_save_name = "../Plots/Shot159243_Pol_{}_{}.png"
-    # for (t, f) in zip(TIMES, FREQS):
+    pol_save_name = "../Plots/Shot159243_Pol_{}_{}.png"
+    for (t, f) in zip(TIMES, FREQS):
     #     tor_file = tor_save_name.format(t, f)
-    #     pol_file = pol_save_name.format(t, f)
+         pol_file = pol_save_name.format(t, f)
     #     plot_diagnostics(Ator, [750, 850], t, f, "Tor", doplot=False, dosave=tor_file)
-    #     plot_diagnostics(Apol, [750, 850], t, f, "Pol", doplot=False, dosave=pol_file)
-    '''
+         plot_diagnostics(Apol, [750, 850], t, f, "Pol", doplot=False, dosave=pol_file)
+
 
     # ECE datamining settings
-    dms = {'n_clusters': 16, 'method': 'EM_GMM'}
-    Aece = Analysis(shots=159243, time_windows=[750,850],probes="ECE_array3",
-                    n_cpus=1,markersize=8, datamining_settings = dms)
-    Aece.run_analysis_ece()
-    plot_diagnostics(Aece,time_window=[750,850],t0=790,f0=120,idx="ece3")
+    # dms = {'n_clusters': 16, 'method': 'EM_GMM'}
+    # Aece = Analysis(shots=159243, time_windows=[750,850],probes="ECE_array3",
+    #                 n_cpus=1,markersize=8, datamining_settings = dms)
+    # Aece.run_analysis_ece()
+    # plot_diagnostics(Aece,time_window=[750,850],t0=790,f0=120,idx="ece3")
 
-    times_ece = [795.06, 791.985, 751.025]
-    freqs_ece = [122.5586, 101.0742, 101.0742]
-    for (t,f) in zip(times_ece, freqs_ece):
-        imag = "..Plots/Shot159243_ECE3_{}_{}.png".format(t,f)
-        plot_diagnostics(Aece,[750,850],t,f,"ECE3",doplot=False,dosave=imag)
+    #times_ece = [795.06, 791.985, 751.025]
+    #freqs_ece = [122.5586, 101.0742, 101.0742]
+    #for (t,f) in zip(times_ece, freqs_ece):
+    #    imag = "..Plots/Shot159243_ECE3_{}_{}.png".format(t,f)
+    #    plot_diagnostics(Aece,[750,850],t,f,"ECE3",doplot=False,dosave=imag)
 
 
     #plot_clusters(Aece,clust_arr="all")

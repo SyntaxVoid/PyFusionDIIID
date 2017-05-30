@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import cPickle as pickle
 import pyfusion.clustering as clust
 import pyfusion.clustering.extract_features_scans as ext
+import jtools as jt
 
 
 def get_single(shot, time_window=None):
@@ -142,8 +143,7 @@ for i, tmp in enumerate(results):
 
     print("Plotting...")
 
-    nrows = 6
-    ncols = 6
+    nrows, ncols = jt.squareish_grid(nshots, swapxy=True)
     fig, ax = plt.subplots(nrows=nrows, ncols=ncols, sharex=False, sharey=False)
     axf = ax.flatten()
     fig2, ax2 = plt.subplots(nrows=nrows, ncols=ncols, sharex=False, sharey=False)
