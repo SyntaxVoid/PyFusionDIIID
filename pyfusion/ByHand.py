@@ -230,7 +230,7 @@ if __name__ == '__main__':
     dms_tor = {'n_clusters': 16, 'n_iterations': 20, 'start': 'k_means',
                'verbose': 0, 'method': 'EM_VMM', "seeds": [732]}
     dms_pol = {'n_clusters': 16, 'n_iterations': 20, 'start': 'k_means',
-               'verbose': 0, 'method': 'EM_VMM', "seeds": None}
+               'verbose': 0, 'method': 'EM_VMM', "seeds": [2321]}
     #Ator = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_toroidal_mag",
     #                n_cpus=1, markersize=8, datamining_settings=dms_tor)
     Apol = Analysis(shots=159243, time_windows=[750, 850], probes="DIIID_poloidal322_mag",
@@ -252,7 +252,7 @@ if __name__ == '__main__':
     FREQS = freqs1+freqs2+freqs3
 
     ## Plot the first 3 clusters in a specgram
-    clusts = [1,9,10]
+    clusts = [3,7,12]
     plot_clusters(Apol,clusts)
 
     ## Make plots for the first 3 clusters
