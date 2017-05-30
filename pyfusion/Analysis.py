@@ -241,7 +241,7 @@ class Analysis:
             plt.plot(self.time_windows[0], [79.1, 79.1], "black", linewidth=3)
             plt.plot(self.time_windows[0], [101.1, 101.1], "black", linewidth=3)
             plt.plot(self.time_windows[0], [107.4, 107.4], "black", linewidth=3)
-            plt.plot(self.time_windows[0], [113.3, 113.3], "black", linewidth=3)
+            # plt.plot(self.time_windows[0], [113.3, 113.3], "black", linewidth=3)
             plt.figure(2)
             plt.xlim(self.time_windows[0])
             plt.ylim([50, 150])
@@ -253,7 +253,7 @@ class Analysis:
             plt.plot(self.time_windows[0], [79.1, 79.1], "black", linewidth=3)
             plt.plot(self.time_windows[0], [101.1, 101.1], "black", linewidth=3)
             plt.plot(self.time_windows[0], [107.4, 107.4], "black", linewidth=3)
-            plt.plot(self.time_windows[0], [113.3, 113.3], "black", linewidth=3)
+            # plt.plot(self.time_windows[0], [113.3, 113.3], "black", linewidth=3)
         self.fig.subplots_adjust(hspace=0, wspace=0)
         self.fig2.subplots_adjust(hspace=0, wspace=0)
         self.fig.text(0.5, 0.065, "Time (ms)", ha="center", fontsize=fontsize-10)
@@ -352,7 +352,7 @@ class Analysis:
 if __name__ == '__main__':
     shots = 159243
     time_windows = [750, 850]
-    A1 = Analysis(shots=shots, time_windows=time_windows, probes="DIIID_toroidal_mag", markersize=7,
+    A1 = Analysis(shots=shots, time_windows=time_windows, probes="DIIID_toroidal_mag", markersize=15,
                   datamining_settings= {'n_clusters': 8, 'n_iterations': 20, 'start': 'k_means', 'verbose': 0, 'method': 'EM_VMM',
                    "seeds": None})
     A1.run_analysis()
