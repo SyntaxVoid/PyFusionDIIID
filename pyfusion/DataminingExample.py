@@ -4,8 +4,8 @@ import Analysis
 shots = range(159243,159246+1)
 time_window = [300,1400]
 probes = "DIIID_toroidal_mag"
-datamining_settings = {'n_clusters': 8, 'n_iterations': 20, 'start': 'k_means',
-                       'verbose': 0, 'method': 'EM_VMM', "seeds": [832]}
+datamining_settings = {"n_clusters": 8, "n_iterations": 20, "start": "k_means",
+                       "verbose": 0, "method": "EM_VMM", "seeds": [832]}
 ## First, we create the Analysis object which conveniently stores all our information in one place.
 A1 = Analysis.Analysis(shots=shots, time_windows=time_window,
                        probes=probes,datamining_settings=datamining_settings,
