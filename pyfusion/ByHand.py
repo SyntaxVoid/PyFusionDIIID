@@ -198,7 +198,6 @@ def avg_amplitude(A, time_window, t, f, idx="", doplot=True, dosave=None, clusta
     ax1 = plt.gca()
     mpl.rcParams['mathtext.fontset'] = 'stix'
     mpl.rcParams['font.family'] = 'STIXGeneral'
-    mpl.pyplot.title(r'ABC123 vs $\mathrm{ABC123}^{123}$')
     for amp in all_amps:
         ax1.plot(positions,amp, "k*-", linewidth = 0.1)
     ax1.plot(positions, amps_average, "k*-", linewidth=3)
@@ -252,14 +251,17 @@ if __name__ == '__main__':
     TIMES = times1+times2+times3
     FREQS = freqs1+freqs2+freqs3
 
+    ## Plot the first 3 clusters in a specgram
+    clusts = [1,9,10]
+    plot_clusters(Apol,clusts)
 
     ## Make plots for the first 3 clusters
-    for i in range(1,4):
-        mask = (Apol.z.cluster_assignments == i)
-        times = Apol.z.feature_object.misc_data_dict["time"][mask]
-        freqs = Apol.z.feature_object.misc_data_dict["freq"][mask]
+    for cluster in clusts:
+        mask = (Apol.z.cluster_assignments == cluster)
+        times = Apol.z.feature_obj.misc_data_dict["time"][mask]
+        freqs = Apol.z.feature_obj.misc_data_dict["freq"][mask]
         avg_amplitude(Apol, [750, 850], times, freqs, "pol")
-    
+
     #avg_amplitude(Apol, [750, 850], TIMES, FREQS, "pol")
 
 
