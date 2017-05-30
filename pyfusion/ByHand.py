@@ -175,7 +175,9 @@ def avg_amplitude(A, time_window, t, f, idx="", doplot=True, dosave=None, clusta
         for prb in tmp:
             complex_amps.append(prb[nf])
         amps = jt.complex_mag_list(complex_amps)
+        amps = np.array(amps)
         all_amps.append(amps)
+    # print(all_amps)
     amps_average = sum(all_amps) / len(t)
     positions = []
     if idx.lower() == "tor":
@@ -250,7 +252,17 @@ if __name__ == '__main__':
     TIMES = times1+times2+times3
     FREQS = freqs1+freqs2+freqs3
 
-    avg_amplitude(Apol, [750, 850], TIMES, FREQS, "pol")
+
+    ## Make plots for the first 3 clusters
+    for i in range(1,4):
+        mask = (Apol.z.cluster_assignments == i)
+        times = Apol.z.feature_object.misc_data_dict["time"][mask]
+        freqs = Apol.z.feature_object.misc_data_dict["freq"][mask]
+        avg_amplitude(Apol, [750, 850], times, freqs, "pol")
+    
+    #avg_amplitude(Apol, [750, 850], TIMES, FREQS, "pol")
+
+
     #plot_clusters(Ator,[],doplot=False,dosave="../Plots/Shot159243Toroidal")
     # plot_clusters(Apol,[],doplot=False,dosave="../Plots/Shot159243Poloidal")
     # tor_save_name = "../Plots/Shot159243_Tor_{}_{}.png"
