@@ -157,6 +157,62 @@ def plot_diagnostics(A, time_window, t0, f0, idx="", doplot=True, dosave=None, c
         plt.savefig(dosave)
     return
 
+def avg_amplitude(A, time_window, t, f, idx="", doplot=True, dosave=None, clustarr=None):
+    fft = A.raw_fft
+    raw_mirnov = fft.signal
+    raw_times = fft.timebase
+    raw_freqs = fft.frequency_base
+    start = 1
+    all_amps = [ ]
+    for t0,f0 in zip(t,f):
+        nt, t_actual = jt.find_closest(raw_times, t0)
+        nf, f_actual = jt.find_closest(raw_freqs, f0)
+        print("Requested t={}ms. Got t={}ms. dt={}ms".format(t0, t_actual, abs(t0 - t_actual)))
+        print("Requested f={}kHz. Got f={}kHz. df={}kHz".format(f0, f_actual, abs(f0 - f_actual)))
+
+        complex_amps = []
+        tmp = raw_mirnov[nt]
+        for prb in tmp:
+            complex_amps.append(prb[nf])
+        amps = jt.complex_mag_list(complex_amps)
+        all_amps.append(amps)
+    amps_average = sum(all_amps) / len(t)
+    positions = []
+    if idx.lower() == "tor":
+        positions = [20., 67., 97., 127., 132., 137., 157., 200., 247., 277., 307., 312., 322., 340.]
+    elif idx.lower() == "pol":
+        positions = [000.0, 018.4, 036.0, 048.7, 059.2, 069.6, 078.0, 085.1, 093.4, 100.7, 107.7,
+                     114.9, 121.0, 129.2, 143.6, 165.3, 180.1, 195.0, 216.3, 230.8, 238.9, 244.9,
+                     253.5, 262.1, 271.1, 279.5, 290.6, 300.6, 311.8, 324.2, 341.9]
+    elif idx.lower() == "ece3":
+        positions = [36 * 0, 36 * 1, 36 * 2, 36 * 3, 36 * 4, 36 * 5, 36 * 6, 36 * 7, 36 * 8, 36 * 9]
+    tmp = A.results[0]
+    time_base = tmp[3]
+    sig = tmp[2]
+    dt = np.mean(np.diff(time_base))
+    tmp_sig = sig[0, :]
+
+    plt.figure(num=None, figsize=(11, 8.5), dpi=100, facecolor="w", edgecolor="k")
+    ax1 = plt.gca()
+    mpl.rcParams['mathtext.fontset'] = 'stix'
+    mpl.rcParams['font.family'] = 'STIXGeneral'
+    mpl.pyplot.title(r'ABC123 vs $\mathrm{ABC123}^{123}$')
+    for amp in all_amps:
+        ax1.plot(positions,amp, "k*-", linewidth = 0.1)
+    ax1.plot(positions, amps_average, "k*-", linewidth=3)
+    ax1.set_xlabel("Probe Positions ($^\circ$)", fontsize=16)
+    ax1.set_ylabel("Amplitudes", fontsize=16)
+    ax1.set_xticks(np.arange(0, 360 + 1, 60))
+    ax1.set_xlim([0, 360])
+    ax1.grid()
+
+    if doplot:
+        plt.show()
+    if dosave is not None:
+        plt.savefig(dosave)
+    return
+
+
 def plot_ece_signals(A, n):
     x = A.mag.timebase
     y = []
@@ -194,16 +250,18 @@ if __name__ == '__main__':
     TIMES = times1+times2+times3
     FREQS = freqs1+freqs2+freqs3
 
+    avg_amplitude(Apol, [750, 850], TIMES, FREQS, "pol")
     #plot_clusters(Ator,[],doplot=False,dosave="../Plots/Shot159243Toroidal")
-    plot_clusters(Apol,[],doplot=False,dosave="../Plots/Shot159243Poloidal")
+    # plot_clusters(Apol,[],doplot=False,dosave="../Plots/Shot159243Poloidal")
     # tor_save_name = "../Plots/Shot159243_Tor_{}_{}.png"
-    pol_save_name = "../Plots/Shot159243_Pol_{}_{}.png"
-    for (t, f) in zip(TIMES, FREQS):
+    # pol_save_name = "../Plots/Shot159243_Pol_{}_{}.png"
+    # for (t, f) in zip(TIMES, FREQS):
     #     tor_file = tor_save_name.format(t, f)
-         pol_file = pol_save_name.format(t, f)
+    #     pol_file = pol_save_name.format(t, f)
     #     plot_diagnostics(Ator, [750, 850], t, f, "Tor", doplot=False, dosave=tor_file)
-         plot_diagnostics(Apol, [750, 850], t, f, "Pol", doplot=False, dosave=pol_file)
+    #     plot_diagnostics(Apol, [750, 850], t, f, "Pol", doplot=False, dosave=pol_file)
 
+    ## I want to create an "average" plot of amplitudes for many times and frequencies.
 
     # ECE datamining settings
     # dms = {'n_clusters': 16, 'method': 'EM_GMM'}
